@@ -35,11 +35,12 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("curios", mods.contains("curios"));
         modStatus.put("buildinggadgets2", mods.contains("buildinggadgets2"));
         modStatus.put("sound_physics", mods.contains("sound_physics_remastered"));
+        modStatus.put("relics", mods.contains("relics"));
+        modStatus.put("createultimine", mods.contains("createultimine"));
 
         // Client
         setMixinToMod("ae2.KeySortersMixin", "ae2emi");
         setMixinToMod("emi.ReloadWorkerMixin", "ae2emi");
-        setMixinToMod("xycraft.XyCoreClientMixin", "xycraft_core");
         setMixinToMod("buildinggadgets2.BuildingGadgetsRenderDisable", "buildinggadgets2");
         setMixinToMod("sound_physics.SoundPhysicsMixin", "sound_physics");
 

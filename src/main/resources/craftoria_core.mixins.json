@@ -9,7 +9,6 @@
         "buildinggadgets2.BuildingGadgetsRenderDisable",
         "emi.ReloadWorkerMixin",
         "minecraft.CreativeModeInventoryScreenMixin",
-        "xycraft.XyCoreClientMixin",
         "sound_physics.SoundPhysicsMixin"
     ],
     "mixins": [
@@ -19,8 +18,7 @@
         "foregoing.MobCrusherTileMixin",
         "jdt.CreatureCatcherEntityMixin",
         "jdt.UnstablePortalFluidTypeMixin",
-        "minecraft.IdDispatchCodecMixin",
-        "cable_facades.ServerInGameEventsMixin"
+        "minecraft.IdDispatchCodecMixin"
     ],
     "injectors": {
         "defaultRequire": 1

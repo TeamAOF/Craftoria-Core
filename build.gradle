@@ -1,7 +1,8 @@
 plugins {
     id 'java-library'
+    id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '1.0.21'
+    id 'net.neoforged.moddev' version '2.0.146'
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -80,7 +81,34 @@ repositories {
         }
     }
 
+    maven { url "https://maven.architectury.dev/" }
     maven { url = 'https://maven.minecraftforge.net/' }
+
+    maven {
+        name = 'Kotlin for Forge'
+        url = 'https://thedarkcolour.github.io/KotlinForForge/'
+        content { includeGroup "thedarkcolour" }
+    }
+
+    maven {
+        url "https://maven.squiddev.cc"
+        content {
+            includeGroup("cc.tweaked")
+        }
+    }
+
+    maven { url = "https://maven.ftb.dev/releases" } // FTB Mods
+    maven { url = "https://mvn.devos.one/snapshots" } // Registrate
+
+    maven {
+        name = 'Create Mod Maven'
+        url = "https://maven.createmod.net/"
+    }
+
+    maven {
+        name = "Team Resourceful Maven"
+        url = "https://maven.teamresourceful.com/repository/maven-public/"
+    }
 }
 
 base {
@@ -143,24 +171,23 @@ dependencies {
 //    compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.3"))
 //    implementation(jarJar("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.3"))
 
-    compileOnly "maven.modrinth:farmers-delight:${minecraft_version}-${farmers_delight_version}"
-    compileOnly "maven.modrinth:my-nethers-delight:${mynethersdelight_version}"
+    runtimeOnly "maven.modrinth:c2me-neoforge:0.4.0-alpha.0.120+1.21.1"
 
-    implementation "com.hollingsworth.ars_nouveau:ars_nouveau-${minecraft_version}:${ars_version}"
+    implementation "com.teamresourceful.resourcefullib:resourcefullib-neoforge-1.21:3.0.12"
+    implementation "com.teamresourceful.resourcefulconfig:resourcefulconfig-neoforge-1.21:3.0.11"
+    implementation "tech.alexnijjar.endermanoverhaul:endermanoverhaul-neoforge-${minecraft_version}:${enderman_overhaul_version}"
     implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
     implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}"
 
     implementation "org.appliedenergistics:appliedenergistics2:${ae2_version}"
-    implementation "curse.maven:ars-energistique-905641:6203425"
-    implementation "curse.maven:applied-mekanistics-574300:5978711"
+    implementation "curse.maven:applied-mekanistics-574300:7096962"
     implementation "curse.maven:glodium-957920:5821676"
-    implementation "curse.maven:applied-flux-965012:6649565"
+    implementation "curse.maven:applied-flux-965012:8204513"
 
     runtimeOnly "maven.modrinth:mega:${mega_cells_version}"
-    runtimeOnly "de.mari_023:ae2wtlib:19.2.3"
-    runtimeOnly "curse.maven:expanded-ae-1213351:6764610"
-    runtimeOnly "curse.maven:ex-pattern-provider-892005:6628645"
-    runtimeOnly "curse.maven:advancedae-1084104:6225993"
+    runtimeOnly "de.mari_023:ae2wtlib:19.5.1"
+    runtimeOnly "curse.maven:ex-pattern-provider-892005:8811572"
+    runtimeOnly "curse.maven:advancedae-1084104:8564177"
 
     implementation "dev.emi:emi-neoforge:${emi_version}"
 //    runtimeOnly "maven.modrinth:tmrv:${tmrv_version}+mc.21.1"
@@ -171,9 +198,7 @@ dependencies {
     runtimeOnly "mekanism:Mekanism:${minecraft_version}-${mekanism_version}:generators"
     runtimeOnly "mekanism:Mekanism:${minecraft_version}-${mekanism_version}:tools"
 
-    implementation "curse.maven:just-dire-things-1002348:6369120"
-
-    implementation "maven.modrinth:cable-facades:${cable_facades_version}"
+    implementation "curse.maven:just-dire-things-1002348:7463040"
 
     implementation "curse.maven:xycraft-653786:5601037"
     implementation "curse.maven:xycraft-world-653789:5601038"
@@ -183,8 +208,8 @@ dependencies {
     compileOnly "curse.maven:industrial-foregoing-266515:6626624"
     compileOnly "curse.maven:titanium-287342:6443608"
 
-    compileOnly "curse.maven:lendercataclysm-551586:6501450"
-    compileOnly "curse.maven:lionfish-api-1001614:6168249"
+    compileOnly "curse.maven:lendercataclysm-551586:8706841"
+    compileOnly "curse.maven:lionfish-api-1001614:8345326"
 
     runtimeOnly "dev.latvian.mods:kubejs-neoforge:${kubejs_version}"
 
@@ -197,10 +222,10 @@ dependencies {
     runtimeOnly "dev.shadowsoffire:ApothicEnchanting:${minecraft_version}-${apothEnchVersion}"
     runtimeOnly "dev.shadowsoffire:Apotheosis:${minecraft_version}-${apothVersion}"
 
-
-    implementation "curse.maven:building-gadgets-298187:5968587"
+    implementation "curse.maven:building-gadgets-298187:6850515"
     implementation "curse.maven:ender-storage-1-8-245174:6159037"
     implementation "curse.maven:codechicken-lib-1-8-242818:6583751"
+
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

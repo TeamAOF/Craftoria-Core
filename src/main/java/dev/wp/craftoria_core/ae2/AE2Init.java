@@ -3,7 +3,6 @@ package dev.wp.craftoria_core.ae2;
 import appeng.api.storage.StorageCells;
 import dev.wp.craftoria_core.ae2.compat.AppFluxItems;
 import dev.wp.craftoria_core.ae2.compat.AppMekItems;
-import dev.wp.craftoria_core.ae2.compat.ArsEngItems;
 import dev.wp.craftoria_core.ae2.init.AE2Components;
 import dev.wp.craftoria_core.ae2.init.AE2Items;
 import dev.wp.craftoria_core.ae2.item.cell.BlackHoleCellItem;
@@ -18,7 +17,6 @@ public class AE2Init {
 
         if (Utils.isModLoaded("appflux")) AppFluxItems.init();
         if (Utils.isModLoaded("appmek")) AppMekItems.init();
-        if (Utils.isModLoaded("arseng")) ArsEngItems.init();
 
         bus.addListener(AE2Init::initStorageCells);
     }
