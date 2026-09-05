@@ -168,11 +168,13 @@ configurations {
 
 dependencies {
     // MixinSquared's annotationProcessor MUST be registered BEFORE Mixin's one.
-//    compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.3"))
-//    implementation(jarJar("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.3"))
+    compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.7-beta.1"))
+    implementation(jarJar("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.7-beta.1"))
 
-    runtimeOnly "maven.modrinth:c2me-neoforge:0.4.0-alpha.0.120+1.21.1"
-
+    implementation "maven.modrinth:c2me-neoforge:0.4.0-alpha.0.120+1.21.1"
+    implementation "curse.maven:revelationary-656526:8664567"
+    implementation "curse.maven:modonomicon-538392:8532346"
+    implementation "curse.maven:spectrum-556967:8679750"
     implementation "com.teamresourceful.resourcefullib:resourcefullib-neoforge-1.21:3.0.12"
     implementation "com.teamresourceful.resourcefulconfig:resourcefulconfig-neoforge-1.21:3.0.11"
     implementation "tech.alexnijjar.endermanoverhaul:endermanoverhaul-neoforge-${minecraft_version}:${enderman_overhaul_version}"

@@ -18,7 +18,8 @@
         "foregoing.MobCrusherTileMixin",
         "jdt.CreatureCatcherEntityMixin",
         "jdt.UnstablePortalFluidTypeMixin",
-        "minecraft.IdDispatchCodecMixin"
+        "minecraft.IdDispatchCodecMixin",
+        "spectrum.SpectrumEndermanEntityMixin"
     ],
     "injectors": {
         "defaultRequire": 1

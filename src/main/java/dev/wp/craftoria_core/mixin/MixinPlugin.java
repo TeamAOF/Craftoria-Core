@@ -28,15 +28,13 @@ public class MixinPlugin implements IMixinConfigPlugin {
         boolean jdtAndIF = mods.contains("justdirethings") && mods.contains("industrialforegoing");
         modStatus.put("ae2emi", ae2AndEmi);
         modStatus.put("jdtAndIF", jdtAndIF);
-        modStatus.put("cable_facades", mods.contains("cable_facades"));
         modStatus.put("xycraft_core", mods.contains("xycraft_core"));
         modStatus.put("cataclysm", mods.contains("cataclysm"));
         modStatus.put("jdt", mods.contains("justdirethings"));
         modStatus.put("curios", mods.contains("curios"));
         modStatus.put("buildinggadgets2", mods.contains("buildinggadgets2"));
         modStatus.put("sound_physics", mods.contains("sound_physics_remastered"));
-        modStatus.put("relics", mods.contains("relics"));
-        modStatus.put("createultimine", mods.contains("createultimine"));
+        modStatus.put("spectrum", mods.contains("spectrum"));
 
         // Client
         setMixinToMod("ae2.KeySortersMixin", "ae2emi");
@@ -45,13 +43,13 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("sound_physics.SoundPhysicsMixin", "sound_physics");
 
         // Common
-        setMixinToMod("cable_facades.ServerInGameEventsMixin", "cable_facades");
         setMixinToMod("cataclysm.CursedTombstoneEntityMixin", "cataclysm");
         setMixinToMod("foregoing.EnchantmentExtractorTileMixin", "jdtAndIF");
         setMixinToMod("foregoing.MobCrusherTileMixin", "jdtAndIF");
         setMixinToMod("jdt.CreatureCatcherEntityMixin", "jdt");
         setMixinToMod("jdt.UnstablePortalFluidTypeMixin", "jdt");
         setMixinToMod("curios.CuriosEventHandlerMixin", "curios");
+        setMixinToMod("spectrum.SpectrumEndermanEntityMixin", "spectrum");
     }
 
     @Override
