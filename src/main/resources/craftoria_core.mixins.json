@@ -18,6 +18,7 @@
         "foregoing.MobCrusherTileMixin",
         "jdt.CreatureCatcherEntityMixin",
         "jdt.UnstablePortalFluidTypeMixin",
+        "mekanism.WorldUtilsMixin",
         "minecraft.IdDispatchCodecMixin",
         "spectrum.SpectrumEndermanEntityMixin"
     ],
