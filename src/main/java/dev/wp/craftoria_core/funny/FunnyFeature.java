@@ -22,11 +22,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class FunnyFeature {
+    private static final ThreadLocal<Random> TRANSFORM_RANDOM = new ThreadLocal<>();
     private enum ReactionCategory {
         EXCITED,
         CONFUSED,
@@ -521,7 +523,9 @@ public final class FunnyFeature {
         if (!ServerConfig.funny) return rawText;
 
         FunnyIntensity intensity = FunnyPlayerData.get(player.serverLevel()).getIntensity(player.getUUID());
-        return intensity == FunnyIntensity.OFF ? rawText : transform(rawText, intensity);
+        return intensity == FunnyIntensity.OFF ? rawText
+                : transformSeeded(rawText, intensity, player.getUUID().getMostSignificantBits()
+                ^ player.getUUID().getLeastSignificantBits());
     }
 
     @SubscribeEvent
@@ -551,6 +555,21 @@ public final class FunnyFeature {
     }
 
     static String transform(String rawText, FunnyIntensity intensity) {
+        return transformSeeded(rawText, intensity, 0L);
+    }
+
+    private static String transformSeeded(String rawText, FunnyIntensity intensity, long salt) {
+        Random previous = TRANSFORM_RANDOM.get();
+        TRANSFORM_RANDOM.set(new Random(rawText.hashCode() * 31L + salt + intensity.ordinal()));
+        try {
+            return transformBody(rawText, intensity);
+        } finally {
+            if (previous == null) TRANSFORM_RANDOM.remove();
+            else TRANSFORM_RANDOM.set(previous);
+        }
+    }
+
+    private static String transformBody(String rawText, FunnyIntensity intensity) {
         if (intensity == FunnyIntensity.OFF) return rawText;
 
         List<String> protectedText = new ArrayList<>();
@@ -895,7 +914,7 @@ public final class FunnyFeature {
                 .sum();
         if (total <= 0) return contexts.get(0);
 
-        int roll = ThreadLocalRandom.current().nextInt(total);
+        int roll = random().nextInt(total);
         for (ContextScore score : contexts.stream().limit(5).toList()) {
             roll -= score.score() * score.score();
             if (roll < 0) return score;
@@ -1051,7 +1070,7 @@ public final class FunnyFeature {
     private static String addReaction(String text) {
         Reaction reaction = reaction(reactionCategory(text));
         String reactionText = "§o" + reaction.suffix() + "§r " + reaction.face();
-        double roll = ThreadLocalRandom.current().nextDouble();
+        double roll = random().nextDouble();
         if (roll < 0.14) return reaction.face() + " §o" + reaction.suffix() + "§r " + text;
         if (roll < 0.29) return insertWhimsy(text, reactionText);
         return text + " " + reactionText;
@@ -1064,7 +1083,7 @@ public final class FunnyFeature {
             return text + " §o" + whimsy + "§r";
         }
 
-        int split = 1 + ThreadLocalRandom.current().nextInt(words.length - 1);
+        int split = 1 + random().nextInt(words.length - 1);
         StringBuilder result = new StringBuilder(text.length() + whimsy.length() + 4);
         for (int i = 0; i < words.length; i++) {
             if (i > 0) result.append(' ');
@@ -1081,7 +1100,7 @@ public final class FunnyFeature {
         while (matcher.find()) {
             String original = matcher.group();
             String replacement = words.get(original.toLowerCase(Locale.ROOT));
-            if (replacement == null || ThreadLocalRandom.current().nextDouble() > chance) {
+            if (replacement == null || random().nextDouble() > chance) {
                 matcher.appendReplacement(result, Matcher.quoteReplacement(original));
                 continue;
             }
@@ -1114,7 +1133,7 @@ public final class FunnyFeature {
 
     private static String expressivePunctuation(String text, boolean strong) {
         if (!strong) return text;
-        text = text.replaceAll("!+", ThreadLocalRandom.current().nextBoolean() ? "!!" : "!!1!");
+        text = text.replaceAll("!+", random().nextBoolean() ? "!!" : "!!1!");
         return text.replaceAll("\\?+", "?!");
     }
 
@@ -1161,7 +1180,7 @@ public final class FunnyFeature {
     private static Reaction reaction(ReactionCategory category) {
         List<Reaction> reactions = REACTIONS.get(category);
         int totalWeight = reactions.stream().mapToInt(Reaction::weight).sum();
-        int roll = ThreadLocalRandom.current().nextInt(totalWeight);
+        int roll = random().nextInt(totalWeight);
         for (Reaction reaction : reactions) {
             roll -= reaction.weight();
             if (roll < 0) return reaction;
@@ -1174,15 +1193,20 @@ public final class FunnyFeature {
     }
 
     private static String randomMessage(String[] messages) {
-        return messages[ThreadLocalRandom.current().nextInt(messages.length)];
+        return messages[random().nextInt(messages.length)];
     }
 
     private static String pick(String... options) {
-        return options[ThreadLocalRandom.current().nextInt(options.length)];
+        return options[random().nextInt(options.length)];
     }
 
     private static boolean roll(double chance) {
-        return ThreadLocalRandom.current().nextDouble() < chance;
+        return random().nextDouble() < chance;
+    }
+
+    private static Random random() {
+        Random random = TRANSFORM_RANDOM.get();
+        return random != null ? random : ThreadLocalRandom.current();
     }
 
     private static Component announcement(String message, String name,
