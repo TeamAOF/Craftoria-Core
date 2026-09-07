@@ -24,6 +24,7 @@
         "minecraft.PlayerListMixin",
         "spectrum.SpectrumEndermanEntityMixin",
         "relics.RingOfTheSevenDeadlySinsMixin",
+        "relics.RelicsTooltipCompatibilityMixin",
         "styledchat.StyledChatUtilsMixin",
         "sdlink.SdlinkServerEventsMixin"
     ],

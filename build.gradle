@@ -240,6 +240,8 @@ dependencies {
     implementation "curse.maven:codechicken-lib-1-8-242818:6583751"
 
     implementation "curse.maven:styled-chat-unofficial-neoforge-1117967:5795252"
+    implementation "curse.maven:functional-storage-556861:8459097"
+    implementation "curse.maven:titanium-287342:8760562"
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
