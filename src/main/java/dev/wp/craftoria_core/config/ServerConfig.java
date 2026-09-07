@@ -1,33 +1,26 @@
-//package dev.wp.craftoria_core.config;
-//
-//import dev.wp.craftoria_core.Craftoria;
-//import net.neoforged.neoforge.common.ModConfigSpec;
-//
-//public class ServerConfig {
-//    private static final ModConfigSpec.Builder BUILDER;
-//    private static final ModConfigSpec.BooleanValue SUPPRESS_UNKNOWN_PACKET_ID;
-//    public static final ModConfigSpec SPEC;
-//
-//    private static String key(String path) {
-//        return Craftoria.ID + ".config." + path;
-//    }
-//
-//    static {
-//        BUILDER = new ModConfigSpec.Builder();
-//        {
-//            BUILDER.translation(key("mixin_toggles")).push("Mixin Toggles");
-//            SUPPRESS_UNKNOWN_PACKET_ID = BUILDER
-//                    .translation(key("suppress_unknown_packet_id"))
-//                    .comment("Suppress the 'Unknown packet ID -1' error in the logs.")
-//                    .define("suppress_unknown_packet_id", false);
-//            BUILDER.pop();
-//        }
-//        SPEC = BUILDER.build();
-//    }
-//
-//    public static boolean suppressUnknownPacketId;
-//
-//    public static void init() {
-//        suppressUnknownPacketId = SUPPRESS_UNKNOWN_PACKET_ID.get();
-//    }
-//}
+package dev.wp.craftoria_core.config;
+
+import dev.wp.craftoria_core.Craftoria;
+import net.neoforged.neoforge.common.ModConfigSpec;
+
+import java.util.List;
+
+public class ServerConfig {
+    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    private static final ModConfigSpec.ConfigValue<List<? extends String>> GLUTTONY_ATTRIBUTE_MOD_BLACKLIST = BUILDER
+            .translation(Craftoria.ID + ".config.gluttony_attribute_mod_blacklist")
+            .comment("Mod IDs whose attributes are ignored by the Relics gluttony effect.")
+            .defineListAllowEmpty(
+                    "gluttony_attribute_mod_blacklist",
+                    List.of("puffish_attributes", "eternal_starlight"),
+                    () -> "mod_id",
+                    value -> value instanceof String && !((String) value).isBlank()
+            );
+
+    public static final ModConfigSpec SPEC = BUILDER.build();
+    public static List<? extends String> gluttonyAttributeModBlacklist = List.of("puffish_attributes");
+
+    public static void init() {
+        gluttonyAttributeModBlacklist = GLUTTONY_ATTRIBUTE_MOD_BLACKLIST.get();
+    }
+}

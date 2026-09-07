@@ -171,6 +171,9 @@ dependencies {
     compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.7-beta.1"))
     implementation(jarJar("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.7-beta.1"))
 
+    implementation "curse.maven:shatterbyte-lib-916747:8040848"
+    implementation "curse.maven:relics-mod-445274:8158315"
+
     implementation "maven.modrinth:c2me-neoforge:0.4.0-alpha.0.120+1.21.1"
     implementation "curse.maven:revelationary-656526:8664567"
     implementation "curse.maven:modonomicon-538392:8532346"
