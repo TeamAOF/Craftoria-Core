@@ -20,8 +20,10 @@
         "jdt.UnstablePortalFluidTypeMixin",
         "mekanism.WorldUtilsMixin",
         "minecraft.IdDispatchCodecMixin",
+        "minecraft.PlayerListMixin",
         "spectrum.SpectrumEndermanEntityMixin",
         "relics.RingOfTheSevenDeadlySinsMixin"
+        ,"styledchat.StyledChatUtilsMixin"
     ],
     "injectors": {
         "defaultRequire": 1

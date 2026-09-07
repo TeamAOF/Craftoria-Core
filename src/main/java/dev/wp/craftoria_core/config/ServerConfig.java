@@ -20,13 +20,24 @@ public class ServerConfig {
                     () -> "mod_id",
                     value -> value instanceof String && !((String) value).isBlank()
             );
+    private static final ModConfigSpec.ConfigValue<List<? extends String>> SDLINK_BYPASS_ROLES = BUILDER
+            .translation(Craftoria.ID + ".config.sdlink_bypass_roles")
+            .comment("Discord role IDs whose linked players bypass the server player limit.")
+            .defineListAllowEmpty(
+                    "sdlink_bypass_roles",
+                    List.of(),
+                    () -> "discord_role_id",
+                    value -> value instanceof String && !((String) value).isBlank()
+            );
 
     public static final ModConfigSpec SPEC = BUILDER.build();
     public static boolean funny = false;
     public static List<? extends String> gluttonyAttributeModBlacklist = List.of("puffish_attributes");
+    public static List<? extends String> sdlinkBypassRoles = List.of();
 
     public static void init() {
         funny = FUNNY.get();
         gluttonyAttributeModBlacklist = GLUTTONY_ATTRIBUTE_MOD_BLACKLIST.get();
+        sdlinkBypassRoles = SDLINK_BYPASS_ROLES.get();
     }
 }

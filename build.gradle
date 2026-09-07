@@ -109,6 +109,10 @@ repositories {
         name = "Team Resourceful Maven"
         url = "https://maven.teamresourceful.com/repository/maven-public/"
     }
+
+    maven {
+        url "https://maven.firstdark.dev/releases"
+    }
 }
 
 base {
@@ -170,6 +174,9 @@ dependencies {
     // MixinSquared's annotationProcessor MUST be registered BEFORE Mixin's one.
     compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.7-beta.1"))
     implementation(jarJar("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.7-beta.1"))
+
+    compileOnly("com.hypherionmc.sdlink:sdlink:3.3.1")
+    compileOnly("com.hypherionmc.craterlib:CraterLib-NeoForge-1.21:2.1.5")
 
     implementation "dev.architectury:architectury-neoforge:${architectury_api_version}"
     implementation "curse.maven:shatterbyte-lib-916747:8040848"

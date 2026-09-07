@@ -37,6 +37,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("spectrum", mods.contains("spectrum"));
         modStatus.put("mekanism", mods.contains("mekanism"));
         modStatus.put("relics", mods.contains("relics"));
+        modStatus.put("sdlink", mods.contains("sdlink"));
         modStatus.put("styledchat", mods.contains("styledchat"));
 
         // Client
@@ -55,6 +56,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("spectrum.SpectrumEndermanEntityMixin", "spectrum");
         setMixinToMod("mekanism.WorldUtilsMixin", "mekanism");
         setMixinToMod("relics.RingOfTheSevenDeadlySinsMixin", "relics");
+        setMixinToMod("minecraft.PlayerListMixin", "sdlink");
         setMixinToMod("styledchat.StyledChatUtilsMixin", "styledchat");
     }
 
