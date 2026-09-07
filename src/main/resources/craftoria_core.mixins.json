@@ -19,6 +19,7 @@
         "foregoing.MobCrusherTileMixin",
         "jdt.CreatureCatcherEntityMixin",
         "jdt.UnstablePortalFluidTypeMixin",
+        "ae2.CableBusBlockCollisionGuardMixin",
         "mekanism.WorldUtilsMixin",
         "minecraft.IdDispatchCodecMixin",
         "minecraft.PlayerListMixin",

@@ -26,6 +26,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
         boolean ae2AndEmi = mods.contains("ae2") && mods.contains("emi");
         boolean jdtAndIF = mods.contains("justdirethings") && mods.contains("industrialforegoing");
+        modStatus.put("ae2", mods.contains("ae2"));
         modStatus.put("ae2emi", ae2AndEmi);
         modStatus.put("jdtAndIF", jdtAndIF);
         modStatus.put("xycraft_core", mods.contains("xycraft_core"));
@@ -53,6 +54,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("foregoing.MobCrusherTileMixin", "jdtAndIF");
         setMixinToMod("jdt.CreatureCatcherEntityMixin", "jdt");
         setMixinToMod("jdt.UnstablePortalFluidTypeMixin", "jdt");
+        setMixinToMod("ae2.CableBusBlockCollisionGuardMixin", "ae2");
         setMixinToMod("curios.CuriosEventHandlerMixin", "curios");
         setMixinToMod("spectrum.SpectrumEndermanEntityMixin", "spectrum");
         setMixinToMod("mekanism.WorldUtilsMixin", "mekanism");
