@@ -44,6 +44,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("ae2.KeySortersMixin", "ae2emi");
         setMixinToMod("emi.ReloadWorkerMixin", "ae2emi");
         setMixinToMod("buildinggadgets2.BuildingGadgetsRenderDisable", "buildinggadgets2");
+        setMixinToMod("buildinggadgets2.BuildingGadgetsDataSaveGuard", "buildinggadgets2");
         setMixinToMod("sound_physics.SoundPhysicsMixin", "sound_physics");
 
         // Common

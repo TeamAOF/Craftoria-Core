@@ -12,6 +12,7 @@
         "sound_physics.SoundPhysicsMixin"
     ],
     "mixins": [
+        "buildinggadgets2.BuildingGadgetsDataSaveGuard",
         "cataclysm.CursedTombstoneEntityMixin",
         "curios.CuriosEventHandlerMixin",
         "foregoing.EnchantmentExtractorTileMixin",
