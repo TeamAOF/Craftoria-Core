@@ -37,6 +37,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("spectrum", mods.contains("spectrum"));
         modStatus.put("mekanism", mods.contains("mekanism"));
         modStatus.put("relics", mods.contains("relics"));
+        modStatus.put("styledchat", mods.contains("styledchat"));
 
         // Client
         setMixinToMod("ae2.KeySortersMixin", "ae2emi");
@@ -54,6 +55,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("spectrum.SpectrumEndermanEntityMixin", "spectrum");
         setMixinToMod("mekanism.WorldUtilsMixin", "mekanism");
         setMixinToMod("relics.RingOfTheSevenDeadlySinsMixin", "relics");
+        setMixinToMod("styledchat.StyledChatUtilsMixin", "styledchat");
     }
 
     @Override

@@ -16,13 +16,9 @@ public final class Lang extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        this.add(key("config.mixin_toggles"), "Mixin Toggles");
-        this.add(key("config.disable_search_tab_autofocus"), "Disable Search Tab Autofocus");
-        this.add(key("config.suppress_unknown_packet_id"), "Suppress Unknown Packet ID Errors");
-        this.add(key("tooltip.contains"), "Contains: %s");
-        this.add(key("tooltip.quantity"), "Quantity: %s");
-        this.add(key("tooltip.empty"), "Empty");
-        this.add(key("tooltip.partitioned"), "Partitioned for: %s");
+        this.add(key("config.funny"), "Funny");
+        this.add(key("config.gluttony_attribute_mod_blacklist"), "Gluttony attribute mod blacklist");
+        this.add(key("config.sdlink_bypass_roles"), "SDLink Player limit bypass roles");
 
         for (var item : CItems.ITEMS.getEntries()) {
             String key = item.getId().getPath();

@@ -171,6 +171,7 @@ dependencies {
     compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.7-beta.1"))
     implementation(jarJar("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.7-beta.1"))
 
+    implementation "dev.architectury:architectury-neoforge:${architectury_api_version}"
     implementation "curse.maven:shatterbyte-lib-916747:8040848"
     implementation "curse.maven:relics-mod-445274:8158315"
 
@@ -221,16 +222,17 @@ dependencies {
     compileOnly "curse.maven:sound-physics-remastered-535489:6809432"
 
     // Just used to verify nbt ordering works with creative sort
-    runtimeOnly "dev.shadowsoffire:Placebo:${minecraft_version}-${placeboVersion}"
-    runtimeOnly "dev.shadowsoffire:ApothicAttributes:${minecraft_version}-${apothAttribsVersion}"
-    runtimeOnly "dev.shadowsoffire:ApothicSpawners:${minecraft_version}-${apothSpawnersVersion}"
-    runtimeOnly "dev.shadowsoffire:ApothicEnchanting:${minecraft_version}-${apothEnchVersion}"
-    runtimeOnly "dev.shadowsoffire:Apotheosis:${minecraft_version}-${apothVersion}"
+//    runtimeOnly "dev.shadowsoffire:Placebo:${minecraft_version}-${placeboVersion}"
+//    runtimeOnly "dev.shadowsoffire:ApothicAttributes:${minecraft_version}-${apothAttribsVersion}"
+//    runtimeOnly "dev.shadowsoffire:ApothicSpawners:${minecraft_version}-${apothSpawnersVersion}"
+//    runtimeOnly "dev.shadowsoffire:ApothicEnchanting:${minecraft_version}-${apothEnchVersion}"
+//    runtimeOnly "dev.shadowsoffire:Apotheosis:${minecraft_version}-${apothVersion}"
 
     implementation "curse.maven:building-gadgets-298187:6850515"
     implementation "curse.maven:ender-storage-1-8-245174:6159037"
     implementation "curse.maven:codechicken-lib-1-8-242818:6583751"
 
+    implementation "curse.maven:styled-chat-unofficial-neoforge-1117967:5795252"
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
