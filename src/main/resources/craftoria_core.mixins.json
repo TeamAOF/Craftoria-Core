@@ -23,7 +23,8 @@
         "minecraft.PlayerListMixin",
         "spectrum.SpectrumEndermanEntityMixin",
         "relics.RingOfTheSevenDeadlySinsMixin"
-        ,"styledchat.StyledChatUtilsMixin"
+        ,"styledchat.StyledChatUtilsMixin",
+        "sdlink.SdlinkServerEventsMixin"
     ],
     "injectors": {
         "defaultRequire": 1
