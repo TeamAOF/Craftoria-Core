@@ -12,7 +12,8 @@
         "apothic_enchanting.EnchJEIPluginMixin",
         "extendedae_plus.InputEventsMixin",
         "subtle_effects.SplashParticleProviderMixin",
-        "sound_physics.SoundPhysicsMixin"
+        "sound_physics.SoundPhysicsMixin",
+        "spectrum.SpectrumTooltipsMixin"
     ],
     "mixins": [
         "buildinggadgets2.BuildingGadgetsDataSaveGuard",

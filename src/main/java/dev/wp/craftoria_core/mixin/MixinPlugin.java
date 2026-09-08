@@ -58,6 +58,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("subtle_effects.SplashParticleProviderMixin", "subtle_effects");
         setMixinToMod("extendedae_plus.InputEventsMixin", "extendedae_plus");
         setMixinToMod("apothic_enchanting.EnchJEIPluginMixin", "apothic_enchanting");
+        setMixinToMod("spectrum.SpectrumTooltipsMixin", "spectrum");
 
         // Common
         setMixinToMod("cataclysm.CursedTombstoneEntityMixin", "cataclysm");
