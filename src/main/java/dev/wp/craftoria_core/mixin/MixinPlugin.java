@@ -73,7 +73,9 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("relics.RingOfTheSevenDeadlySinsMixin", "relics");
         setMixinToMod("relics.RelicsTooltipCompatibilityMixin", "relics");
         setMixinToMod("minecraft.PlayerListMixin", "sdlink");
+        setMixinToMod("minecraft.MinecraftServerMixin", "sdlink");
         setMixinToMod("sdlink.SdlinkServerEventsMixin", "sdlink");
+        setMixinToMod("sdlink.SDLinkMinecraftBridgeMixin", "sdlink");
         setMixinToMod("extendedae_plus.OpenCraftFromJeiC2SPacketMixin", "extendedae_plus");
         setMixinToMod("styledchat.StyledChatUtilsMixin", "styledchat");
     }

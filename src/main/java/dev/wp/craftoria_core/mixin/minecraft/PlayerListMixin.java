@@ -17,10 +17,9 @@ public class PlayerListMixin {
             at = @At(value = "INVOKE", target = "Ljava/util/List;size()I")
     )
     private int countRegularPlayers(int original) {
-        return ((PlayerList) (Object) this).getPlayers().stream()
-                .map(ServerPlayer::getGameProfile)
-                .mapToInt(profile -> SdlinkPlayerLimit.hasBypassRole(profile) ? 0 : 1)
-                .sum();
+        return SdlinkPlayerLimit.countRegularPlayers(((PlayerList) (Object) this).getPlayers().stream()
+                .map(ServerPlayer::getUUID)
+                .toList());
     }
 
     @Inject(method = "canBypassPlayerLimit", at = @At("HEAD"), cancellable = true)

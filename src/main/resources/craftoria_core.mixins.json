@@ -26,13 +26,15 @@
         "ae2.CableBusBlockCollisionGuardMixin",
         "mekanism.WorldUtilsMixin",
         "minecraft.IdDispatchCodecMixin",
+        "minecraft.MinecraftServerMixin",
         "minecraft.PlayerListMixin",
         "spectrum.SpectrumEndermanEntityMixin",
         "relics.RingOfTheSevenDeadlySinsMixin",
         "relics.RelicsTooltipCompatibilityMixin",
         "styledchat.StyledChatUtilsMixin",
         "extendedae_plus.OpenCraftFromJeiC2SPacketMixin",
-        "sdlink.SdlinkServerEventsMixin"
+        "sdlink.SdlinkServerEventsMixin",
+        "sdlink.SDLinkMinecraftBridgeMixin"
     ],
     "injectors": {
         "defaultRequire": 1
