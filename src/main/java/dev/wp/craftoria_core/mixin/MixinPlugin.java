@@ -1,5 +1,6 @@
 package dev.wp.craftoria_core.mixin;
 
+import com.bawnorton.mixinsquared.canceller.MixinCancellerRegistrar;
 import dev.wp.craftoria_core.util.Utils;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
@@ -41,6 +42,11 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("sdlink", mods.contains("sdlink"));
         modStatus.put("styledchat", mods.contains("styledchat"));
         modStatus.put("subtle_effects", mods.contains("subtle_effects"));
+        modStatus.put("extendedae_plus", mods.contains("extendedae_plus"));
+
+        if (mods.contains("extendedae_plus") && mods.contains("emi")) {
+            MixinCancellerRegistrar.register((targets, mixin) -> mixin.startsWith("com.extendedae_plus.mixin.jei."));
+        }
 
         // Client
         setMixinToMod("ae2.KeySortersMixin", "ae2emi");
@@ -49,6 +55,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("buildinggadgets2.BuildingGadgetsDataSaveGuard", "buildinggadgets2");
         setMixinToMod("sound_physics.SoundPhysicsMixin", "sound_physics");
         setMixinToMod("subtle_effects.SplashParticleProviderMixin", "subtle_effects");
+        setMixinToMod("extendedae_plus.InputEventsMixin", "extendedae_plus");
 
         // Common
         setMixinToMod("cataclysm.CursedTombstoneEntityMixin", "cataclysm");
@@ -64,6 +71,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("relics.RelicsTooltipCompatibilityMixin", "relics");
         setMixinToMod("minecraft.PlayerListMixin", "sdlink");
         setMixinToMod("sdlink.SdlinkServerEventsMixin", "sdlink");
+        setMixinToMod("extendedae_plus.OpenCraftFromJeiC2SPacketMixin", "extendedae_plus");
         setMixinToMod("styledchat.StyledChatUtilsMixin", "styledchat");
     }
 

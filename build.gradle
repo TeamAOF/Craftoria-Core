@@ -203,15 +203,15 @@ dependencies {
     implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
     implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}"
 
-    implementation "org.appliedenergistics:appliedenergistics2:${ae2_version}"
-    implementation "curse.maven:applied-mekanistics-574300:7096962"
-    implementation "curse.maven:glodium-957920:5821676"
-    implementation "curse.maven:applied-flux-965012:8204513"
-
-    localRuntime "maven.modrinth:mega:${mega_cells_version}"
-    localRuntime "de.mari_023:ae2wtlib:19.5.1"
-    localRuntime "curse.maven:ex-pattern-provider-892005:8811572"
-    localRuntime "curse.maven:advancedae-1084104:8564177"
+    implementation("org.appliedenergistics:appliedenergistics2:${ae2_version}")
+    implementation("curse.maven:glodium-957920:5821676")
+    implementation("curse.maven:extendedae-plus-1337639:8755074")
+    implementation("curse.maven:applied-mekanistics-574300:7096962")
+    implementation("curse.maven:applied-flux-965012:8204513")
+    implementation("maven.modrinth:mega:${mega_cells_version}")
+    implementation("de.mari_023:ae2wtlib:19.5.1")
+    implementation("curse.maven:ex-pattern-provider-892005:8811572")
+    implementation("curse.maven:advancedae-1084104:8564177")
 
     implementation("dev.emi:emi-neoforge:${emi_version}")
     implementation("maven.modrinth:tmrv:${tmrv_version}+mc.21.1")

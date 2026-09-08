@@ -9,6 +9,7 @@
         "buildinggadgets2.BuildingGadgetsRenderDisable",
         "emi.ReloadWorkerMixin",
         "minecraft.CreativeModeInventoryScreenMixin",
+        "extendedae_plus.InputEventsMixin",
         "subtle_effects.SplashParticleProviderMixin",
         "sound_physics.SoundPhysicsMixin"
     ],
@@ -28,6 +29,7 @@
         "relics.RingOfTheSevenDeadlySinsMixin",
         "relics.RelicsTooltipCompatibilityMixin",
         "styledchat.StyledChatUtilsMixin",
+        "extendedae_plus.OpenCraftFromJeiC2SPacketMixin",
         "sdlink.SdlinkServerEventsMixin"
     ],
     "injectors": {
