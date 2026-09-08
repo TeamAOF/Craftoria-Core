@@ -1,13 +1,14 @@
 package dev.wp.craftoria_core.mixin.relics;
 
 import dev.wp.craftoria_core.config.ServerConfig;
+import it.hurts.sskirillss.relics.items.relics.ring.RingOfTheSevenDeadlySinsItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.List;
 
-@Mixin(targets = "it.hurts.sskirillss.relics.items.relics.ring.RingOfTheSevenDeadlySinsItem")
+@Mixin(RingOfTheSevenDeadlySinsItem.class)
 public class RingOfTheSevenDeadlySinsMixin {
     @Redirect(
             method = "curioTick",
