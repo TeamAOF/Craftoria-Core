@@ -43,6 +43,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("styledchat", mods.contains("styledchat"));
         modStatus.put("subtle_effects", mods.contains("subtle_effects"));
         modStatus.put("extendedae_plus", mods.contains("extendedae_plus"));
+        modStatus.put("apothic_enchanting", mods.contains("apothic_enchanting"));
 
         if (mods.contains("extendedae_plus") && mods.contains("emi")) {
             MixinCancellerRegistrar.register((targets, mixin) -> mixin.startsWith("com.extendedae_plus.mixin.jei."));
@@ -56,6 +57,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("sound_physics.SoundPhysicsMixin", "sound_physics");
         setMixinToMod("subtle_effects.SplashParticleProviderMixin", "subtle_effects");
         setMixinToMod("extendedae_plus.InputEventsMixin", "extendedae_plus");
+        setMixinToMod("apothic_enchanting.EnchJEIPluginMixin", "apothic_enchanting");
 
         // Common
         setMixinToMod("cataclysm.CursedTombstoneEntityMixin", "cataclysm");

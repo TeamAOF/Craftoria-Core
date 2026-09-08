@@ -247,12 +247,12 @@ dependencies {
     compileOnly("curse.maven:sound-physics-remastered-535489:6809432")
 
     // Just used to verify nbt ordering works with creative sort
-    localRuntime("dev.shadowsoffire:GatewaysToEternity:${minecraft_version}-${gatewaysVersion}")
-    localRuntime("dev.shadowsoffire:Placebo:${minecraft_version}-${placeboVersion}")
-    localRuntime("dev.shadowsoffire:ApothicAttributes:${minecraft_version}-${apothAttribsVersion}")
-    localRuntime("dev.shadowsoffire:ApothicSpawners:${minecraft_version}-${apothSpawnersVersion}")
-    localRuntime("dev.shadowsoffire:ApothicEnchanting:${minecraft_version}-${apothEnchVersion}")
-    localRuntime("dev.shadowsoffire:Apotheosis:${minecraft_version}-${apothVersion}")
+    implementation("dev.shadowsoffire:GatewaysToEternity:${minecraft_version}-${gatewaysVersion}")
+    implementation("dev.shadowsoffire:Placebo:${minecraft_version}-${placeboVersion}")
+    implementation("dev.shadowsoffire:ApothicAttributes:${minecraft_version}-${apothAttribsVersion}")
+    implementation("dev.shadowsoffire:ApothicSpawners:${minecraft_version}-${apothSpawnersVersion}")
+    implementation("dev.shadowsoffire:ApothicEnchanting:${minecraft_version}-${apothEnchVersion}")
+    implementation("dev.shadowsoffire:Apotheosis:${minecraft_version}-${apothVersion}")
 
     implementation("curse.maven:building-gadgets-298187:6850515")
     implementation("curse.maven:ender-storage-1-8-245174:6159037")
