@@ -113,6 +113,17 @@ repositories {
     maven {
         url "https://maven.firstdark.dev/releases"
     }
+
+    maven {
+        url "https://maven.breakinblocks.com/releases"
+    }
+
+    maven {
+        url "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/"
+        content {
+            includeGroup "com.klikli_dev"
+        }
+    }
 }
 
 base {
@@ -197,51 +208,59 @@ dependencies {
     implementation "curse.maven:glodium-957920:5821676"
     implementation "curse.maven:applied-flux-965012:8204513"
 
-    runtimeOnly "maven.modrinth:mega:${mega_cells_version}"
-    runtimeOnly "de.mari_023:ae2wtlib:19.5.1"
-    runtimeOnly "curse.maven:ex-pattern-provider-892005:8811572"
-    runtimeOnly "curse.maven:advancedae-1084104:8564177"
+    localRuntime "maven.modrinth:mega:${mega_cells_version}"
+    localRuntime "de.mari_023:ae2wtlib:19.5.1"
+    localRuntime "curse.maven:ex-pattern-provider-892005:8811572"
+    localRuntime "curse.maven:advancedae-1084104:8564177"
 
-    implementation "dev.emi:emi-neoforge:${emi_version}"
-//    runtimeOnly "maven.modrinth:tmrv:${tmrv_version}+mc.21.1"
+    implementation("dev.emi:emi-neoforge:${emi_version}")
+    implementation("maven.modrinth:tmrv:${tmrv_version}+mc.21.1")
 
-    compileOnly "mekanism:Mekanism:${minecraft_version}-${mekanism_version}:all"
+    implementation("com.klikli_dev:modonomicon-${minecraft_version}-neoforge:${modonomicon_version}")
+    implementation("com.breakinblocks.neovitae:neovitae:${minecraft_version}-${neovitae_version}")
 
-    runtimeOnly "mekanism:Mekanism:${minecraft_version}-${mekanism_version}"
-    runtimeOnly "mekanism:Mekanism:${minecraft_version}-${mekanism_version}:generators"
-    runtimeOnly "mekanism:Mekanism:${minecraft_version}-${mekanism_version}:tools"
+    localRuntime("curse.maven:kotlin-for-forge-351264:8335665")
+    implementation("curse.maven:fzzy-config-1005914:7568897")
+    implementation("curse.maven:subtle-effects-1023913:8008312")
+
+    compileOnly("mekanism:Mekanism:${minecraft_version}-${mekanism_version}:all")
+
+    localRuntime("mekanism:Mekanism:${minecraft_version}-${mekanism_version}")
+    localRuntime("mekanism:Mekanism:${minecraft_version}-${mekanism_version}:generators")
+    localRuntime("mekanism:Mekanism:${minecraft_version}-${mekanism_version}:tools")
 
     implementation "curse.maven:just-dire-things-1002348:7463040"
 
-    implementation "curse.maven:xycraft-653786:5601037"
-    implementation "curse.maven:xycraft-world-653789:5601038"
-    implementation "curse.maven:xycraft-machines-653791:5601045"
+    implementation("curse.maven:xycraft-653786:5601037")
+    implementation("curse.maven:xycraft-world-653789:5601038")
+    implementation("curse.maven:xycraft-machines-653791:5601045")
 
-    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}"
-    compileOnly "curse.maven:industrial-foregoing-266515:6626624"
-    compileOnly "curse.maven:titanium-287342:6443608"
+    compileOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}")
+    compileOnly("curse.maven:industrial-foregoing-266515:6626624")
+    compileOnly("curse.maven:titanium-287342:6443608")
 
-    compileOnly "curse.maven:lendercataclysm-551586:8706841"
-    compileOnly "curse.maven:lionfish-api-1001614:8345326"
+    compileOnly("curse.maven:lendercataclysm-551586:8706841")
+    compileOnly("curse.maven:lionfish-api-1001614:8345326")
 
-    runtimeOnly "dev.latvian.mods:kubejs-neoforge:${kubejs_version}"
+    localRuntime("dev.latvian.mods:kubejs-neoforge:${kubejs_version}")
 
-    compileOnly "curse.maven:sound-physics-remastered-535489:6809432"
+    compileOnly("curse.maven:sound-physics-remastered-535489:6809432")
 
     // Just used to verify nbt ordering works with creative sort
-//    runtimeOnly "dev.shadowsoffire:Placebo:${minecraft_version}-${placeboVersion}"
-//    runtimeOnly "dev.shadowsoffire:ApothicAttributes:${minecraft_version}-${apothAttribsVersion}"
-//    runtimeOnly "dev.shadowsoffire:ApothicSpawners:${minecraft_version}-${apothSpawnersVersion}"
-//    runtimeOnly "dev.shadowsoffire:ApothicEnchanting:${minecraft_version}-${apothEnchVersion}"
-//    runtimeOnly "dev.shadowsoffire:Apotheosis:${minecraft_version}-${apothVersion}"
+    localRuntime("dev.shadowsoffire:GatewaysToEternity:${minecraft_version}-${gatewaysVersion}")
+    localRuntime("dev.shadowsoffire:Placebo:${minecraft_version}-${placeboVersion}")
+    localRuntime("dev.shadowsoffire:ApothicAttributes:${minecraft_version}-${apothAttribsVersion}")
+    localRuntime("dev.shadowsoffire:ApothicSpawners:${minecraft_version}-${apothSpawnersVersion}")
+    localRuntime("dev.shadowsoffire:ApothicEnchanting:${minecraft_version}-${apothEnchVersion}")
+    localRuntime("dev.shadowsoffire:Apotheosis:${minecraft_version}-${apothVersion}")
 
-    implementation "curse.maven:building-gadgets-298187:6850515"
-    implementation "curse.maven:ender-storage-1-8-245174:6159037"
-    implementation "curse.maven:codechicken-lib-1-8-242818:6583751"
+    implementation("curse.maven:building-gadgets-298187:6850515")
+    implementation("curse.maven:ender-storage-1-8-245174:6159037")
+    implementation("curse.maven:codechicken-lib-1-8-242818:6583751")
 
-    implementation "curse.maven:styled-chat-unofficial-neoforge-1117967:5795252"
-    implementation "curse.maven:functional-storage-556861:8459097"
-    implementation "curse.maven:titanium-287342:8760562"
+    implementation("curse.maven:styled-chat-unofficial-neoforge-1117967:5795252")
+    implementation("curse.maven:functional-storage-556861:8459097")
+    implementation("curse.maven:titanium-287342:8760562")
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
@@ -249,20 +268,18 @@ dependencies {
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
-    var replaceProperties = [
-            minecraft_version      : minecraft_version,
-            minecraft_version_range: minecraft_version_range,
-            neo_version            : neo_version,
-            neo_version_range      : neo_version_range,
-            loader_version_range   : loader_version_range,
-            mod_id                 : mod_id,
-            mod_name               : mod_name,
-            mod_license            : mod_license,
-            mod_version            : mod_version,
-            mod_authors            : mod_authors,
-            mod_description        : mod_description,
-            ae2_version_range      : ae2_version_range,
-    ]
+    var replaceProperties = [minecraft_version      : minecraft_version,
+                             minecraft_version_range: minecraft_version_range,
+                             neo_version            : neo_version,
+                             neo_version_range      : neo_version_range,
+                             loader_version_range   : loader_version_range,
+                             mod_id                 : mod_id,
+                             mod_name               : mod_name,
+                             mod_license            : mod_license,
+                             mod_version            : mod_version,
+                             mod_authors            : mod_authors,
+                             mod_description        : mod_description,
+                             ae2_version_range      : ae2_version_range,]
     inputs.properties replaceProperties
 
     expand replaceProperties

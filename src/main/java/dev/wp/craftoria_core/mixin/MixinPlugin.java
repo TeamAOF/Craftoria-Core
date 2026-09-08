@@ -40,6 +40,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("relics", mods.contains("relics"));
         modStatus.put("sdlink", mods.contains("sdlink"));
         modStatus.put("styledchat", mods.contains("styledchat"));
+        modStatus.put("subtle_effects", mods.contains("subtle_effects"));
 
         // Client
         setMixinToMod("ae2.KeySortersMixin", "ae2emi");
@@ -47,6 +48,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("buildinggadgets2.BuildingGadgetsRenderDisable", "buildinggadgets2");
         setMixinToMod("buildinggadgets2.BuildingGadgetsDataSaveGuard", "buildinggadgets2");
         setMixinToMod("sound_physics.SoundPhysicsMixin", "sound_physics");
+        setMixinToMod("subtle_effects.SplashParticleProviderMixin", "subtle_effects");
 
         // Common
         setMixinToMod("cataclysm.CursedTombstoneEntityMixin", "cataclysm");

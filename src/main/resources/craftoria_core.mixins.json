@@ -9,6 +9,7 @@
         "buildinggadgets2.BuildingGadgetsRenderDisable",
         "emi.ReloadWorkerMixin",
         "minecraft.CreativeModeInventoryScreenMixin",
+        "subtle_effects.SplashParticleProviderMixin",
         "sound_physics.SoundPhysicsMixin"
     ],
     "mixins": [
