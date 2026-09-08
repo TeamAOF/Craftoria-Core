@@ -213,6 +213,8 @@ dependencies {
     implementation("curse.maven:ex-pattern-provider-892005:8811572")
     implementation("curse.maven:advancedae-1084104:8564177")
 
+    implementation("curse.maven:yacl-667299:7437845")
+    implementation("curse.maven:reliable-emi-1411826:8828211")
     implementation("dev.emi:emi-neoforge:${emi_version}")
     implementation("maven.modrinth:tmrv:${tmrv_version}+mc.21.1")
 

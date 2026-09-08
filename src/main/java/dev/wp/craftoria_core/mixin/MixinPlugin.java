@@ -29,6 +29,8 @@ public class MixinPlugin implements IMixinConfigPlugin {
         boolean jdtAndIF = mods.contains("justdirethings") && mods.contains("industrialforegoing");
         modStatus.put("ae2", mods.contains("ae2"));
         modStatus.put("ae2emi", ae2AndEmi);
+        modStatus.put("emi", mods.contains("emi"));
+        modStatus.put("remi", mods.contains("remi"));
         modStatus.put("jdtAndIF", jdtAndIF);
         modStatus.put("xycraft_core", mods.contains("xycraft_core"));
         modStatus.put("cataclysm", mods.contains("cataclysm"));
@@ -51,7 +53,11 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
         // Client
         setMixinToMod("ae2.KeySortersMixin", "ae2emi");
-        setMixinToMod("emi.ReloadWorkerMixin", "ae2emi");
+        setMixinToMod("emi.ReloadWorkerMixin", "emi");
+        setMixinToMod("emi.ItemEmiStackTooltipMixin", "emi");
+        setMixinToMod("remi.StackGroupManagerMixin", "remi");
+        setMixinToMod("remi.ReliableEmiConfigMixin", "remi");
+        setMixinToMod("remi.StackGroupManagerMatchMixin", "remi");
         setMixinToMod("buildinggadgets2.BuildingGadgetsRenderDisable", "buildinggadgets2");
         setMixinToMod("buildinggadgets2.BuildingGadgetsDataSaveGuard", "buildinggadgets2");
         setMixinToMod("sound_physics.SoundPhysicsMixin", "sound_physics");
