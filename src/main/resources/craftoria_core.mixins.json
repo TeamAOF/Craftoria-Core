@@ -17,7 +17,9 @@
         "extendedae_plus.InputEventsMixin",
         "subtle_effects.SplashParticleProviderMixin",
         "sound_physics.SoundPhysicsMixin",
-        "spectrum.SpectrumTooltipsMixin"
+        "spectrum.SpectrumTooltipsMixin",
+        "transmog.PlayerMixinCompatibility",
+        "transmog.RenderUtilsAccessor"
     ],
     "mixins": [
         "buildinggadgets2.BuildingGadgetsDataSaveGuard",

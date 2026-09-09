@@ -46,6 +46,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("subtle_effects", mods.contains("subtle_effects"));
         modStatus.put("extendedae_plus", mods.contains("extendedae_plus"));
         modStatus.put("apothic_enchanting", mods.contains("apothic_enchanting"));
+        modStatus.put("transmog", mods.contains("transmog"));
 
         if (mods.contains("extendedae_plus") && mods.contains("emi")) {
             MixinCancellerRegistrar.register((targets, mixin) -> mixin.startsWith("com.extendedae_plus.mixin.jei."));
@@ -65,6 +66,8 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("extendedae_plus.InputEventsMixin", "extendedae_plus");
         setMixinToMod("apothic_enchanting.EnchJEIPluginMixin", "apothic_enchanting");
         setMixinToMod("spectrum.SpectrumTooltipsMixin", "spectrum");
+        setMixinToMod("transmog.PlayerMixinCompatibility", "transmog");
+        setMixinToMod("transmog.RenderUtilsAccessor", "transmog");
 
         // Common
         setMixinToMod("cataclysm.CursedTombstoneEntityMixin", "cataclysm");

@@ -264,6 +264,8 @@ dependencies {
     implementation("curse.maven:functional-storage-556861:8459097")
     implementation("curse.maven:titanium-287342:8760562")
 
+    implementation("curse.maven:transmog-848032:6010596")
+
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
