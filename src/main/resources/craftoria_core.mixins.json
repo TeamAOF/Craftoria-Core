@@ -16,7 +16,9 @@
         "sound_physics.SoundPhysicsMixin",
         "spectrum.SpectrumTooltipsMixin",
         "transmog.PlayerMixinCompatibility",
-        "transmog.RenderUtilsAccessor"
+        "transmog.RenderUtilsAccessor",
+        "emi.RecipeDisplayMixin",
+        "wcwt.WcwtEmiPluginInvoker"
     ],
     "mixins": [
         "buildinggadgets2.BuildingGadgetsDataSaveGuard",

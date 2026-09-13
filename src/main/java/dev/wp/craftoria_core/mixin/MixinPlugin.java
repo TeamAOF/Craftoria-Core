@@ -27,11 +27,13 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
         boolean ae2AndEmi = mods.contains("ae2") && mods.contains("emi");
         boolean jdtAndIF = mods.contains("justdirethings") && mods.contains("industrialforegoing");
+        boolean wcwtAndEmi = mods.contains("wcwt") && mods.contains("emi");
         modStatus.put("ae2", mods.contains("ae2"));
         modStatus.put("ae2emi", ae2AndEmi);
         modStatus.put("emi", mods.contains("emi"));
         modStatus.put("remi", mods.contains("remi"));
         modStatus.put("jdtAndIF", jdtAndIF);
+        modStatus.put("wcwtemi", wcwtAndEmi);
         modStatus.put("xycraft_core", mods.contains("xycraft_core"));
         modStatus.put("cataclysm", mods.contains("cataclysm"));
         modStatus.put("jdt", mods.contains("justdirethings"));
@@ -70,6 +72,8 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("spectrum.SpectrumTooltipsMixin", "spectrum");
         setMixinToMod("transmog.PlayerMixinCompatibility", "transmog");
         setMixinToMod("transmog.RenderUtilsAccessor", "transmog");
+        setMixinToMod("emi.RecipeDisplayMixin", "wcwtemi");
+        setMixinToMod("wcwt.WcwtEmiPluginInvoker", "wcwtemi");
 
         // Common
         setMixinToMod("cataclysm.CursedTombstoneEntityMixin", "cataclysm");
