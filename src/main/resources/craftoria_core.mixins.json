@@ -31,6 +31,7 @@
         "minecraft.IdDispatchCodecMixin",
         "minecraft.MinecraftServerMixin",
         "minecraft.PlayerListMixin",
+        "minecraft.DedicatedPlayerListMixin",
         "spectrum.SpectrumEndermanEntityMixin",
         "relics.RingOfTheSevenDeadlySinsMixin",
         "relics.RelicsTooltipCompatibilityMixin",

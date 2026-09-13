@@ -1,5 +1,6 @@
 package dev.wp.craftoria_core.mixin.sdlink;
 
+import com.hypherionmc.sdlink.platform.SDLinkMCPlatform;
 import com.hypherionmc.sdlink.server.SDLinkMinecraftBridge;
 import com.hypherionmc.sdlink.server.ServerEvents;
 import dev.wp.craftoria_core.util.SdlinkPlayerLimit;
@@ -16,6 +17,7 @@ public class SDLinkMinecraftBridgeMixin {
         Pair<Integer, Integer> original = cir.getReturnValue();
         int regularPlayers = SdlinkPlayerLimit.countRegularPlayers(
                 ServerEvents.getInstance().getMinecraftServer().getPlayers().stream()
+                        .filter(SDLinkMCPlatform.INSTANCE::playerIsActive)
                         .map(player -> player.getGameProfile().getId())
                         .toList());
         cir.setReturnValue(Pair.of(regularPlayers, original.getRight()));
