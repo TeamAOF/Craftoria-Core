@@ -93,6 +93,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("animusnv.AltarTierAdvancementHandlerMixin", "animusnv");
         setMixinToMod("worldedit.NeoForgeWorldEditMixin", "worldedit");
         setMixinToMod("wcwt.WcwtToolkitHotbarStateMixin", "wcwt");
+        setMixinToMod("wcwt.WcwtToolkitAccessMixin", "wcwt");
         setMixinToMod("ae2wtlib.AE2wtlibForgeMixin", "ae2wtlib");
     }
 
