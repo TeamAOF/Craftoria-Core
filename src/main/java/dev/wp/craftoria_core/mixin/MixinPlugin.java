@@ -83,6 +83,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("mekanism.WorldUtilsMixin", "mekanism");
         setMixinToMod("relics.RingOfTheSevenDeadlySinsMixin", "relics");
         setMixinToMod("relics.RelicsTooltipCompatibilityMixin", "relics");
+        setMixinToMod("relics.RelicsConfigMixin", "relics");
         setMixinToMod("minecraft.PlayerListMixin", "sdlink");
         setMixinToMod("minecraft.DedicatedPlayerListMixin", "sdlink");
         setMixinToMod("minecraft.MinecraftServerMixin", "sdlink");

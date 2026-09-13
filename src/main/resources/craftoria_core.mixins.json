@@ -35,6 +35,7 @@
         "spectrum.SpectrumEndermanEntityMixin",
         "relics.RingOfTheSevenDeadlySinsMixin",
         "relics.RelicsTooltipCompatibilityMixin",
+        "relics.RelicsConfigMixin",
         "styledchat.StyledChatUtilsMixin",
         "extendedae_plus.OpenCraftFromJeiC2SPacketMixin",
         "sdlink.SdlinkServerEventsMixin",
