@@ -39,7 +39,11 @@
         "extendedae_plus.OpenCraftFromJeiC2SPacketMixin",
         "sdlink.SdlinkServerEventsMixin",
         "sdlink.SDLinkMinecraftBridgeMixin",
-        "animusnv.AltarTierAdvancementHandlerMixin"
+        "animusnv.AltarTierAdvancementHandlerMixin",
+        "worldedit.NeoForgeWorldEditMixin",
+        "wcwt.WcwtToolkitHotbarStateMixin",
+        "wcwt.WcwtToolkitAccessMixin",
+        "ae2wtlib.AE2wtlibForgeMixin"
     ],
     "injectors": {
         "defaultRequire": 1

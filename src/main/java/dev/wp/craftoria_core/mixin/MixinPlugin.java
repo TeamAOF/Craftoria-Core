@@ -48,6 +48,9 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("apothic_enchanting", mods.contains("apothic_enchanting"));
         modStatus.put("transmog", mods.contains("transmog"));
         modStatus.put("animusnv", mods.contains("animusnv"));
+        modStatus.put("worldedit", mods.contains("worldedit"));
+        modStatus.put("wcwt", mods.contains("wcwt"));
+        modStatus.put("ae2wtlib", mods.contains("ae2wtlib"));
 
         if (mods.contains("extendedae_plus") && mods.contains("emi")) {
             MixinCancellerRegistrar.register((targets, mixin) -> mixin.startsWith("com.extendedae_plus.mixin.jei."));
@@ -88,6 +91,9 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("extendedae_plus.OpenCraftFromJeiC2SPacketMixin", "extendedae_plus");
         setMixinToMod("styledchat.StyledChatUtilsMixin", "styledchat");
         setMixinToMod("animusnv.AltarTierAdvancementHandlerMixin", "animusnv");
+        setMixinToMod("worldedit.NeoForgeWorldEditMixin", "worldedit");
+        setMixinToMod("wcwt.WcwtToolkitHotbarStateMixin", "wcwt");
+        setMixinToMod("ae2wtlib.AE2wtlibForgeMixin", "ae2wtlib");
     }
 
     @Override
