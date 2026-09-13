@@ -186,8 +186,9 @@ dependencies {
     compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.7-beta.1"))
     implementation(jarJar("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.7-beta.1"))
 
-    compileOnly("com.hypherionmc.sdlink:sdlink:3.3.1")
-    compileOnly("com.hypherionmc.craterlib:CraterLib-NeoForge-1.21:2.1.5")
+    compileOnly("com.hypherionmc.sdlink:sdlink:3.4.4")
+    compileOnly "curse.maven:craterlib-867099:8117841"
+//    compileOnly("com.hypherionmc.craterlib:CraterLib-API-1.21:3.1.2")
 
     implementation "dev.architectury:architectury-neoforge:${architectury_api_version}"
     implementation "curse.maven:shatterbyte-lib-916747:8040848"

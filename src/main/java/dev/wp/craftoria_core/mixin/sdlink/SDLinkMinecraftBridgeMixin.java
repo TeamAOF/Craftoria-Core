@@ -1,5 +1,6 @@
 package dev.wp.craftoria_core.mixin.sdlink;
 
+import com.hypherionmc.craterlib.api.game.world.entity.player.CraterPlayer;
 import com.hypherionmc.sdlink.platform.SDLinkMCPlatform;
 import com.hypherionmc.sdlink.server.SDLinkMinecraftBridge;
 import com.hypherionmc.sdlink.server.ServerEvents;
@@ -18,7 +19,7 @@ public class SDLinkMinecraftBridgeMixin {
         int regularPlayers = SdlinkPlayerLimit.countRegularPlayers(
                 ServerEvents.getInstance().getMinecraftServer().getPlayers().stream()
                         .filter(SDLinkMCPlatform.INSTANCE::playerIsActive)
-                        .map(player -> player.getGameProfile().getId())
+                        .map(CraterPlayer::getUUID)
                         .toList());
         cir.setReturnValue(Pair.of(regularPlayers, original.getRight()));
     }
