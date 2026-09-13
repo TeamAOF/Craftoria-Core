@@ -8,7 +8,7 @@
         "ae2.KeySortersMixin",
         "buildinggadgets2.BuildingGadgetsRenderDisable",
         "emi.ReloadWorkerMixin",
-        "emi.ItemEmiStackTooltipMixin",
+        "remi.RemiSearchWorkerMixin",
         "minecraft.CreativeModeInventoryScreenMixin",
         "apothic_enchanting.EnchJEIPluginMixin",
         "extendedae_plus.InputEventsMixin",
