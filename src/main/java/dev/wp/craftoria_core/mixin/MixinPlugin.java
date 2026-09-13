@@ -47,6 +47,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("extendedae_plus", mods.contains("extendedae_plus"));
         modStatus.put("apothic_enchanting", mods.contains("apothic_enchanting"));
         modStatus.put("transmog", mods.contains("transmog"));
+        modStatus.put("animusnv", mods.contains("animusnv"));
 
         if (mods.contains("extendedae_plus") && mods.contains("emi")) {
             MixinCancellerRegistrar.register((targets, mixin) -> mixin.startsWith("com.extendedae_plus.mixin.jei."));
@@ -87,6 +88,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("sdlink.SDLinkMinecraftBridgeMixin", "sdlink");
         setMixinToMod("extendedae_plus.OpenCraftFromJeiC2SPacketMixin", "extendedae_plus");
         setMixinToMod("styledchat.StyledChatUtilsMixin", "styledchat");
+        setMixinToMod("animusnv.AltarTierAdvancementHandlerMixin", "animusnv");
     }
 
     @Override

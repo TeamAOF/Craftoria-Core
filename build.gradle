@@ -220,6 +220,7 @@ dependencies {
 
     implementation("com.klikli_dev:modonomicon-${minecraft_version}-neoforge:${modonomicon_version}")
     implementation("com.breakinblocks.neovitae:neovitae:${minecraft_version}-${neovitae_version}")
+    implementation("com.breakinblocks.animusnv:AnimusNV:${minecraft_version}-${animusnv_version}")
 
     localRuntime("curse.maven:kotlin-for-forge-351264:8335665")
     implementation("curse.maven:fzzy-config-1005914:7568897")

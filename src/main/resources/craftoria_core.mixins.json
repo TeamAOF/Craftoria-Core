@@ -40,7 +40,8 @@
         "styledchat.StyledChatUtilsMixin",
         "extendedae_plus.OpenCraftFromJeiC2SPacketMixin",
         "sdlink.SdlinkServerEventsMixin",
-        "sdlink.SDLinkMinecraftBridgeMixin"
+        "sdlink.SDLinkMinecraftBridgeMixin",
+        "animusnv.AltarTierAdvancementHandlerMixin"
     ],
     "injectors": {
         "defaultRequire": 1
