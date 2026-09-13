@@ -2,7 +2,6 @@ package dev.wp.craftoria_core.mixin.emi;
 
 import dev.wp.craftoria_core.Craftoria;
 import dev.wp.craftoria_core.util.CreativeSearchOrder;
-import dev.wp.craftoria_core.util.EmiTooltipCache;
 import dev.wp.craftoria_core.util.Utils;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,7 +14,6 @@ public class ReloadWorkerMixin {
 
     @Inject(method = "run", at = @At("HEAD"))
     private void onRunHead(CallbackInfo ci) {
-        EmiTooltipCache.clear();
         Utils.updateBlockedByEmi = true;
         Utils.emiReloading = true;
     }
