@@ -65,10 +65,8 @@ public class MixinPlugin implements IMixinConfigPlugin {
         // Client
         setMixinToMod("ae2.KeySortersMixin", "ae2emi");
         setMixinToMod("emi.ReloadWorkerMixin", "emi");
-        setMixinToMod("emi.ItemEmiStackTooltipMixin", "emi");
         setMixinToMod("remi.RemiSearchWorkerMixin", "remi");
         setMixinToMod("buildinggadgets2.BuildingGadgetsRenderDisable", "buildinggadgets2");
-        setMixinToMod("buildinggadgets2.BuildingGadgetsDataSaveGuard", "buildinggadgets2");
         setMixinToMod("sound_physics.SoundPhysicsMixin", "sound_physics");
         setMixinToMod("subtle_effects.SplashParticleProviderMixin", "subtle_effects");
         setMixinToMod("extendedae_plus.InputEventsMixin", "extendedae_plus");
@@ -81,6 +79,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("sfm.SFMJEIPluginMixin", "sfm");
 
         // Common
+        setMixinToMod("buildinggadgets2.BuildingGadgetsDataSaveGuard", "buildinggadgets2");
         setMixinToMod("cataclysm.CursedTombstoneEntityMixin", "cataclysm");
         setMixinToMod("foregoing.EnchantmentExtractorTileMixin", "jdtAndIF");
         setMixinToMod("foregoing.MobCrusherTileMixin", "jdtAndIF");
