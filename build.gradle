@@ -236,6 +236,8 @@ dependencies {
     localRuntime("mekanism:Mekanism:${minecraft_version}-${mekanism_version}:generators")
     localRuntime("mekanism:Mekanism:${minecraft_version}-${mekanism_version}:tools")
 
+    implementation "curse.maven:mekanism-weapons-929829:8421979"
+
     implementation "curse.maven:just-dire-things-1002348:7463040"
 
     implementation("curse.maven:xycraft-653786:5601037")

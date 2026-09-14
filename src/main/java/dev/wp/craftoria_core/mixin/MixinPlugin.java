@@ -54,6 +54,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("wcwt", mods.contains("wcwt"));
         modStatus.put("ftbquests", mods.contains("ftbquests"));
         modStatus.put("ae2wtlib", mods.contains("ae2wtlib"));
+        modStatus.put("mekaweapons", mods.contains("mekaweapons"));
 
         if (mods.contains("extendedae_plus") && mods.contains("emi")) {
             MixinCancellerRegistrar.register((targets, mixin) -> mixin.startsWith("com.extendedae_plus.mixin.jei."));
@@ -102,6 +103,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("wcwt.WcwtToolkitAccessMixin", "wcwt");
         setMixinToMod("ftbquests.QuestMixin", "ftbquests");
         setMixinToMod("ae2wtlib.AE2wtlibForgeMixin", "ae2wtlib");
+        setMixinToMod("mekaweapons.ItemMekaGunMixin", "mekaweapons");
     }
 
     @Override

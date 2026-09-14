@@ -47,7 +47,8 @@
         "wcwt.WcwtToolkitHotbarStateMixin",
         "wcwt.WcwtToolkitAccessMixin",
         "ae2wtlib.AE2wtlibForgeMixin",
-        "ftbquests.QuestMixin"
+        "ftbquests.QuestMixin",
+        "mekaweapons.ItemMekaGunMixin"
     ],
     "injectors": {
         "defaultRequire": 1
