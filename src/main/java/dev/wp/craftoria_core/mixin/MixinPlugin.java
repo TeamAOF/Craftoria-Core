@@ -84,6 +84,11 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("foregoing.EnchantmentExtractorTileMixin", "jdtAndIF");
         setMixinToMod("foregoing.MobCrusherTileMixin", "jdtAndIF");
         setMixinToMod("jdt.CreatureCatcherEntityMixin", "jdt");
+        setMixinToMod("jdt.FakePlayerUtilMixin", "jdt");
+        setMixinToMod("jdt.FilterableBEMixin", "jdt");
+        setMixinToMod("jdt.ItemCollectorBEMixin", "jdt");
+        setMixinToMod("jdt.LivingEntityEventsMixin", "jdt");
+        setMixinToMod("jdt.SensorT1BEMixin", "jdt");
         setMixinToMod("jdt.UnstablePortalFluidTypeMixin", "jdt");
         setMixinToMod("ae2.CableBusBlockCollisionGuardMixin", "ae2");
         setMixinToMod("curios.CuriosEventHandlerMixin", "curios");
