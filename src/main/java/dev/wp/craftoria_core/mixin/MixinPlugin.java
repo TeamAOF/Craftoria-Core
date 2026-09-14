@@ -55,6 +55,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("ftbquests", mods.contains("ftbquests"));
         modStatus.put("ae2wtlib", mods.contains("ae2wtlib"));
         modStatus.put("mekaweapons", mods.contains("mekaweapons"));
+        modStatus.put("sfm", mods.contains("sfm"));
 
         if (mods.contains("extendedae_plus") && mods.contains("emi")) {
             MixinCancellerRegistrar.register((targets, mixin) -> mixin.startsWith("com.extendedae_plus.mixin.jei."));
@@ -76,6 +77,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("transmog.RenderUtilsAccessor", "transmog");
         setMixinToMod("emi.RecipeDisplayMixin", "wcwtemi");
         setMixinToMod("wcwt.WcwtEmiPluginInvoker", "wcwtemi");
+        setMixinToMod("sfm.SFMJEIPluginMixin", "sfm");
 
         // Common
         setMixinToMod("cataclysm.CursedTombstoneEntityMixin", "cataclysm");

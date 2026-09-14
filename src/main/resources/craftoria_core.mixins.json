@@ -18,7 +18,8 @@
         "transmog.PlayerMixinCompatibility",
         "transmog.RenderUtilsAccessor",
         "emi.RecipeDisplayMixin",
-        "wcwt.WcwtEmiPluginInvoker"
+        "wcwt.WcwtEmiPluginInvoker",
+        "sfm.SFMJEIPluginMixin"
     ],
     "mixins": [
         "buildinggadgets2.BuildingGadgetsDataSaveGuard",

@@ -238,6 +238,8 @@ dependencies {
 
     implementation "curse.maven:mekanism-weapons-929829:8421979"
 
+    implementation "curse.maven:super-factory-manager-306935:8370241"
+
     implementation "curse.maven:just-dire-things-1002348:7463040"
 
     implementation("curse.maven:xycraft-653786:5601037")
