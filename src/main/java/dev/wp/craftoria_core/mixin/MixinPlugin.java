@@ -92,10 +92,10 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("minecraft.PlayerListMixin", "sdlink");
         setMixinToMod("minecraft.DedicatedPlayerListMixin", "sdlink");
         setMixinToMod("minecraft.MinecraftServerMixin", "sdlink");
-        setMixinToMod("sdlink.SdlinkServerEventsMixin", "sdlink");
         setMixinToMod("sdlink.SDLinkMinecraftBridgeMixin", "sdlink");
         setMixinToMod("extendedae_plus.OpenCraftFromJeiC2SPacketMixin", "extendedae_plus");
         setMixinToMod("styledchat.StyledChatUtilsMixin", "styledchat");
+        setMixinToMod("styledchat.StyledChatDecoratorCompatibility", "styledchat");
         setMixinToMod("animusnv.AltarTierAdvancementHandlerMixin", "animusnv");
         setMixinToMod("worldedit.NeoForgeWorldEditMixin", "worldedit");
         setMixinToMod("wcwt.WcwtToolkitHotbarStateMixin", "wcwt");
