@@ -15,7 +15,7 @@ import java.util.List;
 public class SFMJEIPluginMixin {
     // The disenchant/experience-shard falling anvil recipes are unconditionally registered here
     // regardless of whether the pack still allows them; filter them out before JEI/EMI ever sees
-    // the recipe entry, instead of just cancelling their layout after the fact.
+    // the recipe entry.
     @Redirect(
             method = "registerRecipes",
             at = @At(
