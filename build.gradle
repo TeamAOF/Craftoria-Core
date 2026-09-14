@@ -271,6 +271,10 @@ dependencies {
 
     implementation("curse.maven:transmog-848032:6010596")
 
+    implementation "dev.ftb.mods:ftb-library-neoforge:2101.1.35"
+    implementation "dev.ftb.mods:ftb-teams-neoforge:2101.1.11"
+    implementation "dev.ftb.mods:ftb-quests-neoforge:2101.1.35"
+
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html

@@ -52,6 +52,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("animusnv", mods.contains("animusnv"));
         modStatus.put("worldedit", mods.contains("worldedit"));
         modStatus.put("wcwt", mods.contains("wcwt"));
+        modStatus.put("ftbquests", mods.contains("ftbquests"));
         modStatus.put("ae2wtlib", mods.contains("ae2wtlib"));
 
         if (mods.contains("extendedae_plus") && mods.contains("emi")) {
@@ -99,6 +100,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("worldedit.NeoForgeWorldEditMixin", "worldedit");
         setMixinToMod("wcwt.WcwtToolkitHotbarStateMixin", "wcwt");
         setMixinToMod("wcwt.WcwtToolkitAccessMixin", "wcwt");
+        setMixinToMod("ftbquests.QuestMixin", "ftbquests");
         setMixinToMod("ae2wtlib.AE2wtlibForgeMixin", "ae2wtlib");
     }
 

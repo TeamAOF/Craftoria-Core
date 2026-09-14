@@ -46,7 +46,8 @@
         "worldedit.NeoForgeWorldEditMixin",
         "wcwt.WcwtToolkitHotbarStateMixin",
         "wcwt.WcwtToolkitAccessMixin",
-        "ae2wtlib.AE2wtlibForgeMixin"
+        "ae2wtlib.AE2wtlibForgeMixin",
+        "ftbquests.QuestMixin"
     ],
     "injectors": {
         "defaultRequire": 1
