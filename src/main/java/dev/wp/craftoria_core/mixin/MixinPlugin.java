@@ -76,6 +76,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("transmog.RenderUtilsAccessor", "transmog");
         setMixinToMod("emi.RecipeDisplayMixin", "wcwtemi");
         setMixinToMod("wcwt.WcwtEmiPluginInvoker", "wcwtemi");
+        setMixinToMod("wcwt.WcwtToolkitHudMixin", "wcwt");
         setMixinToMod("sfm.SFMJEIPluginMixin", "sfm");
 
         // Common

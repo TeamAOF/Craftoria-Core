@@ -198,6 +198,9 @@ dependencies {
     implementation("curse.maven:shatterbyte-lib-916747:8040848")
     implementation("curse.maven:relics-mod-445274:8158315")
 
+    localRuntime "curse.maven:jade-324717:8591319"
+    localRuntime "curse.maven:jade-addons-583345:8777229"
+
     compileOnly "maven.modrinth:c2me-neoforge:0.4.0-alpha.0.120+1.21.1"
     implementation "curse.maven:revelationary-656526:8664567"
     implementation "curse.maven:modonomicon-538392:8532346"

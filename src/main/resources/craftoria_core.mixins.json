@@ -19,6 +19,7 @@
         "transmog.RenderUtilsAccessor",
         "emi.RecipeDisplayMixin",
         "wcwt.WcwtEmiPluginInvoker",
+        "wcwt.WcwtToolkitHudMixin",
         "sfm.SFMJEIPluginMixin"
     ],
     "mixins": [
