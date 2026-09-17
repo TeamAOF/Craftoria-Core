@@ -10,6 +10,8 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -18,17 +20,22 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class FunnyFeature {
-    private static final ThreadLocal<Random> TRANSFORM_RANDOM = new ThreadLocal<>();
     private enum ReactionCategory {
         EXCITED,
         CONFUSED,
@@ -93,18 +100,78 @@ public final class FunnyFeature {
     private record ContextRule(MessageContext context, Pattern pattern, int baseWeight) {
     }
 
-    private record ContextScore(MessageContext context, int score, int hits) {
+    /** {@code tokens} holds the start offset of every match, so synergies can tell words apart. */
+    private record ContextScore(MessageContext context, int score, int hits, Set<Integer> tokens) {
+        ContextScore(MessageContext context, int score, int hits) {
+            this(context, score, hits, Set.of());
+        }
+
+        ContextScore withScore(int newScore) {
+            return new ContextScore(context, newScore, hits, tokens);
+        }
     }
 
     private record ContextPair(MessageContext first, MessageContext second, int bonus) {
     }
 
-    private static final Pattern WORD_PATTERN = Pattern.compile("\\b[\\w']+\\b");
+    /** One run of the finished message; decoration runs are droppable and never nested inside another. */
+    private record Segment(String text, boolean decoration, boolean italic) {
+        static Segment body(String text) {
+            return new Segment(text, false, false);
+        }
+
+        static Segment whimsy(String text) {
+            return new Segment(text, true, true);
+        }
+
+        static Segment face(String text) {
+            return new Segment(text, true, false);
+        }
+    }
+
+    /** A transformed message, renderable as a styled component or as plain text. */
+    public static final class Result {
+        private final String plain;
+        private final List<Segment> segments;
+
+        private Result(String plain, List<Segment> segments) {
+            this.plain = plain;
+            this.segments = segments;
+        }
+
+        public String plain() {
+            return plain;
+        }
+
+        public Component toComponent(Style base) {
+            // Root must be a real literal, not Component.empty() - StyledChat treats that as unset.
+            Segment head = segments.get(0);
+            MutableComponent root = Component.literal(head.text().isEmpty() ? " " : head.text()).withStyle(base);
+            if (head.italic()) root.withStyle(ChatFormatting.ITALIC);
+            for (int i = 1; i < segments.size(); i++) {
+                Segment segment = segments.get(i);
+                String text = " " + segment.text();
+                root.append(segment.italic()
+                        ? Component.literal(text).withStyle(ChatFormatting.ITALIC)
+                        : Component.literal(text));
+            }
+            return root;
+        }
+    }
+
+    /** Single-entry memo so ServerChatEvent and the StyledChat mixin agree on one random result. */
+    private record Memo(UUID player, String raw, Result result) {
+    }
+
+    private static Memo memo;
+
+    private static final Pattern WORD_PATTERN = Pattern.compile("(?<!\\x00)\\b[\\w']+\\b(?!\\x00)");
     private static final Pattern STUTTER_PATTERN = Pattern.compile("\\b([A-Za-z])([A-Za-z]{2,})\\b");
     private static final Pattern URL_OR_EMAIL_PATTERN = Pattern.compile(
             "(?i)\\b(?:https?://|www\\.)\\S+|\\b[\\w.+-]+@[\\w.-]+\\.\\w+\\b");
     private static final Pattern QUESTION_MARK = Pattern.compile("\\?");
-    private static final Pattern COMMAND_PREFIX = Pattern.compile("^\\s*(?:/|(?:please|pls|can you|could you|do|make|give|set|run|check|fix)\\b)", Pattern.CASE_INSENSITIVE);
+    private static final Pattern COMMAND_PREFIX = Pattern.compile(
+            "^\\s*(?:please|pls|can you|could you|would you|mind)\\b", Pattern.CASE_INSENSITIVE);
 
     private static final Pattern HAPPY_KEYWORDS = keywordPattern(
             "love", "wuv", "happy", "excited", "yay", "awesome", "great", "fun", "nice",
@@ -354,7 +421,7 @@ public final class FunnyFeature {
 
     private static final List<ContextRule> CONTEXT_RULES = List.of(
             rule(MessageContext.EXPLOSION, 16, "explode", "exploded", "explosion", "blast", "creeper", "tnt", "boom", "kaboom", "blew up", "blown up"),
-            rule(MessageContext.DEATH, 15, "died", "death", "dead", "killed", "fell", "lava", "void", "respawn"),
+            rule(MessageContext.DEATH, 15, "died", "death", "dead", "killed", "lava", "void", "respawn"),
             rule(MessageContext.LAG, 14, "lag", "lagging", "freeze", "freezing", "rubberband", "rubberbanding", "tps", "tick", "ticks", "ms"),
             rule(MessageContext.CHUNK_LOADING, 13, "chunk", "chunks", "loading", "generation", "generating", "rendering", "render distance"),
             rule(MessageContext.WEATHER, 7, "rain", "raining", "storm", "thunder", "snow", "snowing", "weather", "sunny", "lightning"),
@@ -365,7 +432,7 @@ public final class FunnyFeature {
             rule(MessageContext.REDSTONE, 9, "redstone", "lever", "button", "piston", "observer", "hopper", "comparator", "repeater", "clock", "circuit", "signal"),
             rule(MessageContext.ENCHANTING, 8, "enchant", "enchantment", "anvil", "mending", "fortune", "silk touch", "sharpness", "experience", "xp"),
             rule(MessageContext.MAGIC, 7, "magic", "magical", "spell", "wizard", "potion", "brewing", "rune", "runes"),
-            rule(MessageContext.MINING, 10, "mine", "mining", "ore", "diamond", "diamonds", "iron", "gold", "copper", "coal", "lapis", "deepslate", "cave", "caves"),
+            rule(MessageContext.MINING, 10, "mining", "ore", "diamond", "diamonds", "iron", "gold", "copper", "coal", "lapis", "deepslate", "cave", "caves"),
             rule(MessageContext.RARE_LOOT, 11, "ancient debris", "netherite", "elytra", "totem", "legendary", "rare loot", "treasure", "rare"),
             rule(MessageContext.FISHING, 9, "fish", "fishing", "fished", "fishing rod", "catch", "caught"),
             rule(MessageContext.FARMING, 8, "farm", "farming", "crop", "crops", "wheat", "carrot", "carrots", "potato", "potatoes", "harvest", "seed", "seeds"),
@@ -378,24 +445,26 @@ public final class FunnyFeature {
             rule(MessageContext.NETHER, 9, "nether", "netherite", "blaze", "wither", "soul sand", "soul soil", "ghast", "piglin", "magma"),
             rule(MessageContext.END, 9, "the end", "ender", "enderman", "ender pearl", "dragon", "elytra", "shulker", "chorus"),
             rule(MessageContext.DIMENSION, 7, "dimension", "overworld", "nether", "end dimension"),
-            rule(MessageContext.COORDINATES, 10, "\\bx\\s*:?\\s*-?\\d+\\b", "\\by\\s*:?\\s*-?\\d+\\b", "\\bz\\s*:?\\s*-?\\d+\\b"),
+            rule(MessageContext.COORDINATES, 10, "\\bx\\s*[:=]?\\s+-?\\d+\\b", "\\bx\\s*[:=]\\s*-?\\d+\\b",
+                    "\\by\\s*[:=]?\\s+-?\\d+\\b", "\\by\\s*[:=]\\s*-?\\d+\\b",
+                    "\\bz\\s*[:=]?\\s+-?\\d+\\b", "\\bz\\s*[:=]\\s*-?\\d+\\b"),
             rule(MessageContext.INVENTORY, 7, "inventory", "backpack", "storage", "chest", "shulker box", "full inventory", "slot", "slots"),
             rule(MessageContext.SLEEPING, 6, "bed", "sleeping", "sleep", "spawn point", "respawn"),
             rule(MessageContext.ACHIEVEMENT, 7, "achievement", "advancement", "challenge", "completed", "unlocked", "milestone"),
             rule(MessageContext.TIME_OF_DAY, 5, "morning", "afternoon", "evening", "night", "midnight", "sunrise", "sunset", "daytime"),
             rule(MessageContext.GREETING, 5, "hello", "hi", "hey", "hewwo", "welcome", "good morning", "good afternoon", "good evening"),
-            rule(MessageContext.GOODBYE, 6, "bye", "goodbye", "good bye", "see you", "later", "cya"),
+            rule(MessageContext.GOODBYE, 6, "bye", "goodbye", "good bye", "see you", "see ya", "cya"),
             rule(MessageContext.GRATITUDE, 5, "thanks", "thank", "thx", "ty", "appreciate", "grateful"),
             rule(MessageContext.APOLOGY, 5, "sorry", "apologies", "apologize", "oops", "my bad", "forgive"),
-            rule(MessageContext.VICTORY, 7, "won", "win", "victory", "beat", "defeated", "finished", "done", "success", "finally", "yay", "got it"),
+            rule(MessageContext.VICTORY, 7, "won", "win", "victory", "defeated", "finished", "success", "finally", "yay", "got it"),
             rule(MessageContext.DISCOVERY, 7, "found", "discover", "discovered", "look what", "here it is", "there it is", "i got", "we got"),
-            rule(MessageContext.FAILURE, 7, "failed", "failure", "lost", "broken", "broke", "crashed", "rip", "ugh"),
+            rule(MessageContext.FAILURE, 7, "failed", "failure", "broken", "broke", "crashed", "rip", "ugh"),
             rule(MessageContext.FOOD, 5, "food", "hungry", "eat", "eating", "ate", "cookie", "cake", "bread", "potato", "pizza", "coffee", "tea", "yummy"),
             rule(MessageContext.SLEEPY, 5, "sleepy", "tired", "exhausted", "yawn", "nap"),
-            rule(MessageContext.DANGER, 9, "danger", "dangerous", "careful", "watch out", "run", "help", "help me", "uh oh", "oh no", "incoming"),
+            rule(MessageContext.DANGER, 9, "danger", "dangerous", "careful", "watch out", "help", "help me", "uh oh", "oh no", "incoming"),
             rule(MessageContext.COMPLAINT, 6, "why is", "why does", "annoying", "frustrating", "this sucks", "broken again", "hate this", "what a mess"),
             rule(MessageContext.TECHNICAL, 9, "bug", "glitch", "error", "crash", "stacktrace", "exception", "config", "code", "compile", "compiled", "mod", "mods", "server", "log", "logs"),
-            rule(MessageContext.SERVER_ADMIN, 10, "server", "restart", "backup", "whitelist", "op", "operator", "permission", "permissions", "maintenance", "console", "admin"),
+            rule(MessageContext.SERVER_ADMIN, 10, "server", "restart", "backup", "whitelist", "operator", "permission", "permissions", "maintenance", "console", "admin"),
             rule(MessageContext.SOCIAL, 4, "party", "team", "together", "join", "joined", "welcome", "friend", "fwiend", "everyone", "guys"),
             rule(MessageContext.PARANOIA, 7, "suspicious", "watching", "behind me", "following me", "someone is", "is that", "i hear", "i saw"),
             rule(MessageContext.COMMAND, 4, "please", "pls", "can you", "could you", "do this", "make this", "set this", "fix this", "check this")
@@ -510,22 +579,29 @@ public final class FunnyFeature {
 
     @SubscribeEvent
     public static void onChat(ServerChatEvent event) {
-        if (!ServerConfig.funny) return;
+        Result result = transformForPlayer(event.getPlayer(), event.getRawText());
+        if (result == null) return;
 
-        String transformed = transformForPlayer(event.getPlayer(), event.getRawText());
-        if (transformed.equals(event.getRawText())) return;
-
-        event.setMessage(Component.literal(transformed)
-                .withStyle(event.getMessage().getStyle()));
+        event.setMessage(result.toComponent(event.getMessage().getStyle()));
     }
 
-    public static String transformForPlayer(ServerPlayer player, String rawText) {
-        if (!ServerConfig.funny) return rawText;
+    /** Returns null when the feature is off for this player or the text came back unchanged. */
+    public static Result transformForPlayer(ServerPlayer player, String rawText) {
+        if (!ServerConfig.funny) return null;
 
         FunnyIntensity intensity = FunnyPlayerData.get(player.serverLevel()).getIntensity(player.getUUID());
-        return intensity == FunnyIntensity.OFF ? rawText
-                : transformSeeded(rawText, intensity, player.getUUID().getMostSignificantBits()
-                ^ player.getUUID().getLeastSignificantBits());
+        if (intensity == FunnyIntensity.OFF) return null;
+
+        Result result;
+        Memo cached = memo;
+        if (cached != null && cached.player().equals(player.getUUID()) && cached.raw().equals(rawText)) {
+            result = cached.result();
+        } else {
+            List<Segment> segments = transformBody(rawText, intensity);
+            result = new Result(plain(segments), segments);
+            memo = new Memo(player.getUUID(), rawText, result);
+        }
+        return result.plain().equals(rawText) ? null : result;
     }
 
     @SubscribeEvent
@@ -554,23 +630,13 @@ public final class FunnyFeature {
                 announcement(randomMessage(LEAVE_MESSAGES), name, ChatFormatting.GRAY, ChatFormatting.DARK_GRAY), false);
     }
 
+    /** Test seam: transforms without needing a player or a level. */
     static String transform(String rawText, FunnyIntensity intensity) {
-        return transformSeeded(rawText, intensity, 0L);
+        return plain(transformBody(rawText, intensity));
     }
 
-    private static String transformSeeded(String rawText, FunnyIntensity intensity, long salt) {
-        Random previous = TRANSFORM_RANDOM.get();
-        TRANSFORM_RANDOM.set(new Random(rawText.hashCode() * 31L + salt + intensity.ordinal()));
-        try {
-            return transformBody(rawText, intensity);
-        } finally {
-            if (previous == null) TRANSFORM_RANDOM.remove();
-            else TRANSFORM_RANDOM.set(previous);
-        }
-    }
-
-    private static String transformBody(String rawText, FunnyIntensity intensity) {
-        if (intensity == FunnyIntensity.OFF) return rawText;
+    private static List<Segment> transformBody(String rawText, FunnyIntensity intensity) {
+        if (intensity == FunnyIntensity.OFF) return new ArrayList<>(List.of(Segment.body(rawText)));
 
         List<String> protectedText = new ArrayList<>();
         String source = protectUrlsAndEmails(rawText, protectedText);
@@ -590,6 +656,8 @@ public final class FunnyFeature {
                 .replaceAll("(?i)\\bprobably\\b", "pwobabwy")
                 .replaceAll("(?i)\\bprobably not\\b", "pwobabwy not~");
 
+        text = contextFlavorTransform(text, contexts, intensity);
+
         text = playfulPhonetics(text, intensity);
         text = softenEndings(text, intensity);
         text = stretchCuteWords(text, intensity);
@@ -608,45 +676,185 @@ public final class FunnyFeature {
             text = expressivePunctuation(text, intensity == FunnyIntensity.HIGH);
         }
 
-        text = contextFlavorTransform(text, contexts, intensity);
-
+        List<String> decorations = new ArrayList<>();
         double dominance = dominance(contexts);
+
         if (intensity == FunnyIntensity.LOW) {
             if (roll(contextChance(0.08, dominance) * 0.75)) {
-                text = addContextualEvent(text, dominant.context());
+                decorations.add(contextEventPhrase(dominant.context()));
             }
-            return restoreProtectedText(maybeTildes(text, 0.45), protectedText);
+            return finish(maybeTildes(text, 0.45), decorations, null, intensity, rawText, protectedText, false);
         }
 
         if (roll(contextChance(intensity == FunnyIntensity.MEDIUM ? 0.16 : 0.28, dominance))) {
-            text = addWeightedContextEvent(text, contexts);
+            decorations.add(weightedContextPhrase(contexts));
         }
 
         if (roll(intensity == FunnyIntensity.MEDIUM ? 0.12 : 0.24) && dominant.score() >= 6) {
-            text = addContextSpecial(text, dominant.context());
+            decorations.add(contextSpecialPhrase(dominant.context()));
         }
 
         if (roll(intensity == FunnyIntensity.MEDIUM ? 0.08 : 0.16)) {
-            text = addContextualAction(text, category);
+            decorations.add(contextActionPhrase(category));
         }
 
         if (roll(intensity == FunnyIntensity.MEDIUM ? 0.05 : 0.11)) {
-            text = insertWhimsy(text, pick(GENERAL_WHIMSY));
+            decorations.add(pick(GENERAL_WHIMSY));
         }
 
         if (roll(intensity == FunnyIntensity.MEDIUM ? 0.08 : 0.16)) {
-            text = addComboWhimsy(text, contexts);
+            decorations.add(comboPhrase(contexts));
         }
 
+        boolean sprinkleActions = false;
         if (intensity == FunnyIntensity.HIGH) {
-            if (roll(0.24)) text = addActions(text, 0.16);
+            // addActions runs after place() (see sprinkleActions in finish()), not here like stutter.
+            sprinkleActions = roll(0.24);
             if (roll(0.24)) text = stutter(text);
-            if (roll(0.18)) text = insertWhimsy(text, pick(HIGH_WHIMSY));
-            if (roll(0.035)) text = maximumWhimsy(text, contexts);
-            if (roll(0.08) && !contexts.isEmpty()) text = addSecondaryContextWhimsy(text, contexts);
+            if (roll(0.18)) decorations.add(pick(HIGH_WHIMSY));
+            if (roll(0.035)) decorations.addAll(maximumPhrases(contexts, category));
+            if (roll(0.08)) decorations.add(secondaryPhrase(contexts));
         }
 
-        return restoreProtectedText(addReaction(text), protectedText);
+        return finish(text, decorations, category, intensity, rawText, protectedText, sprinkleActions);
+    }
+
+    private static List<Segment> finish(String text, List<String> decorations, ReactionCategory category,
+                                        FunnyIntensity intensity, String rawText, List<String> protectedText,
+                                        boolean sprinkleActions) {
+        int budget = insertionBudget(text, intensity);
+        List<Segment> segments = place(text, decorations, budget);
+        if (sprinkleActions) {
+            int placed = (int) segments.stream().filter(Segment::decoration).count();
+            sprinkleActions(segments, budget - placed);
+        }
+        if (category != null) addReaction(segments, category);
+        capLength(segments, Math.max(512, rawText.length() * 2 + 120));
+        if (!protectedText.isEmpty()) {
+            segments.replaceAll(segment -> new Segment(
+                    restoreProtectedText(segment.text(), protectedText), segment.decoration(), segment.italic()));
+        }
+        return segments;
+    }
+
+    /** Applies addActions per body segment, sharing place()'s budget so it can't bury a short message. */
+    private static void sprinkleActions(List<Segment> segments, int maxInsertions) {
+        if (maxInsertions <= 0) return;
+        int[] remaining = {maxInsertions};
+        for (int i = 0; i < segments.size() && remaining[0] > 0; i++) {
+            Segment segment = segments.get(i);
+            if (segment.decoration()) continue;
+            segments.set(i, new Segment(addActions(segment.text(), 0.16, remaining), false, false));
+        }
+    }
+
+    /** Scales how many phrases a message can carry, so a two-word message is not buried under four. */
+    private static int insertionBudget(String text, FunnyIntensity intensity) {
+        // strip(), not trim(): trim() would also eat a NUL sentinel from protectUrlsAndEmails.
+        int words = text.isBlank() ? 0 : text.strip().split("\\s+").length;
+        int max = switch (intensity) {
+            case HIGH -> 4;
+            case MEDIUM -> 2;
+            default -> 1;
+        };
+        return Math.max(1, Math.min(max, 1 + words / 6));
+    }
+
+    /** Places phrases at distinct word boundaries of the finished body, never inside one another. */
+    private static List<Segment> place(String text, List<String> decorations, int budget) {
+        List<String> phrases = new ArrayList<>();
+        for (String phrase : decorations) {
+            if (phrases.size() >= budget) break;
+            if (phrase != null && !phrase.isBlank() && !phrases.contains(phrase)) phrases.add(phrase);
+        }
+
+        List<Segment> segments = new ArrayList<>();
+        if (phrases.isEmpty()) {
+            segments.add(Segment.body(text));
+            return segments;
+        }
+        if (text.isBlank()) {
+            for (String phrase : phrases) segments.add(Segment.whimsy(phrase));
+            return segments;
+        }
+
+        String[] words = text.strip().split("\\s+");
+        List<Integer> free = new ArrayList<>();
+        for (int i = 1; i < words.length; i++) free.add(i);
+        Collections.shuffle(free, random());
+
+        Map<Integer, List<String>> bySlot = new HashMap<>();
+        for (String phrase : phrases) {
+            int slot = free.isEmpty() || roll(0.62) ? words.length : free.remove(free.size() - 1);
+            bySlot.computeIfAbsent(slot, key -> new ArrayList<>()).add(phrase);
+        }
+
+        StringBuilder body = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            List<String> here = bySlot.get(i);
+            if (here != null) {
+                if (!body.isEmpty()) {
+                    segments.add(Segment.body(body.toString()));
+                    body.setLength(0);
+                }
+                for (String phrase : here) segments.add(Segment.whimsy(phrase));
+            }
+            if (!body.isEmpty()) body.append(' ');
+            body.append(words[i]);
+        }
+        if (!body.isEmpty()) segments.add(Segment.body(body.toString()));
+        List<String> tail = bySlot.get(words.length);
+        if (tail != null) for (String phrase : tail) segments.add(Segment.whimsy(phrase));
+        return segments;
+    }
+
+    private static final Pattern ACTION_SNIPPET = Pattern.compile("\\*[^*]*\\*\\s+");
+
+    /** Drops decorations (then baked-in action snippets) from the end until the message fits. */
+    private static void capLength(List<Segment> segments, int limit) {
+        while (plain(segments).length() > limit) {
+            int index = -1;
+            for (int i = segments.size() - 1; i >= 0; i--) {
+                if (segments.get(i).decoration()) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index >= 0) {
+                segments.remove(index);
+                continue;
+            }
+            if (!stripTrailingAction(segments)) return;
+        }
+    }
+
+    /** Removes the last *action* snippet baked into a body segment. Returns false when none remain. */
+    private static boolean stripTrailingAction(List<Segment> segments) {
+        for (int i = segments.size() - 1; i >= 0; i--) {
+            Segment segment = segments.get(i);
+            if (segment.decoration()) continue;
+            Matcher matcher = ACTION_SNIPPET.matcher(segment.text());
+            int lastStart = -1;
+            int lastEnd = -1;
+            while (matcher.find()) {
+                lastStart = matcher.start();
+                lastEnd = matcher.end();
+            }
+            if (lastStart < 0) continue;
+            String stripped = segment.text().substring(0, lastStart) + segment.text().substring(lastEnd);
+            segments.set(i, new Segment(stripped, false, false));
+            return true;
+        }
+        return false;
+    }
+
+    private static String plain(List<Segment> segments) {
+        StringBuilder out = new StringBuilder();
+        for (Segment segment : segments) {
+            if (!out.isEmpty()) out.append(' ');
+            out.append(segment.text());
+        }
+        return out.toString();
     }
 
     private static String playfulPhonetics(String text, FunnyIntensity intensity) {
@@ -749,54 +957,52 @@ public final class FunnyFeature {
 
         return switch (dominant) {
             case MINING, RARE_LOOT -> text
-                    .replaceAll("(?i)\\bfind\b", "discover")
-                    .replaceAll("(?i)\\bore\b", "shiny rock")
-                    .replaceAll("(?i)\\bdiamond(s)?\\b", "sparkle rock$1");
+                    .replaceAll(w("find"), "discover")
+                    .replaceAll(w("ore"), "shiny rock")
+                    .replaceAll(w("diamond(s)?"), "sparkle rock$1");
             case MACHINE, REDSTONE, TECHNICAL -> text
-                    .replaceAll("(?i)\\bmachine\b", "fancy box")
-                    .replaceAll("(?i)\\berror\b", "forbidden little problem")
-                    .replaceAll("(?i)\\bbug(s)?\\b", "wiggly bug$1");
+                    .replaceAll(w("machine"), "fancy box")
+                    .replaceAll(w("error"), "forbidden little problem")
+                    .replaceAll(w("bug(s)?"), "wiggly bug$1");
             case EXPLOSION, DANGER -> text
-                    .replaceAll("(?i)\\bexplode(d|s)?\\b", "goes boom$1")
-                    .replaceAll("(?i)\\bdanger\b", "impending silliness");
+                    .replaceAll(w("explode(d|s)?"), "goes boom$1")
+                    .replaceAll(w("danger"), "impending silliness");
             case FOOD -> text
-                    .replaceAll("(?i)\\bfood\b", "snackies")
-                    .replaceAll("(?i)\\bhungry\b", "tummy rumblin'")
-                    .replaceAll("(?i)\\beat\\b", "nom");
+                    .replaceAll(w("food"), "snackies")
+                    .replaceAll(w("hungry"), "tummy rumblin'")
+                    .replaceAll(w("eat"), "nom");
             case ANIMAL, MOBS -> text
-                    .replaceAll("(?i)\\bcat\b", "kitty")
-                    .replaceAll("(?i)\\bdog\b", "doggo")
-                    .replaceAll("(?i)\\bcreeper\b", "cweepy")
-                    .replaceAll("(?i)\\bskeleton\b", "bonely guy");
+                    .replaceAll(w("cat"), "kitty")
+                    .replaceAll(w("dog"), "doggo")
+                    .replaceAll(w("creeper"), "cweepy")
+                    .replaceAll(w("skeleton"), "bonely guy");
             case SERVER_ADMIN, LAG, CHUNK_LOADING -> text
-                    .replaceAll("(?i)\\bserver\b", "the smol server")
-                    .replaceAll("(?i)\\blag(ging)?\\b", "wigglin'")
-                    .replaceAll("(?i)\\bload(ing)?\\b", "thinkin' very hard");
+                    .replaceAll(w("server"), "the smol server")
+                    .replaceAll(w("lag(ging)?"), "wigglin'")
+                    .replaceAll(w("load(ing)?"), "thinkin' very hard");
             case BUILDING -> text
-                    .replaceAll("(?i)\\bhouse\b", "cozy cube")
-                    .replaceAll("(?i)\\bbase\b", "fwiend fortress")
-                    .replaceAll("(?i)\\bwall(s)?\\b", "important wall$1");
+                    .replaceAll(w("house"), "cozy cube")
+                    .replaceAll(w("base"), "fwiend fortress")
+                    .replaceAll(w("wall(s)?"), "important wall$1");
             case FARMING -> text
-                    .replaceAll("(?i)\\bfarm\b", "plant baby factory")
-                    .replaceAll("(?i)\\bcrop(s)?\\b", "tiny crop fren$1");
+                    .replaceAll(w("farm"), "plant baby factory")
+                    .replaceAll(w("crop(s)?"), "tiny crop fren$1");
             case FISHING, WATER -> text
-                    .replaceAll("(?i)\\bfish(ing)?\\b", "suspicious fish$1")
-                    .replaceAll("(?i)\\bwater\b", "the splishy place");
+                    .replaceAll(w("fish(ing)?"), "suspicious fish$1")
+                    .replaceAll(w("water"), "the splishy place");
             case PORTAL, NETHER, END, DIMENSION -> text
-                    .replaceAll("(?i)\\bportal\b", "spicy doorway")
-                    .replaceAll("(?i)\\bnether\b", "spicy dimension")
-                    .replaceAll("(?i)\\bthe end\b", "the extremely ominous place");
+                    .replaceAll(w("portal"), "spicy doorway")
+                    .replaceAll(w("nether"), "spicy dimension")
+                    .replaceAll(w("the end"), "the extremely ominous place");
             case TRADING -> text
-                    .replaceAll("(?i)\\bemerald(s)?\\b", "green friendship coupon$1")
-                    .replaceAll("(?i)\\bvillager(s)?\\b", "business neighbor$1");
+                    .replaceAll(w("emerald(s)?"), "green friendship coupon$1")
+                    .replaceAll(w("villager(s)?"), "business neighbor$1");
             case SLEEPY, SLEEPING -> text
-                    .replaceAll("(?i)\\bsleep\b", "go eepy")
-                    .replaceAll("(?i)\\bbed\b", "eepy rectangle");
+                    .replaceAll(w("sleep"), "go eepy")
+                    .replaceAll(w("bed"), "eepy rectangle");
             case COORDINATES -> text
-                    .replaceAll("(?i)\\bcoords?\b", "tiny world directions")
-                    .replaceAll("(?i)\\bx\b", "x-ish")
-                    .replaceAll("(?i)\\by\b", "y-ish")
-                    .replaceAll("(?i)\\bz\b", "z-ish");
+                    .replaceAll(w("coords?"), "tiny world directions")
+                    .replaceAll("(?i)(?<!\\w)([xyz])(?=\\s*:?\\s*-?\\d)", "$1-ish");
             case GREETING -> text.replaceFirst("^", "hewwo fren~ ");
             case GRATITUDE -> text.replaceFirst("$", " fanks fanks~");
             case APOLOGY -> text.replaceFirst("^", "tiny apology incoming: ");
@@ -812,6 +1018,11 @@ public final class FunnyFeature {
         };
     }
 
+    /** Word-boundary wrapper. Never hand-write \b here: a bare \b in a Java string is a backspace, not a boundary. */
+    private static String w(String word) {
+        return "(?i)(?<!\\w)" + word + "(?!\\w)";
+    }
+
     private static double contextChance(double base, double dominance) {
         return Math.min(0.95, base * (0.65 + dominance * 0.8));
     }
@@ -823,30 +1034,41 @@ public final class FunnyFeature {
     }
 
     private static List<ContextScore> scoreContexts(String text) {
-        List<ContextScore> scores = new ArrayList<>();
+        Map<MessageContext, ContextScore> scores = new EnumMap<>(MessageContext.class);
         String normalized = text.toLowerCase(Locale.ROOT);
 
         for (ContextRule rule : CONTEXT_RULES) {
             Matcher matcher = rule.pattern().matcher(normalized);
-            int hits = 0;
-            while (matcher.find()) hits++;
-            if (hits == 0) continue;
+            Set<Integer> tokens = new HashSet<>();
+            while (matcher.find()) tokens.add(matcher.start());
+            if (tokens.isEmpty()) continue;
 
+            int hits = tokens.size();
             int score = rule.baseWeight() * Math.min(hits, 3);
             if (hits > 3) score += (hits - 3) * Math.max(1, rule.baseWeight() / 3);
-            scores.add(new ContextScore(rule.context(), score, hits));
+            merge(scores, new ContextScore(rule.context(), score, hits, tokens));
         }
 
         if (QUESTION_MARK.matcher(normalized).find() || CONFUSION_KEYWORDS.matcher(normalized).find()) {
-            scores.add(new ContextScore(MessageContext.QUESTION, 5, 1));
+            merge(scores, new ContextScore(MessageContext.QUESTION, 5, 1));
         }
         if (COMMAND_PREFIX.matcher(normalized).find()) {
-            scores.add(new ContextScore(MessageContext.COMMAND, 5, 1));
+            merge(scores, new ContextScore(MessageContext.COMMAND, 5, 1));
         }
 
         applySynergies(scores, normalized);
-        scores.sort(Comparator.comparingInt(ContextScore::score).reversed());
-        return scores;
+        List<ContextScore> sorted = new ArrayList<>(scores.values());
+        sorted.sort(Comparator.comparingInt(ContextScore::score).reversed());
+        return sorted;
+    }
+
+    /** A context hit by two rules merges into one entry instead of appearing twice in the list. */
+    private static void merge(Map<MessageContext, ContextScore> scores, ContextScore add) {
+        scores.merge(add.context(), add, (a, b) -> {
+            Set<Integer> tokens = new HashSet<>(a.tokens());
+            tokens.addAll(b.tokens());
+            return new ContextScore(a.context(), a.score() + b.score(), a.hits() + b.hits(), tokens);
+        });
     }
 
     private static ContextRule rule(MessageContext context, int weight, String... words) {
@@ -865,9 +1087,12 @@ public final class FunnyFeature {
         return new ContextRule(context, Pattern.compile(regex.toString()), weight);
     }
 
-    private static void applySynergies(List<ContextScore> scores, String text) {
+    private static void applySynergies(Map<MessageContext, ContextScore> scores, String text) {
         for (ContextPair pair : CONTEXT_SYNERGIES) {
-            if (!hasContext(scores, pair.first()) || !hasContext(scores, pair.second())) continue;
+            ContextScore first = scores.get(pair.first());
+            ContextScore second = scores.get(pair.second());
+            if (first == null || second == null
+                    || !Collections.disjoint(first.tokens(), second.tokens())) continue;
             boost(scores, pair.first(), pair.bonus());
             boost(scores, pair.second(), pair.bonus() / 2);
         }
@@ -887,24 +1112,17 @@ public final class FunnyFeature {
         }
     }
 
-    private static boolean hasContext(List<ContextScore> scores, MessageContext context) {
-        return scores.stream().anyMatch(score -> score.context() == context);
+    private static boolean hasContext(Map<MessageContext, ContextScore> scores, MessageContext context) {
+        return scores.containsKey(context);
     }
 
-    private static void boost(List<ContextScore> scores, MessageContext context, int amount) {
-        for (int i = 0; i < scores.size(); i++) {
-            ContextScore score = scores.get(i);
-            if (score.context() == context) {
-                scores.set(i, new ContextScore(context, score.score() + amount, score.hits()));
-                return;
-            }
-        }
+    private static void boost(Map<MessageContext, ContextScore> scores, MessageContext context, int amount) {
+        scores.computeIfPresent(context, (key, score) -> score.withScore(score.score() + amount));
     }
 
-    private static String addWeightedContextEvent(String text, List<ContextScore> contexts) {
-        if (contexts.isEmpty()) return insertWhimsy(text, pick(GENERAL_WHIMSY));
-        ContextScore chosen = weightedContext(contexts);
-        return addContextualEvent(text, chosen.context());
+    private static String weightedContextPhrase(List<ContextScore> contexts) {
+        if (contexts.isEmpty()) return pick(GENERAL_WHIMSY);
+        return contextEventPhrase(weightedContext(contexts).context());
     }
 
     private static ContextScore weightedContext(List<ContextScore> contexts) {
@@ -922,83 +1140,74 @@ public final class FunnyFeature {
         return contexts.get(0);
     }
 
-    private static String addContextSpecificWhimsy(String text, MessageContext context) {
-        return addContextualEvent(text, context);
-    }
-
-    private static String addContextSpecial(String text, MessageContext context) {
+    private static String contextSpecialPhrase(MessageContext context) {
         return switch (context) {
-            case EXPLOSION -> insertWhimsy(text, pick(
+            case EXPLOSION -> (pick(
                     "*the crater has been declared an abstract art piece*",
                     "*the blast report is somehow 14 pages long*",
                     "*everyone has agreed not to ask what happened*"));
-            case RARE_LOOT -> insertWhimsy(text, pick(
+            case RARE_LOOT -> (pick(
                     "*the treasure goblin puts on a monocle*",
                     "*velvet rope has been deployed around the loot*",
                     "*the valuables department is screaming quietly*"));
-            case LAG, CHUNK_LOADING -> insertWhimsy(text, pick(
+            case LAG, CHUNK_LOADING -> (pick(
                     "*the server hamster has requested a union representative*",
                     "*the loading bar is doing its best and deserves encouragement*",
                     "*one packet has been personally escorted by a duck*"));
-            case MACHINE -> insertWhimsy(text, pick(
+            case MACHINE -> (pick(
                     "*the maintenance goblin taps the machine twice and says 'there'*",
                     "*a tiny engineer records this as a totally normal sound*",
                     "*the machine's warranty becomes visibly nervous*"));
-            case MINING -> insertWhimsy(text, pick(
+            case MINING -> (pick(
                     "*a suspicious rock has been promoted to suspect number one*",
                     "*the cave has started keeping a visitor log*",
                     "*the mining inspector whispers 'shiny' very professionally*"));
-            case FISHING -> insertWhimsy(text, pick(
+            case FISHING -> (pick(
                     "*the fish have formed a negotiation committee*",
                     "*the water goes suspiciously still for dramatic effect*",
                     "*a tiny fisherman salutes the bobber*"));
-            case BUILDING -> insertWhimsy(text, pick(
+            case BUILDING -> (pick(
                     "*the tiny architect has Opinions about that roof*",
                     "*one block is moved 0.3 centimeters for aesthetic reasons*",
                     "*the blueprint acquires seventeen tiny arrows*"));
-            case TRADING -> insertWhimsy(text, pick(
+            case TRADING -> (pick(
                     "*the emerald accountant checks the invoice twice*",
                     "*the villager has requested legal counsel*",
                     "*one potato is now technically a financial asset*"));
-            case PORTAL, NETHER, END, DIMENSION -> insertWhimsy(text, pick(
+            case PORTAL, NETHER, END, DIMENSION -> (pick(
                     "*the dimensional paperwork is stamped with unreasonable enthusiasm*",
                     "*reality makes a tiny administrative noise*",
                     "*the interdimensional crossing receives a safety sticker*"));
-            case MOBS, PARANOIA -> insertWhimsy(text, pick(
+            case MOBS, PARANOIA -> (pick(
                     "*slowly looks toward the nearest suspicious corner*",
                     "*the tiny security team advances in a line of two*",
                     "*someone whispers 'we saw it too' and refuses to elaborate*"));
-            case FOOD -> insertWhimsy(text, pick(
+            case FOOD -> (pick(
                     "*the snack committee has reached DEFCON COOKIE*",
                     "*the potato department approves this development*",
                     "*a tiny chef materializes with a wooden spoon*"));
-            case SLEEPY, SLEEPING -> insertWhimsy(text, pick(
+            case SLEEPY, SLEEPING -> (pick(
                     "*the sentence is gently tucked into bed*",
                     "*the tiny bedtime goblin lowers the lights*",
                     "*one sleepy moth turns the sign to 'closed'*"));
-            case QUESTION -> insertWhimsy(text, pick(
+            case QUESTION -> (pick(
                     "*the answer committee looks at each other nervously*",
                     "*the tiny owl underlines the question three times*",
                     "*someone opens a book upside down with confidence*"));
-            default -> text;
+            default -> null;
         };
     }
 
-    private static String addSecondaryContextWhimsy(String text, List<ContextScore> contexts) {
-        if (contexts.size() < 2) return text;
+    private static String secondaryPhrase(List<ContextScore> contexts) {
+        if (contexts.size() < 2) return null;
         ContextScore secondary = contexts.get(1);
-        if (secondary.score() < Math.max(4, contexts.get(0).score() / 3)) return text;
-        return addContextSpecial(text, secondary.context());
+        if (secondary.score() < Math.max(4, contexts.get(0).score() / 3)) return null;
+        return contextSpecialPhrase(secondary.context());
     }
 
-    private static String addComboWhimsy(String text, List<ContextScore> contexts) {
-        if (contexts.size() < 2) return text;
-
-        MessageContext a = contexts.get(0).context();
-        MessageContext b = contexts.get(1).context();
-        String combo = comboEvent(a, b);
-        if (combo == null) return text;
-        return insertWhimsy(text, combo);
+    private static String comboPhrase(List<ContextScore> contexts) {
+        if (contexts.size() < 2) return null;
+        return comboEvent(contexts.get(0).context(), contexts.get(1).context());
     }
 
     private static String comboEvent(MessageContext a, MessageContext b) {
@@ -1037,13 +1246,13 @@ public final class FunnyFeature {
         return (a == one && b == two) || (a == two && b == one);
     }
 
-    private static String addContextualEvent(String text, MessageContext context) {
+    private static String contextEventPhrase(MessageContext context) {
         List<String> events = CONTEXT_EVENTS.get(context);
-        if (events == null || events.isEmpty()) return insertWhimsy(text, pick(GENERAL_WHIMSY));
-        return insertWhimsy(text, pick(events.toArray(String[]::new)));
+        if (events == null || events.isEmpty()) return pick(GENERAL_WHIMSY);
+        return events.get(random().nextInt(events.size()));
     }
 
-    private static String addContextualAction(String text, ReactionCategory category) {
+    private static String contextActionPhrase(ReactionCategory category) {
         List<String> actions = switch (category) {
             case EXCITED -> List.of("*happy wiggle intensifies*", "*throws imaginary confetti*", "*tiny celebratory spin*",
                     "*produces a party horn that is much too loud*");
@@ -1054,43 +1263,27 @@ public final class FunnyFeature {
             case SAD -> List.of("*offers a tiny blanket*", "*scoots over and makes room*",
                     "*deploys emergency emotional support cookie*", "*gently pats the situation*");
         };
-        return insertWhimsy(text, pick(actions.toArray(String[]::new)));
+        return actions.get(random().nextInt(actions.size()));
     }
 
-    private static String addTinyWhimsy(String text) {
-        return insertWhimsy(text, pick(GENERAL_WHIMSY));
+    private static List<String> maximumPhrases(List<ContextScore> contexts, ReactionCategory category) {
+        List<String> phrases = new ArrayList<>();
+        phrases.add(pick(HIGH_WHIMSY));
+        if (!contexts.isEmpty()) phrases.add(contextEventPhrase(contexts.get(0).context()));
+        phrases.add(contextActionPhrase(category));
+        return phrases;
     }
 
-    private static String maximumWhimsy(String text, List<ContextScore> contexts) {
-        String result = insertWhimsy(text, pick(HIGH_WHIMSY));
-        if (!contexts.isEmpty()) result = addContextualEvent(result, contexts.get(0).context());
-        return addContextualAction(result, reactionCategory(result));
-    }
-
-    private static String addReaction(String text) {
-        Reaction reaction = reaction(reactionCategory(text));
-        String reactionText = "§o" + reaction.suffix() + "§r " + reaction.face();
-        double roll = random().nextDouble();
-        if (roll < 0.14) return reaction.face() + " §o" + reaction.suffix() + "§r " + text;
-        if (roll < 0.29) return insertWhimsy(text, reactionText);
-        return text + " " + reactionText;
-    }
-
-    private static String insertWhimsy(String text, String whimsy) {
-        if (text.isBlank()) return whimsy;
-        String[] words = text.split("\\s+");
-        if (words.length < 2 || roll(0.62)) {
-            return text + " §o" + whimsy + "§r";
+    /** Uses the category read from the clean source, not from the decorations we just added. */
+    private static void addReaction(List<Segment> segments, ReactionCategory category) {
+        Reaction reaction = reaction(category);
+        if (roll(0.14)) {
+            segments.add(0, Segment.whimsy(reaction.suffix()));
+            segments.add(0, Segment.face(reaction.face()));
+        } else {
+            segments.add(Segment.whimsy(reaction.suffix()));
+            segments.add(Segment.face(reaction.face()));
         }
-
-        int split = 1 + random().nextInt(words.length - 1);
-        StringBuilder result = new StringBuilder(text.length() + whimsy.length() + 4);
-        for (int i = 0; i < words.length; i++) {
-            if (i > 0) result.append(' ');
-            if (i == split) result.append("§o").append(whimsy).append("§r ");
-            result.append(words[i]);
-        }
-        return result.toString();
     }
 
     private static String replaceWords(String text, double chance) {
@@ -1137,12 +1330,15 @@ public final class FunnyFeature {
         return text.replaceAll("\\?+", "?!");
     }
 
-    private static String addActions(String text, double chance) {
+    private static String addActions(String text, double chance, int[] remaining) {
         Matcher matcher = Pattern.compile("(?<=\\S)\\s+(?=\\S)").matcher(text);
         StringBuffer result = new StringBuffer();
         while (matcher.find()) {
             String replacement = matcher.group();
-            if (roll(chance)) replacement += pick(ACTIONS) + " ";
+            if (remaining[0] > 0 && roll(chance)) {
+                replacement += pick(ACTIONS) + " ";
+                remaining[0]--;
+            }
             matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
         }
         matcher.appendTail(result);
@@ -1205,8 +1401,7 @@ public final class FunnyFeature {
     }
 
     private static Random random() {
-        Random random = TRANSFORM_RANDOM.get();
-        return random != null ? random : ThreadLocalRandom.current();
+        return ThreadLocalRandom.current();
     }
 
     private static Component announcement(String message, String name,
@@ -1214,7 +1409,7 @@ public final class FunnyFeature {
         String[] parts = message.split("%s", 2);
         return Component.literal(parts[0]).withStyle(textColor)
                 .append(Component.literal(name).withStyle(nameColor))
-                .append(Component.literal(parts[1]).withStyle(textColor));
+                .append(Component.literal(parts.length > 1 ? parts[1] : "").withStyle(textColor));
     }
 
     private static final Map<String, String> UWU_WORDS = Map.ofEntries(

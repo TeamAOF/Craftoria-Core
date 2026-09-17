@@ -35,8 +35,8 @@ public final class FunnyPlayerData extends SavedData {
             try {
                 UUID uuid = UUID.fromString(key);
                 CompoundTag player = players.getCompound(key);
-                FunnyIntensity intensity = FunnyIntensity.parse(player.getString("intensity"));
-                FunnyIntensity previous = FunnyIntensity.parse(player.getString("last_enabled"));
+                FunnyIntensity intensity = FunnyIntensity.parseOrDefault(player.getString("intensity"), FunnyIntensity.OFF);
+                FunnyIntensity previous = FunnyIntensity.parseOrDefault(player.getString("last_enabled"), FunnyIntensity.MEDIUM);
                 data.intensities.put(uuid, intensity);
                 data.lastEnabled.put(uuid, previous == FunnyIntensity.OFF ? FunnyIntensity.MEDIUM : previous);
             } catch (IllegalArgumentException ignored) {

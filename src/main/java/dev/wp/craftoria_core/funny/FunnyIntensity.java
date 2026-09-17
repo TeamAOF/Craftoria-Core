@@ -12,6 +12,14 @@ public enum FunnyIntensity {
         return valueOf(value.toUpperCase(Locale.ROOT));
     }
 
+    public static FunnyIntensity parseOrDefault(String value, FunnyIntensity fallback) {
+        try {
+            return parse(value);
+        } catch (IllegalArgumentException ignored) {
+            return fallback;
+        }
+    }
+
     public String serializedName() {
         return name().toLowerCase(Locale.ROOT);
     }
