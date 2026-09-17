@@ -56,7 +56,8 @@
         "ae2wtlib.AE2wtlibForgeMixin",
         "ftbquests.QuestMixin",
         "mekaweapons.ItemMekaGunMixin",
-        "ars_nouveau.SourceUtilMixin"
+        "ars_nouveau.SourceUtilMixin",
+        "industrial_foregoing.FluidLaserBaseTileMixin"
     ],
     "injectors": {
         "defaultRequire": 1

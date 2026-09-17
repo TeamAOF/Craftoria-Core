@@ -222,6 +222,9 @@ dependencies {
     implementation("curse.maven:advancedae-1084104:8564177")
     implementation "curse.maven:ae2-wcwt-1546802:8785747"
 
+    implementation("maven.modrinth:industrial-foregoing:${industrialforegoing_version}")
+    implementation("maven.modrinth:titanium:${titanium_version}")
+
     implementation("curse.maven:yacl-667299:7437845")
     implementation("curse.maven:reliable-emi-1411826:8828211")
     implementation("dev.emi:emi-neoforge:${emi_version}")
@@ -254,7 +257,6 @@ dependencies {
     implementation("curse.maven:xycraft-machines-653791:5601045")
 
     compileOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}")
-    compileOnly("curse.maven:industrial-foregoing-266515:6626624")
     compileOnly("curse.maven:titanium-287342:6443608")
 
     compileOnly("curse.maven:lendercataclysm-551586:8706841")

@@ -28,11 +28,13 @@ public class MixinPlugin implements IMixinConfigPlugin {
         boolean ae2AndEmi = mods.contains("ae2") && mods.contains("emi");
         boolean jdtAndIF = mods.contains("justdirethings") && mods.contains("industrialforegoing");
         boolean wcwtAndEmi = mods.contains("wcwt") && mods.contains("emi");
+        boolean ifAndArsNouveau = mods.contains("industrialforegoing") && mods.contains("ars_nouveau");
         modStatus.put("ae2", mods.contains("ae2"));
         modStatus.put("ae2emi", ae2AndEmi);
         modStatus.put("emi", mods.contains("emi"));
         modStatus.put("remi", mods.contains("remi"));
         modStatus.put("jdtAndIF", jdtAndIF);
+        modStatus.put("ifAndArsNouveau", ifAndArsNouveau);
         modStatus.put("wcwtemi", wcwtAndEmi);
         modStatus.put("xycraft_core", mods.contains("xycraft_core"));
         modStatus.put("cataclysm", mods.contains("cataclysm"));
@@ -113,6 +115,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("ae2wtlib.AE2wtlibForgeMixin", "ae2wtlib");
         setMixinToMod("mekaweapons.ItemMekaGunMixin", "mekaweapons");
         setMixinToMod("ars_nouveau.SourceUtilMixin", "ars_nouveau");
+        setMixinToMod("industrial_foregoing.FluidLaserBaseTileMixin", "ifAndArsNouveau");
     }
 
     @Override
