@@ -133,6 +133,8 @@ repositories {
         name = "KosmX's maven"
         url = 'https://maven.kosmx.dev/'
     }
+
+    maven { url = "https://maven.is-immensely.gay/releases" } // Revelationary, Fractal, AEA, Arrowhead, Dimensional Reverb...
 }
 
 base {
@@ -218,9 +220,9 @@ dependencies {
     localRuntime("curse.maven:jade-addons-583345:8777229")
 
     compileOnly("maven.modrinth:c2me-neoforge:0.4.0-alpha.0.120+1.21.1")
-    implementation("curse.maven:revelationary-656526:8664567")
-    implementation("curse.maven:modonomicon-538392:8532346")
-    implementation("curse.maven:spectrum-556967:8679750")
+    implementation("de.dafuqs:Spectrum:${spectrum_version}")
+    implementation("de.dafuqs:Fractal:${fractal_version}")
+    implementation("de.dafuqs:revelationary-neoforge:${revelationary_version}")
     implementation("com.teamresourceful.resourcefullib:resourcefullib-neoforge-1.21:3.0.12")
     implementation("com.teamresourceful.resourcefulconfig:resourcefulconfig-neoforge-1.21:3.0.11")
     implementation("tech.alexnijjar.endermanoverhaul:endermanoverhaul-neoforge-${minecraft_version}:${enderman_overhaul_version}")
