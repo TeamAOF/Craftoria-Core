@@ -265,6 +265,7 @@ dependencies {
     localRuntime("mekanism:Mekanism:${minecraft_version}-${mekanism_version}:tools")
 
     implementation("curse.maven:mekanism-weapons-929829:8421979")
+    implementation("curse.maven:mekanism-more-machine-1275257:8724947")
 
     implementation("curse.maven:super-factory-manager-306935:8370241")
 

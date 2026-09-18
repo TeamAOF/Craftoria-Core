@@ -37,6 +37,7 @@
         "jdt.UnstablePortalFluidTypeMixin",
         "ae2.CableBusBlockCollisionGuardMixin",
         "mekanism.WorldUtilsMixin",
+        "minecraft.DiscreteVoxelShapeBoxCacheMixin",
         "minecraft.IdDispatchCodecMixin",
         "minecraft.MinecraftServerMixin",
         "minecraft.PlayerListMixin",
