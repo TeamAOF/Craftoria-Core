@@ -49,6 +49,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("styledchat", mods.contains("styledchat"));
         modStatus.put("subtle_effects", mods.contains("subtle_effects"));
         modStatus.put("extendedae_plus", mods.contains("extendedae_plus"));
+        modStatus.put("extendedae", mods.contains("extendedae"));
         modStatus.put("apothic_enchanting", mods.contains("apothic_enchanting"));
         modStatus.put("transmog", mods.contains("transmog"));
         modStatus.put("animusnv", mods.contains("animusnv"));
@@ -105,6 +106,8 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("minecraft.MinecraftServerMixin", "sdlink");
         setMixinToMod("sdlink.SDLinkMinecraftBridgeMixin", "sdlink");
         setMixinToMod("extendedae_plus.OpenCraftFromJeiC2SPacketMixin", "extendedae_plus");
+        setMixinToMod("extendedae_plus.SuperMatrixFrameChunkLoadGuardMixin", "extendedae_plus");
+        setMixinToMod("extendedae.AssemblerMatrixFrameChunkLoadGuardMixin", "extendedae");
         setMixinToMod("styledchat.StyledChatUtilsMixin", "styledchat");
         setMixinToMod("styledchat.StyledChatDecoratorCompatibility", "styledchat");
         setMixinToMod("animusnv.AltarTierAdvancementHandlerMixin", "animusnv");

@@ -49,6 +49,8 @@
         "styledchat.StyledChatUtilsMixin",
         "styledchat.StyledChatDecoratorCompatibility",
         "extendedae_plus.OpenCraftFromJeiC2SPacketMixin",
+        "extendedae_plus.SuperMatrixFrameChunkLoadGuardMixin",
+        "extendedae.AssemblerMatrixFrameChunkLoadGuardMixin",
         "sdlink.SDLinkMinecraftBridgeMixin",
         "animusnv.AltarTierAdvancementHandlerMixin",
         "worldedit.NeoForgeWorldEditMixin",
