@@ -22,9 +22,11 @@ import java.util.Optional;
 public class LivingEntityEventsMixin {
     @Inject(method = "blockJoin", at = @At("TAIL"))
     private static void craftoriaCore$instantPickup(EntityJoinLevelEvent e, CallbackInfo ci) {
+        Level level = e.getLevel();
+        if (level.isClientSide()) return;
+
         if (!(e.getEntity() instanceof ItemEntity itemEntity)) return;
 
-        Level level = e.getLevel();
         Optional<ItemCollectorBE> found = ItemCollectorPositions.find(level, itemEntity.position());
         if (found.isEmpty()) return;
 
