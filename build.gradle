@@ -229,6 +229,7 @@ dependencies {
     implementation("software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}")
     implementation("top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}")
 
+    implementation("curse.maven:guideme-1173950:8897145")
     implementation("org.appliedenergistics:appliedenergistics2:${ae2_version}")
     implementation("curse.maven:glodium-957920:5821676")
     implementation("curse.maven:extendedae-plus-1337639:8755074")
@@ -306,6 +307,9 @@ dependencies {
     implementation("dev.ftb.mods:ftb-library-neoforge:2101.1.35")
     implementation("dev.ftb.mods:ftb-teams-neoforge:2101.1.11")
     implementation("dev.ftb.mods:ftb-quests-neoforge:2101.1.35")
+
+    implementation("curse.maven:powah-rearchitected-633483:8011715")
+    implementation("curse.maven:cloth-config-348521:5729127")
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

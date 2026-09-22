@@ -60,6 +60,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("mekaweapons", mods.contains("mekaweapons"));
         modStatus.put("sfm", mods.contains("sfm"));
         modStatus.put("ars_nouveau", mods.contains("ars_nouveau"));
+        modStatus.put("powah", mods.contains("powah"));
 
         if (mods.contains("extendedae_plus") && mods.contains("emi")) {
             MixinCancellerRegistrar.register((targets, mixin) -> mixin.startsWith("com.extendedae_plus.mixin.jei."));
@@ -119,6 +120,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("mekaweapons.ItemMekaGunMixin", "mekaweapons");
         setMixinToMod("ars_nouveau.SourceUtilMixin", "ars_nouveau");
         setMixinToMod("industrial_foregoing.FluidLaserBaseTileMixin", "ifAndArsNouveau");
+        setMixinToMod("powah.ReactorTileMixin", "powah");
     }
 
     @Override

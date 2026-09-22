@@ -60,7 +60,8 @@
         "ftbquests.QuestMixin",
         "mekaweapons.ItemMekaGunMixin",
         "ars_nouveau.SourceUtilMixin",
-        "industrial_foregoing.FluidLaserBaseTileMixin"
+        "industrial_foregoing.FluidLaserBaseTileMixin",
+        "powah.ReactorTileMixin"
     ],
     "injectors": {
         "defaultRequire": 1
