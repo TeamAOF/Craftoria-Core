@@ -121,6 +121,8 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("industrial_foregoing.FluidLaserBaseTileMixin", "ifAndArsNouveau");
         setMixinToMod("powah.ReactorTileMixin", "powah");
         setMixinToMod("gametechbcsspellbooks.ExtendedDeadKingBossMixin", "gametechbcs_spellbooks");
+        setMixinToMod("gametechbcsspellbooks.ReversalEffectMixin", "gametechbcs_spellbooks");
+        setMixinToMod("gametechbcsspellbooks.ReversalEffectHandlerAccessor", "gametechbcs_spellbooks");
     }
 
     @Override

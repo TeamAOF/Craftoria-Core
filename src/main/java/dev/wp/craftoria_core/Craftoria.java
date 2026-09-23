@@ -6,6 +6,7 @@ import dev.wp.craftoria_core.functionality.DoorFeature;
 import dev.wp.craftoria_core.functionality.RightClickHarvestFeature;
 import dev.wp.craftoria_core.funny.FunnyFeature;
 import dev.wp.craftoria_core.util.QuestCompletionFix;
+import dev.wp.craftoria_core.util.ReversalLeakFix;
 import dev.wp.craftoria_core.util.Utils;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -35,6 +36,7 @@ public class Craftoria {
         NeoForge.EVENT_BUS.register(DoorFeature.class);
         NeoForge.EVENT_BUS.register(RightClickHarvestFeature.class);
         if (Utils.isModLoaded("ftbquests")) NeoForge.EVENT_BUS.register(QuestCompletionFix.class);
+        if (Utils.isModLoaded("gametechbcs_spellbooks")) NeoForge.EVENT_BUS.register(ReversalLeakFix.class);
         if (dist.isClient()) container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
 

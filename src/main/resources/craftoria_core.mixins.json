@@ -61,7 +61,9 @@
         "ars_nouveau.SourceUtilMixin",
         "industrial_foregoing.FluidLaserBaseTileMixin",
         "powah.ReactorTileMixin",
-        "gametechbcsspellbooks.ExtendedDeadKingBossMixin"
+        "gametechbcsspellbooks.ExtendedDeadKingBossMixin",
+        "gametechbcsspellbooks.ReversalEffectMixin",
+        "gametechbcsspellbooks.ReversalEffectHandlerAccessor"
     ],
     "injectors": {
         "defaultRequire": 1
