@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(RenderUtils.class)
 public interface RenderUtilsAccessor {
     @Accessor("inventoryExcludedCount")
-    static int craftoriaCore$getInventoryExcludedCount() {
+    static int getInventoryExcludedCount() {
         throw new AssertionError();
     }
 }

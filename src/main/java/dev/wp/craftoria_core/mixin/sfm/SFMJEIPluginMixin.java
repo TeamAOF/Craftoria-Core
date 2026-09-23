@@ -24,7 +24,7 @@ public class SFMJEIPluginMixin {
                     ordinal = 1
             )
     )
-    private void craftoriaCore$hideDisabledFallingAnvilRecipes(IRecipeRegistration registration, RecipeType<Object> type, List<Object> recipes) {
+    private void hideDisabledFallingAnvilRecipes(IRecipeRegistration registration, RecipeType<Object> type, List<Object> recipes) {
         recipes.removeIf(recipe -> recipe instanceof FallingAnvilDisenchantRecipe || recipe instanceof FallingAnvilExperienceShardRecipe);
         registration.addRecipes(type, recipes);
     }

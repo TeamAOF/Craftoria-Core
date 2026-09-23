@@ -30,7 +30,7 @@ public abstract class ItemCollectorBEMixin extends BlockEntity implements ItemCo
 
     // no onLoad override to hook, so register on the first tick instead
     @Inject(method = "tickServer", at = @At("HEAD"))
-    private void craftoriaCore$registerPosition(CallbackInfo ci) {
+    private void registerPosition(CallbackInfo ci) {
         if (!craftoriaCore$registered && this.level != null) {
             ItemCollectorPositions.add(this.level, this.getBlockPos());
             craftoriaCore$registered = true;

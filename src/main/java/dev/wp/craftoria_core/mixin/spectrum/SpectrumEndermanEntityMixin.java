@@ -19,7 +19,7 @@ public class SpectrumEndermanEntityMixin {
             method = "@MixinSquared:Handler",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getRandom()Lnet/minecraft/util/RandomSource;")
     )
-    private RandomSource craftoriaCore$safeWorldRandom(Level level) {
+    private RandomSource safeWorldRandom(Level level) {
         Craftoria.LOGGER.debug("Redirecting world random to safe world random");
         return RandomSource.create();
     }

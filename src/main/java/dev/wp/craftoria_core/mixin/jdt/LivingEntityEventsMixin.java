@@ -21,7 +21,7 @@ import java.util.Optional;
 @Mixin(LivingEntityEvents.class)
 public class LivingEntityEventsMixin {
     @Inject(method = "blockJoin", at = @At("TAIL"))
-    private static void craftoriaCore$instantPickup(EntityJoinLevelEvent e, CallbackInfo ci) {
+    private static void instantPickup(EntityJoinLevelEvent e, CallbackInfo ci) {
         Level level = e.getLevel();
         if (level.isClientSide()) return;
 

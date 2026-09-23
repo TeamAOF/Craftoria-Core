@@ -19,7 +19,7 @@ public class WorldUtilsMixin {
                     target = "Lnet/minecraft/world/level/Level;getChunk(IILnet/minecraft/world/level/chunk/status/ChunkStatus;Z)Lnet/minecraft/world/level/chunk/ChunkAccess;"
             )
     )
-    private static ChunkAccess craftoriaCore$markChunkDirtyNonBlocking(Level world, int chunkX, int chunkZ, ChunkStatus status, boolean create) {
+    private static ChunkAccess markChunkDirtyNonBlocking(Level world, int chunkX, int chunkZ, ChunkStatus status, boolean create) {
         MinecraftServer server = world.getServer();
         if (server != null && !server.isSameThread()) {
             server.execute(() -> craftoriaCore$markChunkDirtyOnServerThread(world, chunkX, chunkZ));

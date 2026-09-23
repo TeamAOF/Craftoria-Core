@@ -24,7 +24,7 @@ public abstract class DiscreteVoxelShapeBoxCacheMixin {
             CacheBuilder.newBuilder().weakKeys().build();
 
     @WrapMethod(method = "forAllBoxes")
-    private static void craftoriaCore$cached(DiscreteVoxelShape shape, DiscreteVoxelShape.IntLineConsumer consumer, boolean combine, Operation<Void> original) {
+    private static void cacheBoxes(DiscreteVoxelShape shape, DiscreteVoxelShape.IntLineConsumer consumer, boolean combine, Operation<Void> original) {
         if (!combine) {
             original.call(shape, consumer, combine);
             return;

@@ -16,7 +16,7 @@ public class StyledChatDecoratorCompatibility {
             name = "styledChat_replaceDecorator2"
     )
     @WrapMethod(method = "@MixinSquared:Handler")
-    private Component craftoriaCore$restoreChatDecorator(
+    private Component restoreChatDecorator(
             ChatDecorator instance,
             ServerPlayer player,
             Component text,

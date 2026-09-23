@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Quest.class)
 public class QuestMixin {
     @Inject(method = "onCompleted", at = @At("TAIL"))
-    private void craftoriaCore$completeStuckDependants(QuestProgressEventData<?> data, CallbackInfo ci) {
+    private void completeStuckDependants(QuestProgressEventData<?> data, CallbackInfo ci) {
         QuestCompletionFix.completeStuckDependants((Quest) (Object) this, data);
     }
 }

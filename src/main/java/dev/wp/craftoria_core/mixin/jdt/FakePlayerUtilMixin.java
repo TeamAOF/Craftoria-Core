@@ -20,7 +20,7 @@ public class FakePlayerUtilMixin {
                     value = "INVOKE",
                     target = "Lcom/direwolf20/justdirethings/util/UsefulFakePlayer;attack(Lnet/minecraft/world/entity/Entity;)V"
             ))
-    private static void craftoriaCore$forceGroundedBeforeAttack(UsefulFakePlayer player, Level world, Entity entity, HitResult result, FakePlayerUtil.InteractionType action, CallbackInfoReturnable<Boolean> cir) {
+    private static void forceGroundedBeforeAttack(UsefulFakePlayer player, Level world, Entity entity, HitResult result, FakePlayerUtil.InteractionType action, CallbackInfoReturnable<Boolean> cir) {
         player.setOnGround(true);
         player.fallDistance = 0;
     }

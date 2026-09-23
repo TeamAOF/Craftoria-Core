@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(targets = "einstein.subtle_effects.particle.SplashParticle$Provider")
 public class SplashParticleProviderMixin {
     @WrapMethod(method = "createParticle(Leinstein/subtle_effects/particle/option/SplashParticleOptions;Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDD)Lnet/minecraft/client/particle/Particle;")
-    private Particle craftoriaCore$skipBrokenLavaSplash(
+    private Particle skipBrokenLavaSplash(
             SplashParticleOptions options,
             ClientLevel level,
             double x,

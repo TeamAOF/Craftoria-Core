@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(ItemMekaGun.class)
 public class ItemMekaGunMixin {
     @Redirect(method = "use", at = @At(value = "INVOKE", target = "Lmekanism/client/sound/SoundHandler;playSound(Lmekanism/common/registration/impl/SoundEventRegistryObject;)V"))
-    private void craftoriaCore$clientOnlySound(SoundEventRegistryObject<?> soundEventRO, Level level, Player player, InteractionHand usedHand) {
+    private void clientOnlySound(SoundEventRegistryObject<?> soundEventRO, Level level, Player player, InteractionHand usedHand) {
         if (level.isClientSide()) SoundHandler.playSound(soundEventRO);
     }
 }

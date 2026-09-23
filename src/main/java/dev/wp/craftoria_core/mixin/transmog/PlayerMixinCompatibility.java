@@ -23,7 +23,7 @@ public class PlayerMixinCompatibility {
             CallbackInfoReturnable<ItemStack> cir,
             Operation<Void> original
     ) {
-        if (RenderUtils.isCalledForRendering() && RenderUtilsAccessor.craftoriaCore$getInventoryExcludedCount() > 0) {
+        if (RenderUtils.isCalledForRendering() && RenderUtilsAccessor.getInventoryExcludedCount() > 0) {
             original.call(slot, cir);
         }
     }
@@ -37,7 +37,7 @@ public class PlayerMixinCompatibility {
             CallbackInfoReturnable<Inventory> cir,
             Operation<Void> original
     ) {
-        if (RenderUtils.isCalledForRendering() && RenderUtilsAccessor.craftoriaCore$getInventoryExcludedCount() > 0) {
+        if (RenderUtils.isCalledForRendering() && RenderUtilsAccessor.getInventoryExcludedCount() > 0) {
             original.call(cir);
         }
     }

@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(WcwtEmiPlugin.class)
 public interface WcwtEmiPluginInvoker {
     @Invoker("decoratePullItems")
-    static void craftoriaCore$decoratePullItems(EmiRecipe recipe, WidgetHolder widgets) {
+    static void decoratePullItems(EmiRecipe recipe, WidgetHolder widgets) {
         throw new AssertionError();
     }
 }
