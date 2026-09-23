@@ -134,7 +134,8 @@ repositories {
         url = 'https://maven.kosmx.dev/'
     }
 
-    maven { url = "https://maven.is-immensely.gay/releases" } // Revelationary, Fractal, AEA, Arrowhead, Dimensional Reverb...
+    // Revelationary, Fractal, AEA, Arrowhead, Dimensional Reverb...
+    maven { url = "https://maven.is-immensely.gay/releases" }
 }
 
 base {
@@ -209,8 +210,9 @@ dependencies {
     localRuntime("io.redspace:irons_lib:${minecraft_version}-${irons_lib_version}")
     localRuntime("dev.kosmx.player-anim:player-animation-lib-forge:${player_animator_version}+${minecraft_version}")
 
-    compileOnly("io.redspace:irons_spellbooks:${minecraft_version}-${irons_spells_version}:api")
-    localRuntime("io.redspace:irons_spellbooks:${minecraft_version}-${irons_spells_version}")
+    implementation("io.redspace:irons_spellbooks:${minecraft_version}-${irons_spells_version}")
+    implementation("curse.maven:gtbcs-spelllib-1194714:8824651")
+    implementation("curse.maven:gtbcs-spellbooks-1125198:6312018")
 
     implementation("dev.architectury:architectury-neoforge:${architectury_api_version}")
     implementation("curse.maven:shatterbyte-lib-916747:8040848")

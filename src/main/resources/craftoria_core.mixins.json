@@ -60,7 +60,8 @@
         "mekaweapons.ItemMekaGunMixin",
         "ars_nouveau.SourceUtilMixin",
         "industrial_foregoing.FluidLaserBaseTileMixin",
-        "powah.ReactorTileMixin"
+        "powah.ReactorTileMixin",
+        "gametechbcsspellbooks.ExtendedDeadKingBossMixin"
     ],
     "injectors": {
         "defaultRequire": 1
