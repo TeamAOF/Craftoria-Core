@@ -163,6 +163,12 @@ neoForge {
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
+        client2 {
+            client()
+            programArguments.addAll '--username', 'White_Phant0m', '--uuid', 'f83bd929-fbf0-4186-becb-658d676fcc42'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
         server {
             server()
             programArgument '--nogui'
