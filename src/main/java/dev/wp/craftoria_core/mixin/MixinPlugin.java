@@ -32,7 +32,6 @@ public class MixinPlugin implements IMixinConfigPlugin {
         modStatus.put("ae2", mods.contains("ae2"));
         modStatus.put("ae2emi", ae2AndEmi);
         modStatus.put("emi", mods.contains("emi"));
-        modStatus.put("remi", mods.contains("remi"));
         modStatus.put("jdtAndIF", jdtAndIF);
         modStatus.put("ifAndArsNouveau", ifAndArsNouveau);
         modStatus.put("wcwtemi", wcwtAndEmi);
@@ -69,7 +68,6 @@ public class MixinPlugin implements IMixinConfigPlugin {
         // Client
         setMixinToMod("ae2.KeySortersMixin", "ae2emi");
         setMixinToMod("emi.ReloadWorkerMixin", "emi");
-        setMixinToMod("remi.RemiSearchWorkerMixin", "remi");
         setMixinToMod("buildinggadgets2.BuildingGadgetsRenderDisable", "buildinggadgets2");
         setMixinToMod("sound_physics.SoundPhysicsMixin", "sound_physics");
         setMixinToMod("subtle_effects.SplashParticleProviderMixin", "subtle_effects");

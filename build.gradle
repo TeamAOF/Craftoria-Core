@@ -244,8 +244,6 @@ dependencies {
     implementation("maven.modrinth:industrial-foregoing:${industrialforegoing_version}")
     implementation("maven.modrinth:titanium:${titanium_version}")
 
-    implementation("curse.maven:yacl-667299:7437845")
-    implementation("curse.maven:reliable-emi-1411826:8828211")
     implementation("dev.emi:emi-neoforge:${emi_version}")
     implementation("maven.modrinth:tmrv:${tmrv_version}+mc.21.1")
 
