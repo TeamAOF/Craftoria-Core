@@ -160,28 +160,31 @@ neoForge {
 
         client {
             client()
+
+            gameDirectory.set(project.getLayout().getProjectDirectory().dir('runs/client'))
+
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
         client2 {
             client()
+
+            gameDirectory.set(project.getLayout().getProjectDirectory().dir('runs/client'))
             programArguments.addAll '--username', 'White_Phant0m', '--uuid', 'f83bd929-fbf0-4186-becb-658d676fcc42'
+
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
         server {
             server()
+            gameDirectory.set(project.getLayout().getProjectDirectory().dir('runs/server'))
             programArgument '--nogui'
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        gameTestServer {
-            type = "gameTestServer"
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
         data {
             data()
+            gameDirectory.set(project.getLayout().getProjectDirectory().dir('runs/data'))
             programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
         }
     }
@@ -227,7 +230,7 @@ dependencies {
     localRuntime("curse.maven:jade-324717:8591319")
     localRuntime("curse.maven:jade-addons-583345:8777229")
 
-    compileOnly("maven.modrinth:c2me-neoforge:0.4.0-alpha.0.120+1.21.1")
+    implementation("maven.modrinth:c2me-neoforge:0.4.0-alpha.0.120+1.21.1")
     implementation("de.dafuqs:Spectrum:${spectrum_version}")
     implementation("de.dafuqs:Fractal:${fractal_version}")
     implementation("de.dafuqs:revelationary-neoforge:${revelationary_version}")
