@@ -14,15 +14,8 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Restriction(
-        require = {
-                @Condition("wcwt")
-        }
-)
+@Restriction(require = @Condition(value = "wcwt", versionPredicates = "(,1.3.9]"))
 @Mixin(WcwtToolkitHud.class)
 public class WcwtToolkitHudMixin {
     @Final @Shadow
@@ -45,11 +38,6 @@ public class WcwtToolkitHudMixin {
      * LOWEST and bail out if the event is already canceled, so it stops stealing scroll input other
      * mods handled first.
      */
-    @Restriction(
-            require = {
-                    @Condition(value = "wcwt", versionPredicates = "<=1.3.9")
-            }
-    )
     @Overwrite
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onMouseScroll(InputEvent.MouseScrollingEvent event) {
@@ -74,14 +62,5 @@ public class WcwtToolkitHudMixin {
                 event.setCanceled(true);
             }
         }
-    }
-
-    @Inject(
-            method = "isHudVisible",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    private static void checkForTheDamnGUIFirst(Minecraft minecraft, CallbackInfoReturnable<Boolean> cir) {
-        if (minecraft.options.hideGui) cir.setReturnValue(false);
     }
 }

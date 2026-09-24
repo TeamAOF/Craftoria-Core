@@ -21,6 +21,7 @@
         "emi.RecipeDisplayMixin",
         "wcwt.WcwtEmiPluginInvoker",
         "wcwt.WcwtToolkitHudMixin",
+        "wcwt.WcwtToolkitHudVisibilityMixin",
         "sfm.SFMJEIPluginMixin"
     ],
     "mixins": [
