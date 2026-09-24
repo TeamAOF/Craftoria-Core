@@ -67,7 +67,8 @@
         "powah.ReactorTileMixin",
         "gametechbcsspellbooks.ExtendedDeadKingBossMixin",
         "gametechbcsspellbooks.ReversalEffectMixin",
-        "gametechbcsspellbooks.ReversalEffectHandlerAccessor"
+        "gametechbcsspellbooks.ReversalEffectHandlerAccessor",
+        "collapsible_groups.CollapsibleGroupsKubeJSPluginMixin"
     ],
     "injectors": {
         "defaultRequire": 1

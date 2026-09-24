@@ -324,6 +324,8 @@ dependencies {
 
     implementation("curse.maven:powah-rearchitected-633483:8011715")
     implementation("curse.maven:cloth-config-348521:5729127")
+    compileOnly("curse.maven:collapsible-groups-1495382:8881350")
+    compileOnly("dev.latvian.mods:kubejs-neoforge:${kubejs_version}")
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
