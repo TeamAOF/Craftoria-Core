@@ -3,12 +3,19 @@ package dev.wp.craftoria_core.mixin.styledchat;
 import com.bawnorton.mixinsquared.TargetHandler;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.network.chat.ChatDecorator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import org.spongepowered.asm.mixin.Mixin;
 
+@Restriction(
+        require = {
+                @Condition("styledchat")
+        }
+)
 @Mixin(value = ServerGamePacketListenerImpl.class, priority = 1500)
 public class StyledChatDecoratorCompatibility {
     @TargetHandler(

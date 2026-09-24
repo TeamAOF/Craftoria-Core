@@ -4,6 +4,8 @@ import com.direwolf20.justdirethings.common.blockentities.basebe.FilterableBE;
 import com.direwolf20.justdirethings.common.containers.handlers.FilterBasicHandler;
 import com.direwolf20.justdirethings.common.entities.CreatureCatcherEntity;
 import com.direwolf20.justdirethings.common.items.CreatureCatcher;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
@@ -16,6 +18,11 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 // Port of https://github.com/Direwolf20-MC/JustDireThings/pull/490
+@Restriction(
+        require = {
+                @Condition("justdirethings")
+        }
+)
 @Mixin(FilterableBE.class)
 public interface FilterableBEMixin extends FilterableBE {
     /**

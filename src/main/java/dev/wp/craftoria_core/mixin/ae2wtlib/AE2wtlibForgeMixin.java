@@ -1,6 +1,8 @@
 package dev.wp.craftoria_core.mixin.ae2wtlib;
 
 import de.mari_023.ae2wtlib.AE2wtlibForge;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
@@ -9,6 +11,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@Restriction(
+        require = {
+                @Condition("ae2wtlib")
+        }
+)
 @Mixin(AE2wtlibForge.class)
 public class AE2wtlibForgeMixin {
     @Inject(

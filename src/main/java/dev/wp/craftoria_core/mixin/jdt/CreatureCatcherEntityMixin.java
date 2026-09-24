@@ -2,6 +2,8 @@ package dev.wp.craftoria_core.mixin.jdt;
 
 import com.direwolf20.justdirethings.common.entities.CreatureCatcherEntity;
 import com.llamalad7.mixinextras.sugar.Local;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,6 +12,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@Restriction(
+        require = {
+                @Condition("justdirethings")
+        }
+)
 @Mixin(CreatureCatcherEntity.class)
 public class CreatureCatcherEntityMixin {
     @Inject(method = "canCapture", at = @At(value = "RETURN"), cancellable = true)

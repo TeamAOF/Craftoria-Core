@@ -3,12 +3,19 @@ package dev.wp.craftoria_core.mixin.emi;
 import dev.wp.craftoria_core.Craftoria;
 import dev.wp.craftoria_core.util.CreativeSearchOrder;
 import dev.wp.craftoria_core.util.Utils;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@Restriction(
+        require = {
+                @Condition("emi")
+        }
+)
 @Mixin(targets = "dev.emi.emi.runtime.EmiReloadManager$ReloadWorker")
 public class ReloadWorkerMixin {
 

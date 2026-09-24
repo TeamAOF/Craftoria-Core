@@ -4,6 +4,8 @@ import com.direwolf20.justdirethings.common.blockentities.ItemCollectorBE;
 import com.direwolf20.justdirethings.common.events.LivingEntityEvents;
 import dev.wp.craftoria_core.util.jdt.ItemCollectorAccess;
 import dev.wp.craftoria_core.util.jdt.ItemCollectorPositions;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -18,6 +20,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Optional;
 
 // Pickup half of https://github.com/Direwolf20-MC/JustDireThings/pull/389, see ItemCollectorBEMixin
+@Restriction(
+        require = {
+                @Condition("justdirethings")
+        }
+)
 @Mixin(LivingEntityEvents.class)
 public class LivingEntityEventsMixin {
     @Inject(method = "blockJoin", at = @At("TAIL"))

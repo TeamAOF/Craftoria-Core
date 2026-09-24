@@ -3,6 +3,8 @@ package dev.wp.craftoria_core.mixin.wcwt;
 import com.lhy.wcwt.client.WcwtToolkitHud;
 import com.lhy.wcwt.helpers.WcwtToolkitHotbarState;
 import com.lhy.wcwt.helpers.WcwtToolkitHotbarState.Bar;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.neoforged.bus.api.EventPriority;
@@ -16,6 +18,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@Restriction(
+        require = {
+                @Condition("wcwt")
+        }
+)
 @Mixin(WcwtToolkitHud.class)
 public class WcwtToolkitHudMixin {
     @Final @Shadow
@@ -33,11 +40,16 @@ public class WcwtToolkitHudMixin {
 
     /**
      * @author WP
-     * @reason The original ran at default priority and cancelled every in-world scroll whenever a
+     * @reason The original ran at default priority and canceled every in-world scroll whenever a
      * toolkit card was merely carried, with no regard for other mods on the same bus. Drop it to
-     * LOWEST and bail out if the event is already cancelled, so it stops stealing scroll input other
+     * LOWEST and bail out if the event is already canceled, so it stops stealing scroll input other
      * mods handled first.
      */
+    @Restriction(
+            require = {
+                    @Condition(value = "wcwt", versionPredicates = "<=1.3.9")
+            }
+    )
     @Overwrite
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onMouseScroll(InputEvent.MouseScrollingEvent event) {

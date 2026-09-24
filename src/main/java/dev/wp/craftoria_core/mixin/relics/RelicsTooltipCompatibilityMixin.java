@@ -3,6 +3,8 @@ package dev.wp.craftoria_core.mixin.relics;
 import com.bawnorton.mixinsquared.TargetHandler;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -12,6 +14,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
+@Restriction(
+        require = {
+                @Condition("relics")
+        }
+)
 @Mixin(value = Item.class, priority = 1500)
 public class RelicsTooltipCompatibilityMixin {
     @TargetHandler(

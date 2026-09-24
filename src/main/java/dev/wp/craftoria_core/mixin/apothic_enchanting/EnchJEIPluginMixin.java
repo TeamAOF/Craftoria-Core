@@ -1,6 +1,8 @@
 package dev.wp.craftoria_core.mixin.apothic_enchanting;
 
 import dev.shadowsoffire.apothic_enchanting.compat.EnchJEIPlugin;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.util.RandomSource;
 import org.objectweb.asm.Opcodes;
@@ -9,6 +11,11 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+@Restriction(
+        require = {
+                @Condition("apothic_enchanting")
+        }
+)
 @Mixin(value = EnchJEIPlugin.class, remap = false)
 public class EnchJEIPluginMixin {
     @Unique private final RandomSource craftoriaCore$random = RandomSource.createNewThreadLocalInstance();

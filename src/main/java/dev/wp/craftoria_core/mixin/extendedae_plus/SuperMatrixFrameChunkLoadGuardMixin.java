@@ -1,6 +1,8 @@
 package dev.wp.craftoria_core.mixin.extendedae_plus;
 
 import com.extendedae_plus.content.matrix.supermatrix.SuperAssemblerMatrixFrameBlock;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.LevelAccessor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,6 +12,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 // isFrame probes neighbours 1 block out and force-loads the chunk; deadlocks the server thread when
 // a shape update fires inside a chunk-unload callback (AE2 grid teardown -> setBlock -> updateShape).
+@Restriction(
+        require = {
+                @Condition("extendedae_plus")
+        }
+)
 @Mixin(value = SuperAssemblerMatrixFrameBlock.class, remap = false)
 public class SuperMatrixFrameChunkLoadGuardMixin {
     @Inject(method = "isFrame", at = @At("HEAD"), cancellable = true)

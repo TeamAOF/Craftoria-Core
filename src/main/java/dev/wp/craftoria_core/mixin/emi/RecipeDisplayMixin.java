@@ -5,6 +5,8 @@ import dev.emi.emi.config.EmiConfig;
 import dev.emi.emi.screen.RecipeDisplay;
 import dev.emi.emi.screen.WidgetGroup;
 import dev.wp.craftoria_core.mixin.wcwt.WcwtEmiPluginInvoker;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -12,6 +14,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@Restriction(
+        require = {
+                @Condition("wcwt"),
+                @Condition("emi")
+        }
+)
 @Mixin(RecipeDisplay.class)
 public class RecipeDisplayMixin {
     @Shadow @Final public EmiRecipe recipe;

@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Restriction(
         require = {
-                @Condition(value = "mekaweapons", versionPredicates = "4.3")
+                @Condition(value = "mekaweapons", versionPredicates = ">=4.3")
         }
 )
 @Mixin(ItemMekaGun.class)

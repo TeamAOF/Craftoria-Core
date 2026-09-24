@@ -3,6 +3,8 @@ package dev.wp.craftoria_core.mixin.ars_nouveau;
 import com.hollingsworth.arsnouveau.api.source.ISpecialSourceProvider;
 import com.hollingsworth.arsnouveau.api.util.SourceUtil;
 import dev.wp.craftoria_core.arseng.SourceContainerScanner;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,6 +14,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
+@Restriction(
+        require = {
+                @Condition("ars_nouveau")
+        }
+)
 @Mixin(SourceUtil.class)
 public abstract class SourceUtilMixin {
     @Inject(method = "canGiveSource", at = @At("RETURN"))

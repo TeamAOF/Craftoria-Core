@@ -1,6 +1,8 @@
 package dev.wp.craftoria_core.mixin.cataclysm;
 
 import com.github.L_Ender.cataclysm.blockentities.Cursed_tombstone_Entity;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,6 +15,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+@Restriction(
+        require = {
+                @Condition("cataclysm")
+        }
+)
 @Mixin(Cursed_tombstone_Entity.class)
 public class CursedTombstoneEntityMixin {
     @Unique

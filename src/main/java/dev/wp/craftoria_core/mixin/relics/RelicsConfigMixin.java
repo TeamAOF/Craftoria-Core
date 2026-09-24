@@ -2,6 +2,8 @@ package dev.wp.craftoria_core.mixin.relics;
 
 import com.google.common.collect.Lists;
 import it.hurts.sskirillss.relics.config.RelicsConfigData;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -9,6 +11,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
+@Restriction(
+        require = {
+                @Condition("relics")
+        }
+)
 @Mixin(RelicsConfigData.class) public class RelicsConfigMixin {
 
     @Inject(method = "getRingOfSDSGluttonyAttributesBlacklist", at = @At("HEAD"), cancellable = true) public void craftoria$addGluttonyAttributes(CallbackInfoReturnable<List<String>> cir) {

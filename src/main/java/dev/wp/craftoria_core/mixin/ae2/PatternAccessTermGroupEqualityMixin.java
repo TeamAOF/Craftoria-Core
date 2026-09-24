@@ -5,6 +5,8 @@ import appeng.api.stacks.AEItemKey;
 import appeng.menu.implementations.PatternAccessTermMenu;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -15,6 +17,11 @@ import java.util.Objects;
 
 // Compare groups by text only; mods that animate an item name's color (Mekanism Extras cosmic/infinite
 // tiers) otherwise make the group differ every tick, forcing a full resync that resets terminal scroll.
+@Restriction(
+        require = {
+                @Condition("ae2")
+        }
+)
 @Mixin(PatternAccessTermMenu.class)
 public class PatternAccessTermGroupEqualityMixin {
     @WrapOperation(

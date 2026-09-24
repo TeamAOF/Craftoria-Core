@@ -3,12 +3,19 @@ package dev.wp.craftoria_core.mixin.extendedae_plus;
 import com.extendedae_plus.network.OpenCraftFromJeiC2SPacket;
 import com.extendedae_plus.util.wireless.WirelessTerminalLocator;
 import com.llamalad7.mixinextras.sugar.Local;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@Restriction(
+        require = {
+                @Condition("extendedae_plus")
+        }
+)
 @Mixin(value = OpenCraftFromJeiC2SPacket.class, remap = false)
 public class OpenCraftFromJeiC2SPacketMixin {
     @Inject(

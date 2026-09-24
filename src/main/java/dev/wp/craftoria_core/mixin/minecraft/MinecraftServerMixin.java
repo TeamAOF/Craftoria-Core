@@ -1,6 +1,8 @@
 package dev.wp.craftoria_core.mixin.minecraft;
 
 import dev.wp.craftoria_core.util.SdlinkPlayerLimit;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
@@ -8,6 +10,11 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
+@Restriction(
+        require = {
+                @Condition("sdlink")
+        }
+)
 @Mixin(MinecraftServer.class)
 public class MinecraftServerMixin {
     @ModifyArg(

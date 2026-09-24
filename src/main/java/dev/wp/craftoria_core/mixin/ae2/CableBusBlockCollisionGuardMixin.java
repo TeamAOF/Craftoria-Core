@@ -1,6 +1,8 @@
 package dev.wp.craftoria_core.mixin.ae2;
 
 import appeng.block.networking.CableBusBlock;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
@@ -13,6 +15,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@Restriction(
+        require = {
+                @Condition("ae2")
+        }
+)
 @Mixin(CableBusBlock.class)
 public class CableBusBlockCollisionGuardMixin {
     @Inject(method = "getShape", at = @At("HEAD"), cancellable = true)

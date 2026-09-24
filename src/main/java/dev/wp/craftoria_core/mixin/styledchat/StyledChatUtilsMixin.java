@@ -3,6 +3,8 @@ package dev.wp.craftoria_core.mixin.styledchat;
 import dev.wp.craftoria_core.funny.FunnyFeature;
 import eu.pb4.styledchat.StyledChatUtils;
 import eu.pb4.styledchat.ducks.ExtSignedMessage;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.PlayerChatMessage;
@@ -14,6 +16,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@Restriction(
+        require = {
+                @Condition("styledchat")
+        }
+)
 @Mixin(value = StyledChatUtils.class, remap = false)
 public class StyledChatUtilsMixin {
     @Inject(method = "modifyForSending", at = @At("HEAD"))

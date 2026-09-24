@@ -8,6 +8,8 @@ import com.hollingsworth.arsnouveau.common.block.tile.MobJarTile;
 import com.hrznstudio.titanium.module.BlockWithTile;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -21,6 +23,12 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import java.util.List;
 
 /** Ars Nouveau mob jar support for the fluid laser's entity target. */
+@Restriction(
+        require = {
+                @Condition("industrialforegoing"),
+                @Condition("ars_nouveau")
+        }
+)
 @Mixin(FluidLaserBaseTile.class)
 public abstract class FluidLaserBaseTileMixin extends IndustrialMachineTile<FluidLaserBaseTile> implements ILaserBase<FluidLaserBaseTile> {
     public FluidLaserBaseTileMixin(BlockWithTile basicTileBlock, BlockPos blockPos, BlockState blockState) {

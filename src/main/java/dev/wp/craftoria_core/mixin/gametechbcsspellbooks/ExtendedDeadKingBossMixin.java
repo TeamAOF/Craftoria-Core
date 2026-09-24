@@ -9,6 +9,8 @@ import io.redspace.ironsspellbooks.entity.mobs.dead_king_boss.DeadKingBoss;
 import io.redspace.ironsspellbooks.entity.mobs.dead_king_boss.goals.DeadKingAnimatedWarlockAttackGoal;
 import io.redspace.ironsspellbooks.entity.mobs.goals.PatrolNearLocationGoal;
 import io.redspace.ironsspellbooks.entity.mobs.goals.SpellBarrageGoal;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
@@ -22,6 +24,11 @@ import java.util.List;
 
 // Irons Spellbooks 3.16+ moved DeadKingAnimatedWarlockAttackGoal into the goals subpackage,
 // which NoClassDefFoundErrors the original setFinalPhaseGoals when the boss enters phase 2.
+@Restriction(
+        require = {
+                @Condition("gametechbcs_spellbooks")
+        }
+)
 @Mixin(ExtendedDeadKingBoss.class)
 public abstract class ExtendedDeadKingBossMixin extends DeadKingBoss {
     protected ExtendedDeadKingBossMixin(EntityType<? extends AbstractSpellCastingMob> type, Level level) {

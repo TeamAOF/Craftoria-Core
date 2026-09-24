@@ -4,11 +4,18 @@ import appeng.menu.locator.ItemMenuHostLocator;
 import com.lhy.wcwt.helpers.WcwtToolkitAccess;
 import de.mari_023.ae2wtlib.api.registration.WTDefinition;
 import de.mari_023.ae2wtlib.api.terminal.WUTHandler;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
+@Restriction(
+        require = {
+                @Condition("wcwt")
+        }
+)
 @Mixin(WcwtToolkitAccess.class)
 public class WcwtToolkitAccessMixin {
     /**

@@ -3,6 +3,8 @@ package dev.wp.craftoria_core.mixin.jdt;
 import com.direwolf20.justdirethings.common.blockentities.ItemCollectorBE;
 import dev.wp.craftoria_core.util.jdt.ItemCollectorAccess;
 import dev.wp.craftoria_core.util.jdt.ItemCollectorPositions;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -16,6 +18,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 // Registration half of https://github.com/Direwolf20-MC/JustDireThings/pull/389, see LivingEntityEventsMixin
+@Restriction(
+        require = {
+                @Condition("justdirethings")
+        }
+)
 @Mixin(ItemCollectorBE.class)
 public abstract class ItemCollectorBEMixin extends BlockEntity implements ItemCollectorAccess {
     protected ItemCollectorBEMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {

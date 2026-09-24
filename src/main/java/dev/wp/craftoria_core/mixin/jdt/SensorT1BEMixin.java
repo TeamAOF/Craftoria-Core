@@ -3,6 +3,8 @@ package dev.wp.craftoria_core.mixin.jdt;
 import com.direwolf20.justdirethings.common.blockentities.SensorT1BE;
 import com.direwolf20.justdirethings.common.blockentities.basebe.BaseMachineBE;
 import com.direwolf20.justdirethings.common.blockentities.basebe.FilterableBE;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Animal;
@@ -16,6 +18,11 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 // Port of https://github.com/Direwolf20-MC/JustDireThings/pull/490
+@Restriction(
+        require = {
+                @Condition("justdirethings")
+        }
+)
 @Mixin(SensorT1BE.class)
 public abstract class SensorT1BEMixin extends BaseMachineBE implements FilterableBE {
     protected SensorT1BEMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {

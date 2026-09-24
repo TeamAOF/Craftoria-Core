@@ -3,6 +3,8 @@ package dev.wp.craftoria_core.mixin.sfm;
 import ca.teamdman.sfm.client.jei.FallingAnvilDisenchantRecipe;
 import ca.teamdman.sfm.client.jei.FallingAnvilExperienceShardRecipe;
 import ca.teamdman.sfm.client.jei.SFMJEIPlugin;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeRegistration;
 import org.spongepowered.asm.mixin.Mixin;
@@ -11,6 +13,11 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.List;
 
+@Restriction(
+        require = {
+                @Condition("sfm")
+        }
+)
 @Mixin(SFMJEIPlugin.class)
 public class SFMJEIPluginMixin {
     // The disenchant/experience-shard falling anvil recipes are unconditionally registered here

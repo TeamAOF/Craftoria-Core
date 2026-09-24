@@ -2,6 +2,8 @@ package dev.wp.craftoria_core.mixin.wcwt;
 
 import com.lhy.wcwt.helpers.WcwtToolkitHotbarState;
 import com.lhy.wcwt.helpers.WcwtToolkitHotbarState.Bar;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,6 +12,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@Restriction(
+        require = {
+                @Condition("wcwt")
+        }
+)
 @Mixin(WcwtToolkitHotbarState.class)
 public class WcwtToolkitHotbarStateMixin {
     @Inject(

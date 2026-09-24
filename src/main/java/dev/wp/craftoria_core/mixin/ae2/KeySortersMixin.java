@@ -3,11 +3,19 @@ package dev.wp.craftoria_core.mixin.ae2;
 import appeng.api.stacks.AEKey;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import dev.wp.craftoria_core.ae2.KeySorters;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Comparator;
 
+@Restriction(
+        require = {
+                @Condition("ae2"),
+                @Condition("emi")
+        }
+)
 @Mixin(targets = "appeng.client.gui.me.common.KeySorters")
 abstract class KeySortersMixin {
     @ModifyExpressionValue(

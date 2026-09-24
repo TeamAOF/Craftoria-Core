@@ -3,10 +3,17 @@ package dev.wp.craftoria_core.mixin.subtle_effects;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import einstein.subtle_effects.particle.option.SplashParticleOptions;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import org.spongepowered.asm.mixin.Mixin;
 
+@Restriction(
+        require = {
+                @Condition("subtle_effects")
+        }
+)
 @Mixin(targets = "einstein.subtle_effects.particle.SplashParticle$Provider")
 public class SplashParticleProviderMixin {
     @WrapMethod(method = "createParticle(Leinstein/subtle_effects/particle/option/SplashParticleOptions;Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDD)Lnet/minecraft/client/particle/Particle;")

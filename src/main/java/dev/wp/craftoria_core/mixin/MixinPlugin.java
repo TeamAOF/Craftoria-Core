@@ -2,141 +2,24 @@ package dev.wp.craftoria_core.mixin;
 
 import com.bawnorton.mixinsquared.canceller.MixinCancellerRegistrar;
 import dev.wp.craftoria_core.util.Utils;
-import org.objectweb.asm.tree.ClassNode;
-import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
-import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
+import me.fallenbreath.conditionalmixin.api.mixin.RestrictiveMixinConfigPlugin;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-public class MixinPlugin implements IMixinConfigPlugin {
-    private final Map<String, Boolean> modStatus = new HashMap<>();
-    private final Map<String, String> mixinToMod = new HashMap<>();
-
-    private static final String BASE_PACKAGE = "dev.wp.craftoria_core.mixin.";
-
-    private void setMixinToMod(String mixin, String mod) {
-        mixinToMod.put(BASE_PACKAGE + mixin, mod);
-    }
-
+public class MixinPlugin extends RestrictiveMixinConfigPlugin {
     @Override
     public void onLoad(String s) {
         List<String> mods = Utils.getModList();
 
-        boolean ae2AndEmi = mods.contains("ae2") && mods.contains("emi");
-        boolean jdtAndIF = mods.contains("justdirethings") && mods.contains("industrialforegoing");
-        boolean wcwtAndEmi = mods.contains("wcwt") && mods.contains("emi");
-        boolean ifAndArsNouveau = mods.contains("industrialforegoing") && mods.contains("ars_nouveau");
-        modStatus.put("ae2", mods.contains("ae2"));
-        modStatus.put("ae2emi", ae2AndEmi);
-        modStatus.put("emi", mods.contains("emi"));
-        modStatus.put("jdtAndIF", jdtAndIF);
-        modStatus.put("ifAndArsNouveau", ifAndArsNouveau);
-        modStatus.put("wcwtemi", wcwtAndEmi);
-        modStatus.put("xycraft_core", mods.contains("xycraft_core"));
-        modStatus.put("cataclysm", mods.contains("cataclysm"));
-        modStatus.put("jdt", mods.contains("justdirethings"));
-        modStatus.put("curios", mods.contains("curios"));
-        modStatus.put("buildinggadgets2", mods.contains("buildinggadgets2"));
-        modStatus.put("sound_physics", mods.contains("sound_physics_remastered"));
-        modStatus.put("spectrum", mods.contains("spectrum"));
-        modStatus.put("mekanism", mods.contains("mekanism"));
-        modStatus.put("relics", mods.contains("relics"));
-        modStatus.put("sdlink", mods.contains("sdlink"));
-        modStatus.put("styledchat", mods.contains("styledchat"));
-        modStatus.put("subtle_effects", mods.contains("subtle_effects"));
-        modStatus.put("extendedae_plus", mods.contains("extendedae_plus"));
-        modStatus.put("extendedae", mods.contains("extendedae"));
-        modStatus.put("apothic_enchanting", mods.contains("apothic_enchanting"));
-        modStatus.put("transmog", mods.contains("transmog"));
-        modStatus.put("animusnv", mods.contains("animusnv"));
-        modStatus.put("worldedit", mods.contains("worldedit"));
-        modStatus.put("wcwt", mods.contains("wcwt"));
-        modStatus.put("ftbquests", mods.contains("ftbquests"));
-        modStatus.put("ae2wtlib", mods.contains("ae2wtlib"));
-        modStatus.put("mekaweapons", mods.contains("mekaweapons"));
-        modStatus.put("sfm", mods.contains("sfm"));
-        modStatus.put("ars_nouveau", mods.contains("ars_nouveau"));
-        modStatus.put("powah", mods.contains("powah"));
-        modStatus.put("gametechbcs_spellbooks", mods.contains("gametechbcs_spellbooks"));
-
         if (mods.contains("extendedae_plus") && mods.contains("emi")) {
             MixinCancellerRegistrar.register((targets, mixin) -> mixin.startsWith("com.extendedae_plus.mixin.jei."));
         }
-
-        // Client
-        setMixinToMod("ae2.KeySortersMixin", "ae2emi");
-        setMixinToMod("ae2.PatternAccessTermScreenGroupNameMixin", "ae2");
-        setMixinToMod("extendedae.GuiExPatternTerminalGroupNameMixin", "extendedae");
-        setMixinToMod("emi.ReloadWorkerMixin", "emi");
-        setMixinToMod("buildinggadgets2.BuildingGadgetsRenderDisable", "buildinggadgets2");
-        setMixinToMod("sound_physics.SoundPhysicsMixin", "sound_physics");
-        setMixinToMod("subtle_effects.SplashParticleProviderMixin", "subtle_effects");
-        setMixinToMod("extendedae_plus.InputEventsMixin", "extendedae_plus");
-        setMixinToMod("apothic_enchanting.EnchJEIPluginMixin", "apothic_enchanting");
-        setMixinToMod("spectrum.SpectrumTooltipsMixin", "spectrum");
-        setMixinToMod("transmog.PlayerMixinCompatibility", "transmog");
-        setMixinToMod("transmog.RenderUtilsAccessor", "transmog");
-        setMixinToMod("emi.RecipeDisplayMixin", "wcwtemi");
-        setMixinToMod("wcwt.WcwtEmiPluginInvoker", "wcwtemi");
-        setMixinToMod("wcwt.WcwtToolkitHudMixin", "wcwt");
-        setMixinToMod("sfm.SFMJEIPluginMixin", "sfm");
-
-        // Common
-        setMixinToMod("buildinggadgets2.BuildingGadgetsDataSaveGuard", "buildinggadgets2");
-        setMixinToMod("cataclysm.CursedTombstoneEntityMixin", "cataclysm");
-        setMixinToMod("foregoing.EnchantmentExtractorTileMixin", "jdtAndIF");
-        setMixinToMod("foregoing.MobCrusherTileMixin", "jdtAndIF");
-        setMixinToMod("jdt.CreatureCatcherEntityMixin", "jdt");
-        setMixinToMod("jdt.FakePlayerUtilMixin", "jdt");
-        setMixinToMod("jdt.FilterableBEMixin", "jdt");
-        setMixinToMod("jdt.ItemCollectorBEMixin", "jdt");
-        setMixinToMod("jdt.LivingEntityEventsMixin", "jdt");
-        setMixinToMod("jdt.SensorT1BEMixin", "jdt");
-        setMixinToMod("jdt.UnstablePortalFluidTypeMixin", "jdt");
-        setMixinToMod("ae2.CableBusBlockCollisionGuardMixin", "ae2");
-        setMixinToMod("ae2.PatternAccessTermGroupEqualityMixin", "ae2");
-        setMixinToMod("curios.CuriosEventHandlerMixin", "curios");
-        setMixinToMod("spectrum.SpectrumEndermanEntityMixin", "spectrum");
-        setMixinToMod("mekanism.WorldUtilsMixin", "mekanism");
-        setMixinToMod("relics.RingOfTheSevenDeadlySinsMixin", "relics");
-        setMixinToMod("relics.RelicsTooltipCompatibilityMixin", "relics");
-        setMixinToMod("relics.RelicsConfigMixin", "relics");
-        setMixinToMod("minecraft.PlayerListMixin", "sdlink");
-        setMixinToMod("minecraft.DedicatedPlayerListMixin", "sdlink");
-        setMixinToMod("minecraft.MinecraftServerMixin", "sdlink");
-        setMixinToMod("sdlink.SDLinkMinecraftBridgeMixin", "sdlink");
-        setMixinToMod("extendedae_plus.OpenCraftFromJeiC2SPacketMixin", "extendedae_plus");
-        setMixinToMod("extendedae_plus.SuperMatrixFrameChunkLoadGuardMixin", "extendedae_plus");
-        setMixinToMod("extendedae.AssemblerMatrixFrameChunkLoadGuardMixin", "extendedae");
-        setMixinToMod("styledchat.StyledChatUtilsMixin", "styledchat");
-        setMixinToMod("styledchat.StyledChatDecoratorCompatibility", "styledchat");
-        setMixinToMod("animusnv.AltarTierAdvancementHandlerMixin", "animusnv");
-        setMixinToMod("worldedit.NeoForgeWorldEditMixin", "worldedit");
-        setMixinToMod("wcwt.WcwtToolkitHotbarStateMixin", "wcwt");
-        setMixinToMod("wcwt.WcwtToolkitAccessMixin", "wcwt");
-        setMixinToMod("ftbquests.QuestMixin", "ftbquests");
-        setMixinToMod("ae2wtlib.AE2wtlibForgeMixin", "ae2wtlib");
-        setMixinToMod("mekaweapons.ItemMekaGunMixin", "mekaweapons");
-        setMixinToMod("ars_nouveau.SourceUtilMixin", "ars_nouveau");
-        setMixinToMod("industrial_foregoing.FluidLaserBaseTileMixin", "ifAndArsNouveau");
-        setMixinToMod("powah.ReactorTileMixin", "powah");
-        setMixinToMod("gametechbcsspellbooks.ExtendedDeadKingBossMixin", "gametechbcs_spellbooks");
-        setMixinToMod("gametechbcsspellbooks.ReversalEffectMixin", "gametechbcs_spellbooks");
-        setMixinToMod("gametechbcsspellbooks.ReversalEffectHandlerAccessor", "gametechbcs_spellbooks");
     }
 
     @Override
     public String getRefMapperConfig() {
         return null;
-    }
-
-    @Override
-    public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        String modId = mixinToMod.get(mixinClassName);
-        return modId == null || modStatus.getOrDefault(modId, false);
     }
 
     @Override
@@ -146,13 +29,5 @@ public class MixinPlugin implements IMixinConfigPlugin {
     @Override
     public List<String> getMixins() {
         return null;
-    }
-
-    @Override
-    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-    }
-
-    @Override
-    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
     }
 }

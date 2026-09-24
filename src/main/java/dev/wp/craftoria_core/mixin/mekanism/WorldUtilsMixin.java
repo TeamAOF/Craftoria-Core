@@ -1,5 +1,7 @@
 package dev.wp.craftoria_core.mixin.mekanism;
 
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import mekanism.common.util.WorldUtils;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.Level;
@@ -10,6 +12,11 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+@Restriction(
+        require = {
+                @Condition("mekanism")
+        }
+)
 @Mixin(WorldUtils.class)
 public class WorldUtilsMixin {
     @Redirect(

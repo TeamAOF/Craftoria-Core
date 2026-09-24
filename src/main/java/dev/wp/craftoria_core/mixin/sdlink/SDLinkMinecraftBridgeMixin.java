@@ -5,12 +5,19 @@ import com.hypherionmc.sdlink.platform.SDLinkMCPlatform;
 import com.hypherionmc.sdlink.server.SDLinkMinecraftBridge;
 import com.hypherionmc.sdlink.server.ServerEvents;
 import dev.wp.craftoria_core.util.SdlinkPlayerLimit;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import org.apache.commons.lang3.tuple.Pair;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@Restriction(
+        require = {
+                @Condition("sdlink")
+        }
+)
 @Mixin(value = SDLinkMinecraftBridge.class, remap = false)
 public class SDLinkMinecraftBridgeMixin {
     @Inject(method = "getPlayerCounts", at = @At("RETURN"), cancellable = true)
