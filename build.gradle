@@ -136,6 +136,7 @@ repositories {
 
     // Revelationary, Fractal, AEA, Arrowhead, Dimensional Reverb...
     maven { url = "https://maven.is-immensely.gay/releases" }
+    maven { url 'https://maven.fallenbreath.me/releases' }
 }
 
 base {
@@ -203,6 +204,9 @@ configurations {
 }
 
 dependencies {
+    //noinspection DependencyNotationArgument
+    jarJar(implementation("me.fallenbreath:conditional-mixin-neoforge:0.6.4"))
+
     // MixinSquared's annotationProcessor MUST be registered BEFORE Mixin's one.
     compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.7-beta.1"))
     implementation(jarJar("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.7-beta.1"))
@@ -275,7 +279,7 @@ dependencies {
     localRuntime("mekanism:Mekanism:${minecraft_version}-${mekanism_version}:generators")
     localRuntime("mekanism:Mekanism:${minecraft_version}-${mekanism_version}:tools")
 
-    implementation("curse.maven:mekanism-weapons-929829:8421979")
+    implementation("curse.maven:mekanism-weapons-929829:8951656")
     implementation("curse.maven:mekanism-more-machine-1275257:8724947")
 
     implementation("curse.maven:super-factory-manager-306935:8370241")
