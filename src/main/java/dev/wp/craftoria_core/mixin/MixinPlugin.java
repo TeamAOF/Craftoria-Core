@@ -68,6 +68,8 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
         // Client
         setMixinToMod("ae2.KeySortersMixin", "ae2emi");
+        setMixinToMod("ae2.PatternAccessTermScreenGroupNameMixin", "ae2");
+        setMixinToMod("extendedae.GuiExPatternTerminalGroupNameMixin", "extendedae");
         setMixinToMod("emi.ReloadWorkerMixin", "emi");
         setMixinToMod("buildinggadgets2.BuildingGadgetsRenderDisable", "buildinggadgets2");
         setMixinToMod("sound_physics.SoundPhysicsMixin", "sound_physics");
@@ -95,6 +97,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         setMixinToMod("jdt.SensorT1BEMixin", "jdt");
         setMixinToMod("jdt.UnstablePortalFluidTypeMixin", "jdt");
         setMixinToMod("ae2.CableBusBlockCollisionGuardMixin", "ae2");
+        setMixinToMod("ae2.PatternAccessTermGroupEqualityMixin", "ae2");
         setMixinToMod("curios.CuriosEventHandlerMixin", "curios");
         setMixinToMod("spectrum.SpectrumEndermanEntityMixin", "spectrum");
         setMixinToMod("mekanism.WorldUtilsMixin", "mekanism");

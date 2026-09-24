@@ -269,6 +269,7 @@ dependencies {
     implementation("curse.maven:subtle-effects-1023913:8008312")
 
     compileOnly("mekanism:Mekanism:${minecraft_version}-${mekanism_version}:all")
+    implementation("curse.maven:mekanism-extras-1026040:8677677")
 
     localRuntime("mekanism:Mekanism:${minecraft_version}-${mekanism_version}")
     localRuntime("mekanism:Mekanism:${minecraft_version}-${mekanism_version}:generators")

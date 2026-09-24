@@ -6,6 +6,8 @@
     "minVersion": "0.8",
     "client": [
         "ae2.KeySortersMixin",
+        "ae2.PatternAccessTermScreenGroupNameMixin",
+        "extendedae.GuiExPatternTerminalGroupNameMixin",
         "buildinggadgets2.BuildingGadgetsRenderDisable",
         "emi.ReloadWorkerMixin",
         "minecraft.CreativeModeInventoryScreenMixin",
@@ -35,6 +37,7 @@
         "jdt.SensorT1BEMixin",
         "jdt.UnstablePortalFluidTypeMixin",
         "ae2.CableBusBlockCollisionGuardMixin",
+        "ae2.PatternAccessTermGroupEqualityMixin",
         "mekanism.WorldUtilsMixin",
         "minecraft.DiscreteVoxelShapeBoxCacheMixin",
         "minecraft.IdDispatchCodecMixin",
