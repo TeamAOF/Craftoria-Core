@@ -12,11 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 // isFrame probes neighbours 1 block out and force-loads the chunk; deadlocks the server thread when
 // a shape update fires inside a chunk-unload callback (AE2 grid teardown -> setBlock -> updateShape).
-@Restriction(
-        require = {
-                @Condition("extendedae_plus")
-        }
-)
+@Restriction(require = @Condition("extendedae_plus"))
 @Mixin(value = SuperAssemblerMatrixFrameBlock.class, remap = false)
 public class SuperMatrixFrameChunkLoadGuardMixin {
     @Inject(method = "isFrame", at = @At("HEAD"), cancellable = true)

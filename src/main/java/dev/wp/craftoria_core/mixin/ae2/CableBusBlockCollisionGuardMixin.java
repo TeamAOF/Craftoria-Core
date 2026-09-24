@@ -15,11 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Restriction(
-        require = {
-                @Condition("ae2")
-        }
-)
+@Restriction(require = @Condition("ae2"))
 @Mixin(CableBusBlock.class)
 public class CableBusBlockCollisionGuardMixin {
     @Inject(method = "getShape", at = @At("HEAD"), cancellable = true)

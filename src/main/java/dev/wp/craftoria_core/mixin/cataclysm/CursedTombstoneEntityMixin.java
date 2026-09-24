@@ -15,11 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-@Restriction(
-        require = {
-                @Condition("cataclysm")
-        }
-)
+@Restriction(require = @Condition("cataclysm"))
 @Mixin(Cursed_tombstone_Entity.class)
 public class CursedTombstoneEntityMixin {
     @Unique

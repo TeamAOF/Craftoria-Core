@@ -8,11 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Restriction(
-        require = {
-                @Condition("spectrum")
-        }
-)
+@Restriction(require = @Condition("spectrum"))
 @Mixin(SpectrumTooltips.class)
 public class SpectrumTooltipsMixin {
     @Inject(

@@ -12,11 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 // Same deadlock as extendedae_plus.SuperMatrixFrameChunkLoadGuardMixin; ExtendedAE-Plus copied this
 // class verbatim, so the base Assembler Matrix force-loads chunks from updateShape too.
-@Restriction(
-        require = {
-                @Condition("extendedae")
-        }
-)
+@Restriction(require = @Condition("extendedae"))
 @Mixin(value = BlockAssemblerMatrixFrame.class, remap = false)
 public class AssemblerMatrixFrameChunkLoadGuardMixin {
     @Inject(method = "isFrame", at = @At("HEAD"), cancellable = true)

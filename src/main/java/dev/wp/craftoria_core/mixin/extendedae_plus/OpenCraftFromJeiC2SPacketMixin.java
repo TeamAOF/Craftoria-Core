@@ -11,11 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Restriction(
-        require = {
-                @Condition("extendedae_plus")
-        }
-)
+@Restriction(require = @Condition("extendedae_plus"))
 @Mixin(value = OpenCraftFromJeiC2SPacket.class, remap = false)
 public class OpenCraftFromJeiC2SPacketMixin {
     @Inject(

@@ -12,11 +12,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Restriction(
-        require = {
-                @Condition("mekanism")
-        }
-)
+@Restriction(require = @Condition("mekanism"))
 @Mixin(WorldUtils.class)
 public class WorldUtilsMixin {
     @Redirect(

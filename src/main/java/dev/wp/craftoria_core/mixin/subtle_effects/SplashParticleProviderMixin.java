@@ -9,11 +9,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Restriction(
-        require = {
-                @Condition("subtle_effects")
-        }
-)
+@Restriction(require = @Condition("subtle_effects"))
 @Mixin(targets = "einstein.subtle_effects.particle.SplashParticle$Provider")
 public class SplashParticleProviderMixin {
     @WrapMethod(method = "createParticle(Leinstein/subtle_effects/particle/option/SplashParticleOptions;Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDD)Lnet/minecraft/client/particle/Particle;")

@@ -18,11 +18,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 // Port of https://github.com/Direwolf20-MC/JustDireThings/pull/490
-@Restriction(
-        require = {
-                @Condition("justdirethings")
-        }
-)
+@Restriction(require = @Condition("justdirethings"))
 @Mixin(FilterableBE.class)
 public interface FilterableBEMixin extends FilterableBE {
     /**

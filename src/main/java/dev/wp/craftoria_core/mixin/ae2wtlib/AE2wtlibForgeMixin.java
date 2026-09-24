@@ -11,11 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Restriction(
-        require = {
-                @Condition("ae2wtlib")
-        }
-)
+@Restriction(require = @Condition("ae2wtlib"))
 @Mixin(AE2wtlibForge.class)
 public class AE2wtlibForgeMixin {
     @Inject(

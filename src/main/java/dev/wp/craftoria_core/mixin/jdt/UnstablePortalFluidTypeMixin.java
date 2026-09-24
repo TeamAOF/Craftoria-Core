@@ -11,11 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Restriction(
-        require = {
-                @Condition("justdirethings")
-        }
-)
+@Restriction(require = @Condition("justdirethings"))
 @Mixin(UnstablePortalFluidType.class)
 public class UnstablePortalFluidTypeMixin {
     @Inject(method = "isVaporizedOnPlacement", at = @At("HEAD"), cancellable = true)

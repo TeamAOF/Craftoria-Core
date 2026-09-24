@@ -11,11 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import java.util.ArrayList;
 
-@Restriction(
-        require = {
-                @Condition("buildinggadgets2")
-        }
-)
+@Restriction(require = @Condition("buildinggadgets2"))
 @Mixin(BG2Data.class)
 public class BuildingGadgetsDataSaveGuard {
     @WrapMethod(method = "statePosListToNBTMapArray")

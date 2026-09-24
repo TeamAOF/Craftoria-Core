@@ -11,11 +11,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Restriction(
-        require = {
-                @Condition("apothic_enchanting")
-        }
-)
+@Restriction(require = @Condition("apothic_enchanting"))
 @Mixin(value = EnchJEIPlugin.class, remap = false)
 public class EnchJEIPluginMixin {
     @Unique private final RandomSource craftoriaCore$random = RandomSource.createNewThreadLocalInstance();

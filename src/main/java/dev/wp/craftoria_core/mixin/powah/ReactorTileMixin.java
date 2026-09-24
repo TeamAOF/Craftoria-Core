@@ -7,11 +7,7 @@ import owmii.powah.block.reactor.ReactorTile;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Restriction(
-        require = {
-                @Condition("powah")
-        }
-)
+@Restriction(require = @Condition("powah"))
 @Mixin(ReactorTile.class)
 public class ReactorTileMixin {
 

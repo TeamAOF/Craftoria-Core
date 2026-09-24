@@ -10,11 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.theillusivec4.curios.common.event.CuriosEventHandler;
 
-@Restriction(
-        require = {
-                @Condition("curios")
-        }
-)
+@Restriction(require = @Condition("curios"))
 @Mixin(CuriosEventHandler.class)
 public class CuriosEventHandlerMixin {
     @Inject(method = "onBreakBlock", at = @At("HEAD"), cancellable = true)

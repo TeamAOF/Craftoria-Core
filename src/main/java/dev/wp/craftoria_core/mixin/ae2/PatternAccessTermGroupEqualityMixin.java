@@ -17,11 +17,7 @@ import java.util.Objects;
 
 // Compare groups by text only; mods that animate an item name's color (Mekanism Extras cosmic/infinite
 // tiers) otherwise make the group differ every tick, forcing a full resync that resets terminal scroll.
-@Restriction(
-        require = {
-                @Condition("ae2")
-        }
-)
+@Restriction(require = @Condition("ae2"))
 @Mixin(PatternAccessTermMenu.class)
 public class PatternAccessTermGroupEqualityMixin {
     @WrapOperation(

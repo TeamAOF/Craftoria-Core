@@ -18,11 +18,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 // Port of https://github.com/Direwolf20-MC/JustDireThings/pull/490
-@Restriction(
-        require = {
-                @Condition("justdirethings")
-        }
-)
+@Restriction(require = @Condition("justdirethings"))
 @Mixin(SensorT1BE.class)
 public abstract class SensorT1BEMixin extends BaseMachineBE implements FilterableBE {
     protected SensorT1BEMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {

@@ -16,11 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Restriction(
-        require = {
-                @Condition("styledchat")
-        }
-)
+@Restriction(require = @Condition("styledchat"))
 @Mixin(value = StyledChatUtils.class, remap = false)
 public class StyledChatUtilsMixin {
     @Inject(method = "modifyForSending", at = @At("HEAD"))

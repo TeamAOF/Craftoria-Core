@@ -10,11 +10,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import java.util.Map;
 import java.util.UUID;
 
-@Restriction(
-        require = {
-                @Condition("gametechbcs_spellbooks")
-        }
-)
+@Restriction(require = @Condition("gametechbcs_spellbooks"))
 @Mixin(value = ReversalEffectHandler.class, remap = false)
 public interface ReversalEffectHandlerAccessor {
     @Accessor("storedDamageMap")

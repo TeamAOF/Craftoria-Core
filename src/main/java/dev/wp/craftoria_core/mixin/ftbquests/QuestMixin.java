@@ -10,11 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Restriction(
-        require = {
-                @Condition("ftbquests")
-        }
-)
+@Restriction(require = @Condition("ftbquests"))
 @Mixin(Quest.class)
 public class QuestMixin {
     @Inject(method = "onCompleted", at = @At("TAIL"))

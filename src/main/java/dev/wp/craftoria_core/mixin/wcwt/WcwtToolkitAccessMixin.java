@@ -11,11 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
-@Restriction(
-        require = {
-                @Condition("wcwt")
-        }
-)
+@Restriction(require = @Condition("wcwt"))
 @Mixin(WcwtToolkitAccess.class)
 public class WcwtToolkitAccessMixin {
     /**

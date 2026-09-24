@@ -13,11 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 // Port of https://github.com/Direwolf20-MC/JustDireThings/pull/530
-@Restriction(
-        require = {
-                @Condition("justdirethings")
-        }
-)
+@Restriction(require = @Condition("justdirethings"))
 @Mixin(FakePlayerUtil.class)
 public class FakePlayerUtilMixin {
     // fake player is teleported, not ticked, so onGround/fallDistance never get set by physics

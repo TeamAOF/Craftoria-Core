@@ -12,11 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 // ExtendedAE reimplements the terminal screen rather than extending AE2's, so it needs the same
 // live-name refresh as PatternAccessTermScreenGroupNameMixin.
-@Restriction(
-        require = {
-                @Condition("extendedae")
-        }
-)
+@Restriction(require = @Condition("extendedae"))
 @Mixin(GuiExPatternTerminal.class)
 public class GuiExPatternTerminalGroupNameMixin {
     @ModifyExpressionValue(

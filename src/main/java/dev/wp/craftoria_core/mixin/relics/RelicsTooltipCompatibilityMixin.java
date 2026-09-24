@@ -14,11 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
-@Restriction(
-        require = {
-                @Condition("relics")
-        }
-)
+@Restriction(require = @Condition("relics"))
 @Mixin(value = Item.class, priority = 1500)
 public class RelicsTooltipCompatibilityMixin {
     @TargetHandler(

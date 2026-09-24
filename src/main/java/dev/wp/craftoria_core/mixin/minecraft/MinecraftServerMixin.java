@@ -10,11 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-@Restriction(
-        require = {
-                @Condition("sdlink")
-        }
-)
+@Restriction(require = @Condition("sdlink"))
 @Mixin(MinecraftServer.class)
 public class MinecraftServerMixin {
     @ModifyArg(

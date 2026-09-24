@@ -14,11 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
-@Restriction(
-        require = {
-                @Condition("ars_nouveau")
-        }
-)
+@Restriction(require = @Condition("ars_nouveau"))
 @Mixin(SourceUtil.class)
 public abstract class SourceUtilMixin {
     @Inject(method = "canGiveSource", at = @At("RETURN"))

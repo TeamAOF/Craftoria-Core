@@ -12,11 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 // The group name is a server snapshot, so animated name colors freeze; re-derive it from the live
 // icon stack each frame. Pairs with PatternAccessTermGroupEqualityMixin.
-@Restriction(
-        require = {
-                @Condition("ae2")
-        }
-)
+@Restriction(require = @Condition("ae2"))
 @Mixin(PatternAccessTermScreen.class)
 public class PatternAccessTermScreenGroupNameMixin {
     @ModifyExpressionValue(

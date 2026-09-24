@@ -20,11 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Optional;
 
 // Pickup half of https://github.com/Direwolf20-MC/JustDireThings/pull/389, see ItemCollectorBEMixin
-@Restriction(
-        require = {
-                @Condition("justdirethings")
-        }
-)
+@Restriction(require = @Condition("justdirethings"))
 @Mixin(LivingEntityEvents.class)
 public class LivingEntityEventsMixin {
     @Inject(method = "blockJoin", at = @At("TAIL"))

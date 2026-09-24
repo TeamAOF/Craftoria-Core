@@ -11,11 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
-@Restriction(
-        require = {
-                @Condition("relics")
-        }
-)
+@Restriction(require = @Condition("relics"))
 @Mixin(RelicsConfigData.class) public class RelicsConfigMixin {
 
     @Inject(method = "getRingOfSDSGluttonyAttributesBlacklist", at = @At("HEAD"), cancellable = true) public void craftoria$addGluttonyAttributes(CallbackInfoReturnable<List<String>> cir) {

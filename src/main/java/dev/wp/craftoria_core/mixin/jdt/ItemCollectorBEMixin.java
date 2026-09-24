@@ -18,11 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 // Registration half of https://github.com/Direwolf20-MC/JustDireThings/pull/389, see LivingEntityEventsMixin
-@Restriction(
-        require = {
-                @Condition("justdirethings")
-        }
-)
+@Restriction(require = @Condition("justdirethings"))
 @Mixin(ItemCollectorBE.class)
 public abstract class ItemCollectorBEMixin extends BlockEntity implements ItemCollectorAccess {
     protected ItemCollectorBEMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {

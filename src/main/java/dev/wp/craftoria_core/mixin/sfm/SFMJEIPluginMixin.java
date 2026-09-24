@@ -13,11 +13,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.List;
 
-@Restriction(
-        require = {
-                @Condition("sfm")
-        }
-)
+@Restriction(require = @Condition("sfm"))
 @Mixin(SFMJEIPlugin.class)
 public class SFMJEIPluginMixin {
     // The disenchant/experience-shard falling anvil recipes are unconditionally registered here

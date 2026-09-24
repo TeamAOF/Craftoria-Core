@@ -11,11 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Restriction(
-        require = {
-                @Condition("emi")
-        }
-)
+@Restriction(require = @Condition("emi"))
 @Mixin(targets = "dev.emi.emi.runtime.EmiReloadManager$ReloadWorker")
 public class ReloadWorkerMixin {
 

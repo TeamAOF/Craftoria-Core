@@ -12,11 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import java.util.Collection;
 import java.util.List;
 
-@Restriction(
-        require = {
-                @Condition("gametechbcs_spellbooks")
-        }
-)
+@Restriction(require = @Condition("gametechbcs_spellbooks"))
 @Mixin(value = ReversalEffect.class, remap = false)
 public class ReversalEffectMixin {
     // Reversal clears harmful effects while iterating getActiveEffects() itself -> CME. Iterate a copy.
