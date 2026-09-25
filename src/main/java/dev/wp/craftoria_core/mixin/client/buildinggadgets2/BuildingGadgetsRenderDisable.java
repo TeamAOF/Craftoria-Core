@@ -13,10 +13,15 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Coerce;
 
-@Restriction(require = @Condition("buildinggadgets2"))
+@Restriction(require =
+        {
+                @Condition("buildinggadgets2"),
+                @Condition("enderstorage")
+        }
+)
 @Mixin(VBORenderer.class)
 public class BuildingGadgetsRenderDisable {
-    @WrapWithCondition(method="drawRender",at=@At(value="INVOKE",target="Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;render(Lnet/minecraft/world/level/block/entity/BlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;)V"))
+    @WrapWithCondition(method = "drawRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;render(Lnet/minecraft/world/level/block/entity/BlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;)V"))
     private static boolean render(BlockEntityRenderDispatcher instance, @Coerce BlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource) {
         return !(blockEntity instanceof TileFrequencyOwner);
     }

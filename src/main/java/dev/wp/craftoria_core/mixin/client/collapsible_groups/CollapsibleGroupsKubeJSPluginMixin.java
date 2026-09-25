@@ -1,4 +1,4 @@
-package dev.wp.craftoria_core.mixin.common.collapsible_groups;
+package dev.wp.craftoria_core.mixin.client.collapsible_groups;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
