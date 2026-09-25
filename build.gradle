@@ -1,3 +1,7 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+import groovy.io.FileType
+
 plugins {
     id 'java-library'
     id 'idea'
@@ -344,12 +348,58 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
     inputs.properties replaceProperties
 
     expand replaceProperties
-    from "src/main/templates"
+    from("src/main/templates") {
+        include "META-INF/**"
+    }
     into "build/generated/sources/modMetadata"
 }
 
 sourceSets.main.resources.srcDir generateModMetadata
 neoForge.ideSyncTask generateModMetadata
+
+// The mixin config's class lists are generated from the source tree, so adding a mixin is just adding
+// a file: everything under mixin/client/ lands in "client", everything under mixin/common/ in "mixins".
+var mixinConfigTemplate = file("src/main/templates/craftoria_core.mixins.json")
+var mixinSourceRoot = file("src/main/java/dev/wp/craftoria_core/mixin")
+var mixinConfigDir = layout.buildDirectory.dir("generated/sources/mixinConfig")
+
+var generateMixinConfig = tasks.register("generateMixinConfig") {
+    group = 'build'
+    description = 'Writes craftoria_core.mixins.json from the classes under the mixin package.'
+
+    inputs.file mixinConfigTemplate
+    inputs.dir mixinSourceRoot
+    outputs.dir mixinConfigDir
+
+    var template = mixinConfigTemplate
+    var sourceRoot = mixinSourceRoot
+    var outputDir = mixinConfigDir
+
+    doLast {
+        var config = new JsonSlurper().parse(template)
+
+        ["client": "client", "common": "mixins"].each { side, key ->
+            var sideRoot = new File(sourceRoot, side)
+            var classes = []
+            if (sideRoot.isDirectory()) {
+                sideRoot.eachFileRecurse(FileType.FILES) { javaFile ->
+                    if (javaFile.name.endsWith(".java")) {
+                        var relative = sideRoot.toPath().relativize(javaFile.toPath()).toString()
+                        classes << "${side}." + relative[0..<-".java".length()].replace(File.separator, ".")
+                    }
+                }
+            }
+            config[key] = classes.sort()
+        }
+
+        var target = outputDir.get().file("craftoria_core.mixins.json").asFile
+        target.parentFile.mkdirs()
+        target.text = JsonOutput.prettyPrint(JsonOutput.toJson(config)) + "\n"
+    }
+}
+
+sourceSets.main.resources.srcDir files(mixinConfigDir).builtBy(generateMixinConfig)
+neoForge.ideSyncTask generateMixinConfig
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation

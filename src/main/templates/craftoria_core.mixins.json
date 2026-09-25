@@ -1,0 +1,12 @@
+{
+    "required": true,
+    "package": "dev.wp.craftoria_core.mixin",
+    "plugin": "dev.wp.craftoria_core.mixin.MixinPlugin",
+    "compatibilityLevel": "JAVA_21",
+    "minVersion": "0.8",
+    "client": [],
+    "mixins": [],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}
