@@ -1,6 +1,6 @@
 package dev.wp.craftoria_core.util;
 
-import dev.wp.craftoria_core.mixin.gametechbcsspellbooks.ReversalEffectHandlerAccessor;
+import dev.wp.craftoria_core.mixin.common.gametechbcsspellbooks.ReversalEffectHandlerAccessor;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;

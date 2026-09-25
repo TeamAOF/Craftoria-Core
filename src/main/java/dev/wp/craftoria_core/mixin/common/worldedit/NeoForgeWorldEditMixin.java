@@ -1,0 +1,32 @@
+package dev.wp.craftoria_core.mixin.common.worldedit;
+
+import com.sk89q.worldedit.neoforge.NeoForgeWorldEdit;
+import me.fallenbreath.conditionalmixin.api.annotation.Condition;
+import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Restriction(require = @Condition("worldedit"))
+@Mixin(NeoForgeWorldEdit.class)
+public abstract class NeoForgeWorldEditMixin {
+
+    @Inject(
+            method = "skipInteractionEvent(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Z",
+            at = @At("RETURN"),
+            cancellable = true
+    )
+    private void skipInteractionEventMixin(
+            Player player,
+            InteractionHand hand,
+            CallbackInfoReturnable<Boolean> cir
+    ) {
+        if (player instanceof FakePlayer) {
+            if (cir != null) cir.setReturnValue(true);
+        }
+    }
+}
