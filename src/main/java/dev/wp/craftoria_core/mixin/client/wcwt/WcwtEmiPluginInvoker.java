@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Restriction(
         require = {
-                @Condition("wcwt"),
+                @Condition(value = "wcwt", versionPredicates = "(,1.3.10]"),
                 @Condition("emi")
         }
 )
