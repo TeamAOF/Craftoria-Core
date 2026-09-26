@@ -17,6 +17,7 @@ public class SpectrumTooltipsMixin {
             cancellable = true
     )
     private static void cancelSpawnerTooltips(CallbackInfo ci) {
-        ci.cancel(); // We have apothic spawners handle this already.
+        // Apothic Spawners already adds spawner tooltips; Spectrum's would duplicate them.
+        ci.cancel();
     }
 }

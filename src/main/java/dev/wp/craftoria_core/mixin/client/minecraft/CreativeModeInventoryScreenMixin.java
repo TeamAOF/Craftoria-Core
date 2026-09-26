@@ -14,7 +14,6 @@ public class CreativeModeInventoryScreenMixin {
     @Shadow
     private EditBox searchBox;
 
-    // Got tired of the search tab autofocusing
     @Inject(method = "selectTab", at = @At("TAIL"))
     private void selectTabNoAutoFocus(CreativeModeTab tab, CallbackInfo ci) {
         searchBox.setCanLoseFocus(true);

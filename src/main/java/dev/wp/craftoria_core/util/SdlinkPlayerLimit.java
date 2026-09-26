@@ -80,8 +80,7 @@ public final class SdlinkPlayerLimit {
 
                 return new CacheEntry(bypass, currentTime + CACHE_TTL_NANOS);
             } catch (RuntimeException ignored) {
-                // Do not allow a previous "true" authorization to live
-                // indefinitely after the cache expires.
+                // Cache a negative so an earlier "true" can't survive past its expiry.
                 return new CacheEntry(false, currentTime + CACHE_TTL_NANOS);
             }
         });

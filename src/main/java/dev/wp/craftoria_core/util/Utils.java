@@ -19,7 +19,7 @@ public class Utils {
     private final static int gasOffset = fluidOffset * 10;
 
     public static int getItemPosition(ItemStack item) {
-        if (emiReloading) return BuiltInRegistries.ITEM.getId(item.getItem()); // EMI reload in progress, use a fallback
+        if (emiReloading) return BuiltInRegistries.ITEM.getId(item.getItem());
         else return CreativeSearchOrder.getItemIndex(item);
     }
 

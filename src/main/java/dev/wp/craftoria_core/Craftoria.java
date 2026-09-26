@@ -1,6 +1,5 @@
 package dev.wp.craftoria_core;
 
-import dev.wp.craftoria_core.ae2.AE2Init;
 import dev.wp.craftoria_core.config.ServerConfig;
 import dev.wp.craftoria_core.functionality.DoorFeature;
 import dev.wp.craftoria_core.functionality.RightClickHarvestFeature;
@@ -53,7 +52,5 @@ public class Craftoria {
         CItems.init(bus);
         CComponents.init(bus);
         CCreativeTab.init(bus);
-
-        if (Utils.isModLoaded("ae2")) AE2Init.init(bus);
     }
 }

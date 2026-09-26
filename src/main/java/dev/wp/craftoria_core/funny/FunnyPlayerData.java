@@ -49,7 +49,6 @@ public final class FunnyPlayerData extends SavedData {
             try {
                 data.joinedPlayers.add(UUID.fromString(entry.getAsString()));
             } catch (IllegalArgumentException ignored) {
-                // Ignore malformed entries.
             }
         }
         return data;
