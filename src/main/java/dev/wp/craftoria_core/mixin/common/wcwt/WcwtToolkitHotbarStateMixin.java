@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Restriction(require = @Condition("wcwt"))
+@Restriction(require = @Condition(value = "wcwt", versionPredicates = "(,1.3.9]"))
 @Mixin(WcwtToolkitHotbarState.class)
 public class WcwtToolkitHotbarStateMixin {
     @Inject(
