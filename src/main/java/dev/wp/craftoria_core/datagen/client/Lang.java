@@ -16,9 +16,7 @@ public final class Lang extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        this.add(key("config.funny"), "Funny");
         this.add(key("config.gluttony_attribute_mod_blacklist"), "Gluttony attribute mod blacklist");
-        this.add(key("config.sdlink_bypass_roles"), "SDLink Player limit bypass roles");
 
         for (var item : CItems.ITEMS.getEntries()) {
             String key = item.getId().getPath();

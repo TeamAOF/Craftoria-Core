@@ -3,7 +3,6 @@ package dev.wp.craftoria_core;
 import dev.wp.craftoria_core.config.ServerConfig;
 import dev.wp.craftoria_core.functionality.DoorFeature;
 import dev.wp.craftoria_core.functionality.RightClickHarvestFeature;
-import dev.wp.craftoria_core.funny.FunnyFeature;
 import dev.wp.craftoria_core.util.QuestCompletionFix;
 import dev.wp.craftoria_core.util.ReversalLeakFix;
 import dev.wp.craftoria_core.util.Utils;
@@ -31,7 +30,6 @@ public class Craftoria {
     public Craftoria(ModContainer container, IEventBus bus, Dist dist) {
         container.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
         bus.addListener(this::onConfigReload);
-        NeoForge.EVENT_BUS.register(FunnyFeature.class);
         NeoForge.EVENT_BUS.register(DoorFeature.class);
         NeoForge.EVENT_BUS.register(RightClickHarvestFeature.class);
         if (Utils.isModLoaded("ftbquests")) NeoForge.EVENT_BUS.register(QuestCompletionFix.class);
